@@ -253,15 +253,15 @@ Copyrighted web text хранится только во внешней research 
 ### Freeze workflow
 
 ```bash
-python3 scripts/materialize_external_heldout.py --sources ... --output-dir ../heldout-work
+python3 scripts/materialize_external_heldout.py --sources ... --output-dir data/heldout-work
 python3 scripts/validate_external_heldout.py \
-  --manifest ../heldout-work/manifest.csv \
-  --output ../heldout-work/VALIDATION.json \
-  --validated-manifest ../heldout-work/manifest.validated.csv
+  --manifest data/heldout-work/manifest.csv \
+  --output data/heldout-work/VALIDATION.json \
+  --validated-manifest data/heldout-work/manifest.validated.csv
 python3 scripts/ablate_signals_v3.py \
-  --manifest ../heldout-work/manifest.validated.csv \
-  --output ../heldout-work/ABLATION_DECISION_V3.json \
-  --annotation-template ../heldout-work/alert-adjudication.csv
+  --manifest data/heldout-work/manifest.validated.csv \
+  --output data/heldout-work/ABLATION_DECISION_V3.json \
+  --annotation-template data/heldout-work/alert-adjudication.csv
 ```
 
 Третья команда имеет смысл только после profile-size/dedup stage; сам v3 runner дополнительно блокирует решения по diversity, signal eligibility и split minima. Для полного сетевого сценария предпочтителен `scripts/run_external_heldout_gate.py`, который физически не вызывает decision stage до profile gate. Каталог URL или search snippets не считаются materialized corpus.
@@ -286,4 +286,3 @@ Raw `manifest.csv` — журнал получения данных, а не с�
 - конфликтующие повторные labels для одного `(document_id, signal)` запрещены.
 
 Исторический `scripts/ablate_signals.py` и `benchmark/ablation/spec.json` сохраняются byte-identical для воспроизведения 1.4. Решения после 1.7 должны опираться на `scripts/ablate_signals_v3.py` и `spec-v3.json`; ни один runner не редактирует active profile автоматически.
-

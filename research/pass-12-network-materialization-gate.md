@@ -76,7 +76,7 @@ The following hashes remain unchanged:
 ```bash
 python3 -m pip install datasets
 python3 scripts/run_external_heldout_gate.py \
-  --output-dir ../heldout-work
+  --output-dir data/heldout-work
 ```
 
 Do not copy third-party raw texts into a release automatically. The release should contain provenance, manifests, hashes, validator reports and aggregates unless redistribution rights are separately verified.

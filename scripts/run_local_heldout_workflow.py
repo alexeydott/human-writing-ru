@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the GitHub held-out workflow locally against examples/ corpora."""
+"""Run the GitHub held-out workflow locally against data/ corpora."""
 from __future__ import annotations
 
 import argparse
@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_EXAMPLES = ROOT / "examples"
+DEFAULT_DATA = ROOT / "data"
 CHECKS = (
     ("scripts/validate_skill.py",),
     ("scripts/validate_eval_design.py",),
@@ -41,7 +41,7 @@ def run(command: list[str], env: dict[str, str]) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the held-out GitHub Actions workflow locally")
-    parser.add_argument("--examples-dir", type=Path, default=DEFAULT_EXAMPLES)
+    parser.add_argument("--data-dir", type=Path, default=DEFAULT_DATA)
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--annotations", type=Path, default=None)
     parser.add_argument("--skip-checks", action="store_true")
@@ -49,8 +49,8 @@ def main() -> int:
     parser.add_argument("--source-process-timeout", type=float, default=300.0)
     args = parser.parse_args()
 
-    examples = args.examples_dir.expanduser().resolve()
-    output = (args.output_dir or (examples / "heldout-work")).expanduser().resolve()
+    data = args.data_dir.expanduser().resolve()
+    output = (args.output_dir or (data / "heldout-work")).expanduser().resolve()
     env = local_environment()
     if not args.skip_checks:
         for parts in CHECKS:
@@ -61,7 +61,7 @@ def main() -> int:
         sys.executable,
         "scripts/run_external_heldout_gate.py",
         "--output-dir", str(output),
-        "--local-corpus-root", str(examples),
+        "--local-corpus-root", str(data),
         "--timeout", str(args.timeout),
         "--source-process-timeout", str(args.source_process_timeout),
     ]

@@ -74,14 +74,18 @@ dist-review*/
 .dist-*/
 .dist.*/
 
-# Local corpora and derived research data
-examples/
-data/.examples/
-data/raw/
-data/local/
-data/corpus_manifest.csv
-data/features.csv
-data/distributions.json
+# Local corpora and derived research data. Keep the short guide and example
+# manifest tracked; all downloaded/generated data stays below this root.
+data/*/
+data/*.json
+data/*.csv
+data/*.txt
+data/*.xls
+data/*.xlsx
+data/*.pdf
+!data/README.md
+!data/corpus_manifest.example.csv
+!data/.gitignore
 
 # Local presentation assets
 .fonts/

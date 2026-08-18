@@ -33,8 +33,11 @@ def main()->None:
             integrity=__import__('json').loads(z.read('human-writing-ru/quality/RELEASE_INTEGRITY.json').decode('utf-8'))
             assert integrity['package_version']==VERSION and integrity['skill_root']=='human-writing-ru'
             assert integrity['frozen_inputs_match'] is True
-            forbidden_parts={'__pycache__','.pytest_cache','.mypy_cache','.ruff_cache','.git','.agents','.ai-factory','.codex','.opencode','.venv','node_modules','.examples','examples'}
+            forbidden_parts={'__pycache__','.pytest_cache','.mypy_cache','.ruff_cache','.git','.agents','.ai-factory','.codex','.opencode','.venv','node_modules'}
             assert not any(any(part in forbidden_parts for part in Path(n).parts) or n.endswith('.pyc') or Path(n).name in {'.coverage','.DS_Store'} for n in names)
+            assert 'human-writing-ru/data/README.md' in names
+            assert 'human-writing-ru/data/corpus_manifest.example.csv' in names
+            assert not any('/data/taiga_social/' in n or '/data/heldout-work/' in n for n in names)
             assert 'human-writing-ru/.gitignore' not in names
             assert not any(n.startswith('human-writing-ru-1.') for n in names)
             tracked=integrity['tracked_sha256']

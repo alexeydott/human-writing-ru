@@ -43,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set +e
-          args=(--output-dir heldout-work --local-corpus-root examples)
+          args=(--output-dir data/heldout-work --local-corpus-root data)
           if [ -n "$ANNOTATIONS_PATH" ]; then
             if [ ! -f "$ANNOTATIONS_PATH" ]; then
               echo "annotations_path does not exist in checkout: $ANNOTATIONS_PATH" | tee heldout-gate.log
@@ -63,7 +63,7 @@ jobs:
         with:
           name: human-writing-ru-heldout-gate-v3
           path: |
-            heldout-work/**
+            data/heldout-work/**
             heldout-gate.log
           if-no-files-found: warn
           retention-days: 30

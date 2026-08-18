@@ -24,10 +24,13 @@ PACKAGE_EXCLUDE_DIR_NAMES = CLEAN_DIR_NAMES | {
     ".opencode",
     ".venv",
     "node_modules",
-    "examples",
 }
 PACKAGE_EXCLUDE_FILE_NAMES = CLEAN_FILE_NAMES | {".gitignore"}
-PACKAGE_EXCLUDE_REL_DIRS = {Path("data/.examples")}
+PACKAGE_EXCLUDE_REL_DIRS: set[Path] = set()
+PACKAGE_DATA_FILES = {
+    Path("data/README.md"),
+    Path("data/corpus_manifest.example.csv"),
+}
 
 
 def sha256(path: Path) -> str:
@@ -51,6 +54,8 @@ def package_files(include_generated_manifests: bool = True) -> list[Path]:
             continue
         rel=p.relative_to(ROOT)
         if any(part in PACKAGE_EXCLUDE_DIR_NAMES for part in rel.parts):
+            continue
+        if rel.parts and rel.parts[0] == "data" and rel not in PACKAGE_DATA_FILES:
             continue
         if any(rel == excluded or excluded in rel.parents for excluded in PACKAGE_EXCLUDE_REL_DIRS):
             continue

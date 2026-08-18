@@ -10,10 +10,10 @@ python3 scripts/fetch_local_heldout_corpora.py
 python3 scripts/run_local_heldout_workflow.py
 ```
 
-Загрузчик сохраняет raw-архивы, PDF и подготовленные sidecar-деревья в `./examples`.
+Загрузчик сохраняет raw-архивы, PDF и подготовленные sidecar-деревья в `./data`.
 Каталог целиком локальный: он игнорируется Git и исключён из release builder. Runner
-автоматически находит `examples/<source_id>/manifest.csv`; альтернативный корень можно
-передать через `--local-corpus-root` или `HUMAN_WRITING_RU_EXAMPLES_DIR`.
+автоматически находит `data/<source_id>/manifest.csv`; альтернативный корень можно
+передать через `--local-corpus-root` или `HUMAN_WRITING_RU_DATA_DIR`.
 Для запросов к GitHub API локальный wrapper использует `GITHUB_TOKEN`/`GH_TOKEN`, а при
 их отсутствии — credential активной сессии `gh auth`. Токен передаётся только на
 `api.github.com`; GitHub Actions использует `${{ github.token }}` с `contents: read`.
@@ -22,8 +22,8 @@ python3 scripts/run_local_heldout_workflow.py
 
 ```bash
 python3 scripts/run_external_heldout_gate.py \
-  --output-dir examples/heldout-work \
-  --local-corpus-root examples
+  --output-dir data/heldout-work \
+  --local-corpus-root data
 ```
 
 `taiga_social`, `duma_speeches_1994_2021` и `pravo_open_data` входят в default source selection как необходимые потенциальные strata для текущих prose/oral/official diversity/author-provenance gates. Если локальные деревья не найдены, acquisition продолжится как диагностический запуск, но full v3 evidence gate ожидаемо останется недостижимым. Raw third-party corpora не следует помещать в публичный release только ради CI.

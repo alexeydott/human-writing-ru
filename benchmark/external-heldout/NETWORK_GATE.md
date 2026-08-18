@@ -10,8 +10,8 @@ python3 scripts/fetch_local_heldout_corpora.py
 python3 scripts/run_local_heldout_workflow.py
 ```
 
-По умолчанию runner автоматически использует `examples/<source_id>/manifest.csv`.
-Другой корень задаётся `--local-corpus-root` или `HUMAN_WRITING_RU_EXAMPLES_DIR`.
+По умолчанию runner автоматически использует `data/<source_id>/manifest.csv`.
+Другой корень задаётся `--local-corpus-root` или `HUMAN_WRITING_RU_DATA_DIR`.
 
 Без нужных local strata default run остаётся полезным acquisition probe, но current `prose` channel/author, `oral` author/source и `official` source-diversity gates не могут быть объявлены пройденными.
 
@@ -26,7 +26,7 @@ python3 scripts/run_local_heldout_workflow.py
 После получения `alert-adjudication.csv` повторный запуск принимает:
 
 ```bash
---annotations ../heldout-work/alert-adjudication.csv
+  --annotations data/heldout-work/alert-adjudication.csv
 ```
 
 ## Жёсткий порядок

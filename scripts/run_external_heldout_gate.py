@@ -31,7 +31,7 @@ PROFILE_SPEC = DECISION_SPEC
 PROFILE_FILE = ROOT / "profiles/editorial-baseline.json"
 FROZEN = ROOT / "benchmark/external-heldout/FROZEN_INPUT_SHA256.json"
 DEFAULT_LOCAL_CORPUS_ROOT = Path(
-    os.environ.get("HUMAN_WRITING_RU_EXAMPLES_DIR", str(ROOT / "examples"))
+    os.environ.get("HUMAN_WRITING_RU_DATA_DIR", str(ROOT / "data"))
 )
 
 DEFAULT_SOURCES = (
@@ -118,7 +118,7 @@ def main() -> int:
     ap.add_argument("--local-source", action="append", default=[], metavar="SOURCE_ID=PATH",
                     help="Pass a local corpus tree to a manual_or_local_tree source; may be repeated")
     ap.add_argument("--local-corpus-root", type=Path, default=DEFAULT_LOCAL_CORPUS_ROOT,
-                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: examples or HUMAN_WRITING_RU_EXAMPLES_DIR)")
+                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: data or HUMAN_WRITING_RU_DATA_DIR)")
     ap.add_argument("--no-auto-local-sources", action="store_true",
                     help="Disable local corpus auto-discovery; only explicit --local-source values are used")
     ap.add_argument("--timeout", type=float, default=30.0)

@@ -20,9 +20,9 @@ python3 scripts/fetch_local_heldout_corpora.py
 python3 scripts/run_local_heldout_workflow.py
 ```
 
-Prepared corpora live under ignored `examples/<source_id>/` directories and are
+Prepared corpora live under ignored `data/<source_id>/` directories and are
 auto-discovered by both the orchestrator and materializer. Use
-`--local-corpus-root` or `HUMAN_WRITING_RU_EXAMPLES_DIR` for another location.
+`--local-corpus-root` or `HUMAN_WRITING_RU_DATA_DIR` for another location.
 The local workflow also reuses `GITHUB_TOKEN`/`GH_TOKEN`, or the active `gh auth`
 credential, for authenticated GitHub API reads without forwarding it to other hosts.
 
@@ -41,13 +41,13 @@ Frozen `scripts/check_prose_ru.py`, historical `scripts/ablate_signals.py` и `p
 ```bash
 python3 scripts/materialize_external_heldout.py \
   --sources ljsearch_saved_copies factrueval_2016 \
-  --output-dir ../heldout-work
+  --output-dir data/heldout-work
 ```
 
 ```bash
 python3 scripts/materialize_external_heldout.py \
   --sources yandex_cloud_docs_ru \
-  --output-dir ../heldout-work
+  --output-dir data/heldout-work
 ```
 
 Для RusLawOD streaming нужен optional package `datasets`:
@@ -56,7 +56,7 @@ python3 scripts/materialize_external_heldout.py \
 python3 -m pip install datasets
 python3 scripts/materialize_external_heldout.py \
   --sources ruslawod_v3 \
-  --output-dir ../heldout-work
+  --output-dir data/heldout-work
 ```
 
 Большие/вручную скачанные источники импортируются без изменения raw-файлов:
@@ -64,8 +64,8 @@ python3 scripts/materialize_external_heldout.py \
 ```bash
 python3 scripts/materialize_external_heldout.py \
   --sources taiga_social \
-  --local-corpus-root examples \
-  --output-dir ../heldout-work
+  --local-corpus-root data \
+  --output-dir data/heldout-work
 ```
 
 Нельзя нарезать один исходный документ на псевдонезависимые документы ради выполнения gate и нельзя произвольно склеивать несвязанные ASR utterances.
@@ -78,9 +78,9 @@ Current network orchestrator начинает fresh workspace по умолча�
 
 ```bash
 python3 scripts/validate_external_heldout.py \
-  --manifest ../heldout-work/manifest.csv \
-  --output ../heldout-work/VALIDATION_REPORT.json \
-  --validated-manifest ../heldout-work/manifest.validated.csv
+  --manifest data/heldout-work/manifest.csv \
+  --output data/heldout-work/VALIDATION_REPORT.json \
+  --validated-manifest data/heldout-work/manifest.validated.csv
 ```
 
 `manifest.csv` — acquisition log. `manifest.validated.csv` содержит по одному представителю exact/near-copy/explicit-independence cluster и является **единственным допустимым входом current decision protocol**.
@@ -91,9 +91,9 @@ Validator требует уникальные непустые document IDs. Exp
 
 ```bash
 python3 scripts/ablate_signals_v3.py \
-  --manifest ../heldout-work/manifest.validated.csv \
-  --output ../heldout-work/ABLATION_DECISION_V3.json \
-  --annotation-template ../heldout-work/alert-adjudication.csv
+  --manifest data/heldout-work/manifest.validated.csv \
+  --output data/heldout-work/ABLATION_DECISION_V3.json \
+  --annotation-template data/heldout-work/alert-adjudication.csv
 ```
 
 Это не shortcut вокруг network gate: v3 самостоятельно повторно проверяет profile diversity, signal-specific eligibility/diversity и connected split minima. Candidate строится только на calibration и оценивается на untouched validation. Natural-alert usefulness требует отдельной adjudication.

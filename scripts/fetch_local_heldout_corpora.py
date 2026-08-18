@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download and prepare the manual/local held-out corpora under examples/.
+"""Download and prepare the manual/local held-out corpora under data/.
 
 Raw third-party archives and prepared text samples stay local and are excluded
 from Git and release packages.  Each prepared source gets a manifest.csv with
@@ -28,7 +28,7 @@ from urllib.request import Request, urlopen
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_EXAMPLES = ROOT / "examples"
+DEFAULT_DATA = ROOT / "data"
 USER_AGENT = "human-writing-ru local held-out corpus fetcher"
 
 TAIGA_PUBLIC_URL = "https://yadi.sk/d/1eM_U29k3URn3v"
@@ -221,7 +221,7 @@ def iter_taiga_records(stream: Iterable[str]) -> Iterator[tuple[str, str]]:
         yield document_id, normalize_text("".join(lines))
 
 
-def prepare_taiga(archive: Path, examples: Path) -> dict:
+def prepare_taiga(archive: Path, data: Path) -> dict:
     prepared: list[dict] = []
     with tarfile.open(archive, "r:gz") as tf:
         for member_name, quota in TAIGA_MEMBERS.items():
@@ -247,7 +247,7 @@ def prepare_taiga(archive: Path, examples: Path) -> dict:
                 })
     if len(prepared) < 80:
         raise RuntimeError(f"Taiga preparation produced only {len(prepared)} documents")
-    return write_prepared(examples / "taiga_social", prepared, {
+    return write_prepared(data / "taiga_social", prepared, {
         "source_id": "taiga_social",
         "source_url": TAIGA_PUBLIC_URL,
         "archive": str(archive),
@@ -256,7 +256,7 @@ def prepare_taiga(archive: Path, examples: Path) -> dict:
     })
 
 
-def prepare_duma(archive: Path, examples: Path) -> dict:
+def prepare_duma(archive: Path, data: Path) -> dict:
     try:
         import pyarrow.parquet as parquet
     except ImportError as exc:
@@ -317,7 +317,7 @@ def prepare_duma(archive: Path, examples: Path) -> dict:
         raise RuntimeError(f"Duma preparation produced only {len(selected)} documents")
     for record in selected:
         record.pop("year", None)
-    return write_prepared(examples / "duma_speeches_1994_2021", selected, {
+    return write_prepared(data / "duma_speeches_1994_2021", selected, {
         "source_id": "duma_speeches_1994_2021",
         "source_url": DUMA_SOURCE_URL,
         "archive_url": DUMA_URL,
@@ -343,10 +343,10 @@ def find_pdftoppm() -> Path:
     raise RuntimeError("PDF OCR requires pdftoppm; install Poppler or set PDFTOPPM_CMD")
 
 
-def find_tesseract(examples: Path) -> Path:
+def find_tesseract(data: Path) -> Path:
     configured = os.environ.get("TESSERACT_CMD")
     candidates = [Path(configured)] if configured else []
-    candidates.append(examples / "_tools" / "tesseract" / "tesseract.exe")
+    candidates.append(data / "_tools" / "tesseract" / "tesseract.exe")
     found = shutil.which("tesseract.exe") or shutil.which("tesseract")
     if found:
         candidates.append(Path(found))
@@ -356,7 +356,7 @@ def find_tesseract(examples: Path) -> Path:
     raise RuntimeError("image-only Pravo PDFs require Tesseract OCR with Russian data; set TESSERACT_CMD")
 
 
-def extract_pdf_text(path: Path, examples: Path, max_pages: int = 12) -> tuple[str, str]:
+def extract_pdf_text(path: Path, data: Path, max_pages: int = 12) -> tuple[str, str]:
     try:
         from pypdf import PdfReader
     except ImportError as exc:
@@ -367,7 +367,7 @@ def extract_pdf_text(path: Path, examples: Path, max_pages: int = 12) -> tuple[s
     if word_count(embedded) >= 100:
         return embedded, "embedded-text"
     pdftoppm = find_pdftoppm()
-    tesseract = find_tesseract(examples)
+    tesseract = find_tesseract(data)
     with tempfile.TemporaryDirectory(prefix="human-writing-ru-ocr-") as td:
         base = Path(td)
         prefix = base / "page"
@@ -392,7 +392,7 @@ def extract_pdf_text(path: Path, examples: Path, max_pages: int = 12) -> tuple[s
         return "\n\n".join(ocr_pages), "tesseract-rus"
 
 
-def prepare_pravo(examples: Path, downloads: Path, timeout: float) -> dict:
+def prepare_pravo(data: Path, downloads: Path, timeout: float) -> dict:
     pdf_root = downloads / "pravo-pdf"
     pdf_root.mkdir(parents=True, exist_ok=True)
     selected: list[dict] = []
@@ -427,7 +427,7 @@ def prepare_pravo(examples: Path, downloads: Path, timeout: float) -> dict:
                 pdf_root / f"{eo_number}.pdf", timeout,
             )
             try:
-                text, extraction = extract_pdf_text(pdf_path, examples)
+                text, extraction = extract_pdf_text(pdf_path, data)
             except Exception as exc:
                 print(f"skip {eo_number}: PDF text extraction failed: {exc}")
                 continue
@@ -449,7 +449,7 @@ def prepare_pravo(examples: Path, downloads: Path, timeout: float) -> dict:
             break
     if len(selected) < 50:
         raise RuntimeError(f"Pravo preparation produced only {len(selected)} eligible documents")
-    return write_prepared(examples / "pravo_open_data", selected, {
+    return write_prepared(data / "pravo_open_data", selected, {
         "source_id": "pravo_open_data",
         "source_url": PRAVO_SOURCE_URL,
         "api": f"{PRAVO_BASE}/api/Documents",
@@ -461,8 +461,8 @@ def prepare_pravo(examples: Path, downloads: Path, timeout: float) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Download and prepare local held-out corpora under examples/")
-    parser.add_argument("--examples-dir", type=Path, default=DEFAULT_EXAMPLES)
+    parser = argparse.ArgumentParser(description="Download and prepare local held-out corpora under data/")
+    parser.add_argument("--data-dir", type=Path, default=DEFAULT_DATA)
     parser.add_argument(
         "--sources", nargs="+",
         choices=("taiga_social", "duma_speeches_1994_2021", "pravo_open_data"),
@@ -470,25 +470,25 @@ def main() -> int:
     )
     parser.add_argument("--timeout", type=float, default=120.0)
     args = parser.parse_args()
-    examples = args.examples_dir.resolve()
-    downloads = examples / "_downloads"
+    data = args.data_dir.resolve()
+    downloads = data / "_downloads"
     downloads.mkdir(parents=True, exist_ok=True)
     reports: dict[str, dict] = {}
     for source_id in ("taiga_social", "duma_speeches_1994_2021", "pravo_open_data"):
-        provenance = examples / source_id / "provenance.json"
+        provenance = data / source_id / "provenance.json"
         if provenance.is_file():
             reports[source_id] = json.loads(provenance.read_text(encoding="utf-8"))
     if "taiga_social" in args.sources:
         api_url = TAIGA_API + "?" + urlencode({"public_key": TAIGA_PUBLIC_URL})
         taiga_url = str(fetch_json(api_url, args.timeout)["file"])
         archive = download(taiga_url, downloads / "taiga-social.tar.gz", args.timeout, TAIGA_SHA256)
-        reports["taiga_social"] = prepare_taiga(archive, examples)
+        reports["taiga_social"] = prepare_taiga(archive, data)
     if "duma_speeches_1994_2021" in args.sources:
         archive = download(DUMA_URL, downloads / "duma-transcripts.zip", args.timeout, DUMA_SHA256)
-        reports["duma_speeches_1994_2021"] = prepare_duma(archive, examples)
+        reports["duma_speeches_1994_2021"] = prepare_duma(archive, data)
     if "pravo_open_data" in args.sources:
-        reports["pravo_open_data"] = prepare_pravo(examples, downloads, args.timeout)
-    (examples / "LOCAL_CORPORA_REPORT.json").write_text(
+        reports["pravo_open_data"] = prepare_pravo(data, downloads, args.timeout)
+    (data / "LOCAL_CORPORA_REPORT.json").write_text(
         json.dumps({"schema_version": 1, "sources": reports}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

@@ -6,7 +6,7 @@ raw corpora. This script is intentionally run OUTSIDE the release tree, e.g.:
 
   python scripts/materialize_external_heldout.py \
       --sources ljsearch_saved_copies factrueval_2016 \
-      --output-dir ../heldout-work
+      --output-dir data/heldout-work
 
 It writes:
   raw/<profile>/<source>/<doc>.txt
@@ -41,7 +41,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "benchmark/external-heldout/SOURCE_REGISTRY.json"
 DEFAULT_LOCAL_CORPUS_ROOT = Path(
-    os.environ.get("HUMAN_WRITING_RU_EXAMPLES_DIR", str(ROOT / "examples"))
+    os.environ.get("HUMAN_WRITING_RU_DATA_DIR", str(ROOT / "data"))
 )
 WORD_RE = re.compile(r"[А-Яа-яЁёA-Za-z]+(?:[-'][А-Яа-яЁёA-Za-z]+)*", re.UNICODE)
 RUS_RE = re.compile(r"[А-Яа-яЁё]")
@@ -804,7 +804,7 @@ def main() -> int:
     ap.add_argument("--local-source", action="append", default=[], metavar="SOURCE_ID=PATH",
                     help="Import an already downloaded local text tree for manual_or_local_tree sources")
     ap.add_argument("--local-corpus-root", type=Path, default=DEFAULT_LOCAL_CORPUS_ROOT,
-                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: examples or HUMAN_WRITING_RU_EXAMPLES_DIR)")
+                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: data or HUMAN_WRITING_RU_DATA_DIR)")
     ap.add_argument("--no-auto-local-sources", action="store_true",
                     help="Disable local corpus auto-discovery")
     ap.add_argument("--target-docs", type=int, default=0, help="Override per-source target (testing/small runs)")

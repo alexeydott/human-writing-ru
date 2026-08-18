@@ -25,19 +25,19 @@
 
 ```bash
 python3 scripts/ablate_signals_v3.py \
-  --manifest heldout-work/manifest.validated.csv \
-  --output heldout-work/ABLATION_DECISION_V3.json \
-  --annotation-template heldout-work/alert-adjudication.csv
+  --manifest data/heldout-work/manifest.validated.csv \
+  --output data/heldout-work/ABLATION_DECISION_V3.json \
+  --annotation-template data/heldout-work/alert-adjudication.csv
 ```
 
 После разметки:
 
 ```bash
 python3 scripts/ablate_signals_v3.py \
-  --manifest heldout-work/manifest.validated.csv \
-  --output heldout-work/ABLATION_DECISION_V3.json \
-  --annotations heldout-work/alert-adjudication.csv \
-  --annotation-template heldout-work/alert-adjudication.next.csv
+  --manifest data/heldout-work/manifest.validated.csv \
+  --output data/heldout-work/ABLATION_DECISION_V3.json \
+  --annotations data/heldout-work/alert-adjudication.csv \
+  --annotation-template data/heldout-work/alert-adjudication.next.csv
 ```
 
 ## Почему `off` не выигрывает автоматически

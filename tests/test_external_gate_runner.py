@@ -83,11 +83,11 @@ with tempfile.TemporaryDirectory() as td:
 
 print("OK external network gate blocking")
 
-# A prepared examples/<source_id>/manifest.csv tree is discovered without
+# A prepared data/<source_id>/manifest.csv tree is discovered without
 # repeating three --local-source arguments in every local workflow command.
 with tempfile.TemporaryDirectory() as td:
     base = Path(td)
-    local_root = base / "examples"
+    local_root = base / "data"
     local = local_root / "local_fixture"
     local.mkdir(parents=True)
     body = ("Это естественно ограниченный русский документ локального корпуса. " * 30).strip()
