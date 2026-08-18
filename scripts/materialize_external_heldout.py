@@ -59,10 +59,13 @@ TEXT_FIELD_NAMES = (
 
 
 class ProseHTMLParser(HTMLParser):
-    def __init__(self) -> None:
+    def __init__(self, content_class_regex: str | None = None) -> None:
         super().__init__(convert_charrefs=True)
         self.skip_depth = 0
         self.focus_depth = 0
+        self.content_class_re = re.compile(content_class_regex, re.I) if content_class_regex else None
+        self.content_focus_depth = 0
+        self.tag_stack: list[tuple[str, bool]] = []
         self.all_parts: list[str] = []
         self.focus_parts: list[str] = []
         self.links: list[str] = []
@@ -74,6 +77,12 @@ class ProseHTMLParser(HTMLParser):
             self.skip_depth += 1
         if tag in {"article", "main"}:
             self.focus_depth += 1
+        has_content_class = bool(
+            self.content_class_re and self.content_class_re.search(attr.get("class", ""))
+        )
+        self.tag_stack.append((tag, has_content_class))
+        if has_content_class:
+            self.content_focus_depth += 1
         if tag in BLOCK_TAGS:
             self._append("\n")
         if tag == "a" and attr.get("href"):
@@ -87,6 +96,15 @@ class ProseHTMLParser(HTMLParser):
             self.focus_depth -= 1
         if tag in SKIP_TAGS and self.skip_depth:
             self.skip_depth -= 1
+        # HTML from public pages is not always perfectly balanced.  Close the
+        # most recent matching opening tag and every nested element above it.
+        for index in range(len(self.tag_stack) - 1, -1, -1):
+            if self.tag_stack[index][0] == tag:
+                for _, had_content_class in self.tag_stack[index:]:
+                    if had_content_class:
+                        self.content_focus_depth -= 1
+                del self.tag_stack[index:]
+                break
 
     def handle_data(self, data: str) -> None:
         if not self.skip_depth:
@@ -96,7 +114,7 @@ class ProseHTMLParser(HTMLParser):
         if self.skip_depth:
             return
         self.all_parts.append(value)
-        if self.focus_depth:
+        if self.focus_depth or self.content_focus_depth:
             self.focus_parts.append(value)
 
 
@@ -115,13 +133,18 @@ def normalize_text(text: str) -> str:
     return text
 
 
-def html_to_text(raw: str) -> tuple[str, list[str]]:
-    parser = ProseHTMLParser()
+def html_to_text(raw: str, content_class_regex: str | None = None) -> tuple[str, list[str]]:
+    parser = ProseHTMLParser(content_class_regex)
     parser.feed(raw)
     focused = normalize_text("".join(parser.focus_parts))
     all_text = normalize_text("".join(parser.all_parts))
     # Prefer semantic main/article only when it contains substantial Russian prose.
-    text = focused if len(WORD_RE.findall(focused)) >= 100 and RUS_RE.search(focused) else all_text
+    # A source-specific content selector is an explicit acquisition contract:
+    # falling back to the whole page would reintroduce menus and footers.
+    text = focused if (
+        (content_class_regex and focused)
+        or (len(WORD_RE.findall(focused)) >= 100 and RUS_RE.search(focused))
+    ) else all_text
     return text, parser.links
 
 
@@ -528,7 +551,13 @@ def materialize_zip_text_records(source: dict, out: Path, args, rows: list[dict]
     }
 
 
-def materialize_github_tree_text(source: dict, out: Path, args, rows: list[dict], hashes: set[tuple[str, str]]) -> dict:
+def github_tree_paths(source: dict, args) -> tuple[list[str], list[str]]:
+    """List matching repository paths, recovering from GitHub tree truncation.
+
+    Large repositories may truncate a recursive root-tree response before the
+    configured language subtree.  A source can therefore declare ``tree_root``
+    and have that smaller tree traversed independently.
+    """
     repo = source["repository"]
     ref = source.get("ref", "main")
     path_re = re.compile(source["path_regex"])
@@ -536,13 +565,52 @@ def materialize_github_tree_text(source: dict, out: Path, args, rows: list[dict]
     errors: list[str] = []
     try:
         raw, _ = fetch_text(tree_url, timeout=args.timeout, user_agent=args.user_agent)
-        tree = json.loads(raw).get("tree", [])
+        payload = json.loads(raw)
+        tree = payload.get("tree", [])
     except Exception as exc:
-        return {"source_id": source["id"], "accepted": 0, "errors": [str(exc)]}
-    paths = sorted(
+        return [], [str(exc)]
+    if payload.get("truncated"):
+        tree_root = str(source.get("tree_root") or "").strip("/")
+        if not tree_root:
+            return [], [f"GitHub tree for {repo}@{ref} is truncated; source must declare tree_root"]
+        try:
+            root_raw, _ = fetch_text(
+                f"https://api.github.com/repos/{repo}/git/trees/{ref}",
+                timeout=args.timeout,
+                user_agent=args.user_agent,
+            )
+            root_tree = json.loads(root_raw).get("tree", [])
+            root_entry = next(
+                (item for item in root_tree if item.get("path") == tree_root and item.get("type") == "tree"),
+                None,
+            )
+            if root_entry is None or not root_entry.get("sha"):
+                return [], [f"GitHub tree root {tree_root!r} not found in {repo}@{ref}"]
+            sub_raw, _ = fetch_text(
+                f"https://api.github.com/repos/{repo}/git/trees/{root_entry['sha']}?recursive=1",
+                timeout=args.timeout,
+                user_agent=args.user_agent,
+            )
+            sub_payload = json.loads(sub_raw)
+            if sub_payload.get("truncated"):
+                return [], [f"GitHub subtree {tree_root!r} for {repo}@{ref} is truncated"]
+            prefix = tree_root + "/"
+            tree = [
+                {**item, "path": prefix + str(item.get("path") or "")}
+                for item in sub_payload.get("tree", [])
+            ]
+        except Exception as exc:
+            return [], [str(exc)]
+    return sorted(
         item["path"] for item in tree
         if item.get("type") == "blob" and path_re.search(item.get("path", ""))
-    )
+    ), errors
+
+
+def materialize_github_tree_text(source: dict, out: Path, args, rows: list[dict], hashes: set[tuple[str, str]]) -> dict:
+    repo = source["repository"]
+    ref = source.get("ref", "main")
+    paths, errors = github_tree_paths(source, args)
     target = args.target_docs or int(source.get("target_documents", 50))
     profile = source["profiles"][0]
     channel = source["channels"][0]
@@ -620,7 +688,7 @@ def materialize_web_index(source: dict, out: Path, args, rows: list[dict], hashe
             break
         try:
             raw, final = fetch_text(url, timeout=args.timeout, user_agent=args.user_agent)
-            text, _ = html_to_text(raw)
+            text, _ = html_to_text(raw, source.get("content_class_regex"))
             if not eligible(text, source):
                 continue
             parsed = urlparse(final)

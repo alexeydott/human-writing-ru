@@ -86,14 +86,14 @@
           "test": "tests/test_external_gate_runner.py",
           "ok": true,
           "returncode": 0,
-          "stdout": "OK external network gate blocking\n",
+          "stdout": "OK external network gate blocking\nOK local corpus auto-discovery\n",
           "stderr": ""
         },
         {
           "test": "tests/test_external_heldout_tools.py",
           "ok": true,
           "returncode": 0,
-          "stdout": "OK\nOK technical-freeze regression\nOK zip profile routing\nOK factRuEval adapter regression\nOK TSV natural boundaries\nOK multi-ZIP acquisition\nOK GitHub-tree acquisition\nOK Yandex standalone-document routing\nOK speech XML body routing\nOK duplicate document-id rejection\nOK source-scoped independence identifiers\nOK technical registry diversity feasibility\nOK format-unverified source blocking\nOK LJSearch successful-routing regression\nOK local sidecar provenance regression\nOK profile-scoped acquisition dedupe\nOK cross-profile exact-routing conflict\nOK validated-manifest path rebasing\nOK validator provenance diagnostics normalization\n",
+          "stdout": "OK\nOK technical-freeze regression\nOK zip profile routing\nOK factRuEval adapter regression\nOK TSV natural boundaries\nOK multi-ZIP acquisition\nOK GitHub-tree acquisition\nOK Yandex standalone-document routing\nOK speech XML body routing\nOK duplicate document-id rejection\nOK source-scoped independence identifiers\nOK technical registry diversity feasibility\nOK format-unverified source blocking\nOK LJSearch successful-routing regression\nOK web-index query identity regression\nOK scoped GitHub authentication regression\nOK local sidecar provenance regression\nOK profile-scoped acquisition dedupe\nOK cross-profile exact-routing conflict\nOK validated-manifest path rebasing\nOK validator provenance diagnostics normalization\n",
           "stderr": ""
         },
         {
@@ -346,7 +346,7 @@
       "earned": 4,
       "ok": true,
       "evidence": {
-        "version": "1.9.0-beta.3",
+        "version": "1.9.0-beta.4",
         "product_router_bytes": 1247
       }
     },

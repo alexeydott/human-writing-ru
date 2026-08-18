@@ -33,6 +33,38 @@ assert "Меню сайта" not in text
 assert "плохой текст" not in text
 assert "Первый абзац" in text and "Второй абзац" in text
 
+# A source-specific content selector must not fall back to page chrome when a
+# public page has no semantic <main> or <article> element.
+case_html = """<html><body><nav>Рейтинги Войти</nav>
+<div class=\"caseblock\"><p>Содержательная часть кейса с русским текстом.</p></div>
+<footer>Памятка агентствам</footer></body></html>"""
+case_text, _ = mod.html_to_text(case_html, r"\bcaseblock\b")
+assert "Содержательная часть" in case_text
+assert "Рейтинги" not in case_text and "Памятка" not in case_text
+
+# GitHub truncates recursive root trees for very large repositories.  Sources
+# that declare tree_root must traverse that subtree rather than silently yield
+# zero documents.
+old_fetch = mod.fetch_text
+try:
+    calls = []
+    def tree_fetch(url, **kwargs):
+        calls.append(url)
+        if url.endswith("trees/master?recursive=1"):
+            return json.dumps({"truncated": True, "tree": []}), url
+        if url.endswith("trees/master"):
+            return json.dumps({"tree": [{"path": "ru", "type": "tree", "sha": "ru-sha"}]}), url
+        if url.endswith("trees/ru-sha?recursive=1"):
+            return json.dumps({"truncated": False, "tree": [{"path": "docs/a.md", "type": "blob"}]}), url
+        raise AssertionError(url)
+    mod.fetch_text = tree_fetch
+    source = {"repository": "owner/repo", "ref": "master", "tree_root": "ru", "path_regex": r"^ru/docs/.+\.md$"}
+    args = type("Args", (), {"timeout": 1.0, "user_agent": "test"})()
+    paths, errors = mod.github_tree_paths(source, args)
+    assert paths == ["ru/docs/a.md"] and not errors
+finally:
+    mod.fetch_text = old_fetch
+
 # Generic ZIP reader handles JSONL records without splitting one text into fake docs.
 with tempfile.TemporaryDirectory() as td:
     zpath = Path(td) / "sample.zip"

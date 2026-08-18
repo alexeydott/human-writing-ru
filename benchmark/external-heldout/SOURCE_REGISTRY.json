@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_for_release": "1.9.0-beta.3",
+  "generated_for_release": "1.9.0-beta.4",
   "purpose": "External held-out acquisition plan for the five-signal ablation. Source catalog entries are not counted as materialized documents.",
   "freeze_gate": {
     "minimum_independent_documents_per_profile": 50,
@@ -235,7 +235,7 @@
       ],
       "adapter": "web_index",
       "source_url": "https://companies.rbc.ru/cases/",
-      "article_path_regex": "^/news/",
+      "article_path_regex": "^/news/[A-Za-z0-9_-]+/[^/]+/?$",
       "crawl_path_regex": "^/cases/",
       "license_or_terms": "Copyrighted publisher/company case pages. Fetch for local research analysis only; do not redistribute article bodies.",
       "redistribution": "manifest_and_aggregates_only",
@@ -266,6 +266,7 @@
       "minimum_words_per_document": 220,
       "minimum_paragraphs_per_document": 4,
       "selection_policy": "Select cases with problem, implementation and outcome sections; diversify agencies and years.",
+      "content_class_regex": "\\bcaseblock\\b",
       "seed_urls": [
         "https://ruward.ru/award/2026/311750/",
         "https://ruward.ru/award/2026/311753/",
@@ -359,6 +360,7 @@
       "status": "catalogued_automated_verified_license",
       "repository": "yandex-cloud/docs",
       "ref": "master",
+      "tree_root": "ru",
       "path_regex": "^ru/(?!_includes/).*\\.(?:md|markdown)$"
     },
     {
