@@ -13,6 +13,7 @@
 - В README и документации убраны устаревшие пути к каталогам примеров; переменная окружения переименована в `HUMAN_WRITING_RU_DATA_DIR`.
 - Обновлены `scripts/fetch_local_heldout_corpora.py`, `scripts/run_local_heldout_workflow.py`, сетевой исполнитель и `.github/workflows/heldout-gate.yml`: локальный корень и каталог вывода теперь `data/`.
 - Сборщик релиза исключает тяжёлые локальные данные из ZIP, но сохраняет в пакете краткое руководство и шаблон манифеста.
+- Сборщик релиза теперь без параметров формирует готовый ZIP и файл SHA-256 в `dist/`; параметр `--output-dir` оставлен для временных или внешних каталогов. Публикация релиза в GitHub этим сценарием не выполняется.
 - Основные использованные источники: [Taiga](https://tatianashavrina.github.io/taiga_site/downloads.html), [Duma в Discuss Data](https://discuss-data.net/dataset/fb52dac2-66e3-47a3-86c5-b2a3dadf41bf/), [Pravo Open Data](https://publication.pravo.gov.ru/OpenData), [Kubernetes Website](https://github.com/kubernetes/website), [Yandex Cloud Docs](https://github.com/yandex-cloud/docs) и [RusLawOD](https://github.com/irlcode/RusLawOD/).
 
 ## Что изменено в 1.9.0-beta.2

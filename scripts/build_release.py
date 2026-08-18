@@ -12,6 +12,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_NAME = "human-writing-ru"
+DEFAULT_OUTPUT_DIR = ROOT / "dist"
 FIXED_DT = (2020, 1, 1, 0, 0, 0)
 EXCLUDE_NAMES = {"FILES.sha256", "PACKAGE_CONTENTS.md"}
 CLEAN_DIR_NAMES = {"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"}
@@ -56,6 +57,14 @@ def package_files(include_generated_manifests: bool = True) -> list[Path]:
         if any(part in PACKAGE_EXCLUDE_DIR_NAMES for part in rel.parts):
             continue
         if rel.parts and rel.parts[0] == "data" and rel not in PACKAGE_DATA_FILES:
+            continue
+        # Release archives and their checksums are written to ``dist``.  Keep
+        # the tracked lite guide there, but never embed a previous/generated
+        # archive into the next archive (which would make builds grow and lose
+        # reproducibility).
+        if rel.parts and rel.parts[0] == "dist" and (
+            p.suffix == ".zip" or p.name.endswith(".sha256.txt")
+        ):
             continue
         if any(rel == excluded or excluded in rel.parents for excluded in PACKAGE_EXCLUDE_REL_DIRS):
             continue
@@ -131,7 +140,7 @@ def write_inventory() -> None:
         "## Inventory", "",
     ]
     for k in sorted(counts): lines.append(f"- `{k}`: {counts[k]} files")
-    lines += ["", f"Total files: **{len(files)}**.", "", "## Integrity", "", "`FILES.sha256` hashes every packaged file except `FILES.sha256` and `PACKAGE_CONTENTS.md` itself to avoid self-reference.", "", "Build with:", "", "```bash", "python3 scripts/build_release.py --output-dir /path/to/output", "```", ""]
+    lines += ["", f"Total files: **{len(files)}**.", "", "## Integrity", "", "`FILES.sha256` hashes every packaged file except `FILES.sha256` and `PACKAGE_CONTENTS.md` itself to avoid self-reference.", "", "Build with:", "", "```bash", "python3 scripts/build_release.py", "```", "", "By default the archive and its SHA-256 checksum are written to `dist/`. Use `--output-dir` to write the release inputs to another directory (for example, a temporary directory during tests). The script only prepares local release files; it does not create or publish a GitHub release.", ""]
     (ROOT/"PACKAGE_CONTENTS.md").write_text("\n".join(lines),encoding="utf-8")
 
 
@@ -155,7 +164,12 @@ def write_zip(out: Path) -> None:
 
 def main() -> int:
     ap=argparse.ArgumentParser(description="Build deterministic installable human-writing-ru release")
-    ap.add_argument("--output-dir",type=Path,required=True)
+    ap.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="directory for the release archive and checksum (default: dist/)",
+    )
     args=ap.parse_args()
     if ROOT.name != SKILL_NAME:
         raise SystemExit(f"skill directory must be named {SKILL_NAME!r}, got {ROOT.name!r}")
@@ -165,10 +179,12 @@ def main() -> int:
     write_inventory()
     validate()
     version=(ROOT/"VERSION").read_text(encoding="utf-8").strip()
-    out=args.output_dir/f"{SKILL_NAME}-{version}-full.zip"
+    output_dir = (args.output_dir or DEFAULT_OUTPUT_DIR).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    out=output_dir/f"{SKILL_NAME}-{version}-full.zip"
     write_zip(out)
     digest=sha256(out)
-    sha_path=args.output_dir/f"{out.name}.sha256.txt"
+    sha_path=output_dir/f"{out.name}.sha256.txt"
     sha_path.write_text(f"{digest}  {out.name}\n",encoding="utf-8")
     print(f"zip={out}")
     print(f"sha256={digest}")

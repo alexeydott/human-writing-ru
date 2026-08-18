@@ -29,5 +29,7 @@ Total files: **177**.
 Build with:
 
 ```bash
-python3 scripts/build_release.py --output-dir /path/to/output
+python3 scripts/build_release.py
 ```
+
+By default the archive and its SHA-256 checksum are written to `dist/`. Use `--output-dir` to write the release inputs to another directory (for example, a temporary directory during tests). The script only prepares local release files; it does not create or publish a GitHub release.

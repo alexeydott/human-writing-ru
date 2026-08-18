@@ -37,7 +37,9 @@ def main()->None:
             assert not any(any(part in forbidden_parts for part in Path(n).parts) or n.endswith('.pyc') or Path(n).name in {'.coverage','.DS_Store'} for n in names)
             assert 'human-writing-ru/data/README.md' in names
             assert 'human-writing-ru/data/corpus_manifest.example.csv' in names
+            assert 'human-writing-ru/dist/human-writing-ru-lite.md' in names
             assert not any('/data/taiga_social/' in n or '/data/heldout-work/' in n for n in names)
+            assert not any(n.endswith('.zip') or n.endswith('.sha256.txt') for n in names)
             assert 'human-writing-ru/.gitignore' not in names
             assert not any(n.startswith('human-writing-ru-1.') for n in names)
             tracked=integrity['tracked_sha256']
