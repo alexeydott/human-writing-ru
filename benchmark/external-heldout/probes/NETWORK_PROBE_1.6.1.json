@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "release": "1.6.1-beta.1",
+  "date": "2026-08-10",
+  "environment": "ChatGPT build container",
+  "status": "freeze_gate_not_met_ablation_blocked",
+  "selected_sources": [
+    "factrueval_2016",
+    "rub_corpus_russia",
+    "ruward_cases",
+    "yandex_cloud_docs_ru",
+    "ruslawod_v3"
+  ],
+  "selected_source_profile_coverage": {
+    "prose": [
+      "factrueval_2016"
+    ],
+    "oral": [
+      "rub_corpus_russia"
+    ],
+    "product": [
+      "ruward_cases"
+    ],
+    "technical": [
+      "yandex_cloud_docs_ru"
+    ],
+    "official": [
+      "ruslawod_v3"
+    ]
+  },
+  "frozen_inputs_pre": {
+    "expected": {
+      "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+      "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+      "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+    },
+    "actual": {
+      "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+      "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+      "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+    },
+    "ok": true,
+    "mismatches": {}
+  },
+  "frozen_inputs_post_acquisition": {
+    "expected": {
+      "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+      "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+      "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+    },
+    "actual": {
+      "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+      "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+      "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+    },
+    "ok": true,
+    "mismatches": {}
+  },
+  "sources": [
+    {
+      "source_id": "factrueval_2016",
+      "returncode": 124,
+      "timed_out": true,
+      "timeout_seconds": 2.0
+    },
+    {
+      "source_id": "rub_corpus_russia",
+      "returncode": 124,
+      "timed_out": true,
+      "timeout_seconds": 2.0
+    },
+    {
+      "source_id": "ruward_cases",
+      "returncode": 124,
+      "timed_out": true,
+      "timeout_seconds": 2.0
+    },
+    {
+      "source_id": "yandex_cloud_docs_ru",
+      "returncode": 124,
+      "timed_out": true,
+      "timeout_seconds": 2.0
+    },
+    {
+      "source_id": "ruslawod_v3",
+      "returncode": 2,
+      "timed_out": false,
+      "timeout_seconds": null,
+      "materialization_status": "materialization_failed_no_documents",
+      "documents_total": 0,
+      "error_count": 1,
+      "source_reports": [
+        {
+          "source_id": "ruslawod_v3",
+          "accepted": 0,
+          "errors": [
+            "optional dependency 'datasets' is not installed"
+          ],
+          "new_manifest_rows": 0
+        }
+      ]
+    }
+  ],
+  "validation_summary": {
+    "validated_representative_rows": 0,
+    "required_profiles_for_freeze": [
+      "official",
+      "oral",
+      "product",
+      "prose",
+      "technical"
+    ],
+    "profiles": {
+      "prose": {
+        "independent_documents": 0,
+        "independent_words": 0,
+        "freeze_gate_met": false,
+        "channels": {},
+        "sources": {},
+        "largest_source_share": 0.0,
+        "largest_source": null,
+        "known_author_groups": 0,
+        "largest_known_author_share": null,
+        "largest_known_author": null,
+        "signal_sample_eligibility": {
+          "road-sign-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "sentence-uniformity": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "long-sentence": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "one-sentence-paragraphs": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "context-jargon-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          }
+        }
+      },
+      "oral": {
+        "independent_documents": 0,
+        "independent_words": 0,
+        "freeze_gate_met": false,
+        "channels": {},
+        "sources": {},
+        "largest_source_share": 0.0,
+        "largest_source": null,
+        "known_author_groups": 0,
+        "largest_known_author_share": null,
+        "largest_known_author": null,
+        "signal_sample_eligibility": {
+          "road-sign-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "sentence-uniformity": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "long-sentence": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "one-sentence-paragraphs": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "context-jargon-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          }
+        }
+      },
+      "product": {
+        "independent_documents": 0,
+        "independent_words": 0,
+        "freeze_gate_met": false,
+        "channels": {},
+        "sources": {},
+        "largest_source_share": 0.0,
+        "largest_source": null,
+        "known_author_groups": 0,
+        "largest_known_author_share": null,
+        "largest_known_author": null,
+        "signal_sample_eligibility": {
+          "road-sign-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "sentence-uniformity": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "long-sentence": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "one-sentence-paragraphs": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "context-jargon-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          }
+        }
+      },
+      "technical": {
+        "independent_documents": 0,
+        "independent_words": 0,
+        "freeze_gate_met": false,
+        "channels": {},
+        "sources": {},
+        "largest_source_share": 0.0,
+        "largest_source": null,
+        "known_author_groups": 0,
+        "largest_known_author_share": null,
+        "largest_known_author": null,
+        "signal_sample_eligibility": {
+          "road-sign-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "sentence-uniformity": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "long-sentence": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "one-sentence-paragraphs": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "context-jargon-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          }
+        }
+      },
+      "official": {
+        "independent_documents": 0,
+        "independent_words": 0,
+        "freeze_gate_met": false,
+        "channels": {},
+        "sources": {},
+        "largest_source_share": 0.0,
+        "largest_source": null,
+        "known_author_groups": 0,
+        "largest_known_author_share": null,
+        "largest_known_author": null,
+        "signal_sample_eligibility": {
+          "road-sign-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "sentence-uniformity": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "long-sentence": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "one-sentence-paragraphs": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          },
+          "context-jargon-density": {
+            "eligible_documents": 0,
+            "eligible_words": 0
+          }
+        }
+      }
+    },
+    "ready_for_unchanged_ablation": false,
+    "validated_manifest_sha256": "a66f7925984b63ac55b31bf0dd4a58b2ea1bff3e022ab3451aff9e2b2081a269"
+  },
+  "ablation_output_created": false,
+  "ablation_not_run_created": true,
+  "interpretation": "Transport/build-environment result only. It does not count as corpus evidence and does not alter the preregistered freeze gate."
+}

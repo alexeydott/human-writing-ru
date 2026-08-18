@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "dimensions": {
+    "operation": [
+      "generation",
+      "proofreading",
+      "light_edit",
+      "rewrite",
+      "adaptation",
+      "oral"
+    ],
+    "origin": [
+      "native_original",
+      "L2",
+      "translated",
+      "unknown"
+    ],
+    "factuality": [
+      "factual",
+      "fiction",
+      "mixed",
+      "unknown"
+    ],
+    "channel": [
+      "article",
+      "media",
+      "social",
+      "chat",
+      "technical",
+      "official",
+      "speech",
+      "fiction",
+      "unknown"
+    ],
+    "audience": [
+      "expert",
+      "general",
+      "child_or_student",
+      "L2",
+      "accessibility_specific",
+      "unknown"
+    ],
+    "length": [
+      "sentence",
+      "short",
+      "medium",
+      "long"
+    ],
+    "embedded_material": [
+      "none",
+      "quotes",
+      "code",
+      "urls",
+      "tables",
+      "unknown",
+      "mixed"
+    ],
+    "risk": [
+      "ordinary",
+      "high_stakes_factual",
+      "unknown"
+    ],
+    "correction_goal": [
+      "norm_only",
+      "naturalness",
+      "clarity",
+      "accessibility",
+      "voice_preservation",
+      "mixed"
+    ],
+    "translation_source": [
+      "not_applicable",
+      "close_to_russian",
+      "distant_from_russian",
+      "unknown"
+    ],
+    "learner_l1": [
+      "not_applicable",
+      "known",
+      "unknown"
+    ],
+    "source_period": [
+      "pre_1956",
+      "late_20c",
+      "2000s",
+      "2010s",
+      "2020s",
+      "unknown"
+    ],
+    "target_register": [
+      "neutral",
+      "colloquial_written",
+      "professional",
+      "official",
+      "literary",
+      "oral",
+      "unknown"
+    ]
+  },
+  "coverage_goal": "Каждый релиз должен добавлять тесты в незакрытые пересечения, но не пытаться построить полный декартов продукт.",
+  "fairness_policy": "Demographic/L1/source-language metadata may be used to measure false-positive and error-rate differences, not to generate stereotyped voices."
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "purpose": "План rule-level проверки для задач корректуры и learner Russian; не используется как стилевой score.",
+  "sources": [
+    "https://aclanthology.org/2025.bea-1.38/",
+    "https://aclanthology.org/2026.bea-1.32/",
+    "https://aclanthology.org/2024.eacl-long.76/",
+    "https://aclanthology.org/2024.lrec-main.1241/"
+  ],
+  "categories_to_track": [
+    "agreement",
+    "government_and_case",
+    "prepositions",
+    "verb_aspect_and_tense",
+    "word_order_and_information_structure",
+    "subordinate_clause_punctuation",
+    "homogeneous_members_punctuation",
+    "participial_and_adverbial_participial_constructions",
+    "lexical_collocation",
+    "semantic_acceptability",
+    "reference_and_coreference"
+  ],
+  "policy": "Не сводить категории в единственный общий балл без отчёта по каждой категории. Не считать стилевой линтер грамматическим корректором."
+}

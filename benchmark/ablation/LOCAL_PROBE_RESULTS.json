@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "status": "ablation_complete_threshold_freeze_conditional",
+  "manifest": "external/local probe; raw texts are not distributed",
+  "documents_loaded": 10,
+  "freeze_gate": {
+    "minimum_independent_documents_per_profile": 50,
+    "minimum_words_per_profile": 10000,
+    "note": "Research design target only; not a Russian-language norm. Candidate thresholds cannot become active solely from quantiles unless the gate and positive/negative controls pass."
+  },
+  "signals": {
+    "road-sign-density": {
+      "profiles": {
+        "official": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 18.0,
+          "candidate_threshold": 18.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "oral": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 10.0,
+          "candidate_threshold": 10.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "product": {
+          "eligible_documents": 3,
+          "eligible_words": 672,
+          "freeze_gate_met": false,
+          "old_threshold": 10.0,
+          "candidate_threshold": 10.0,
+          "observed_feature_quantile": 0.0,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        },
+        "prose": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 10.0,
+          "candidate_threshold": 10.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "technical": {
+          "eligible_documents": 2,
+          "eligible_words": 1489,
+          "freeze_gate_met": false,
+          "old_threshold": 15.0,
+          "candidate_threshold": 15.0,
+          "observed_feature_quantile": 2.314,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        }
+      },
+      "overall_decision": "keep_old_no_evidence_for_threshold_change"
+    },
+    "sentence-uniformity": {
+      "profiles": {
+        "official": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.22,
+          "candidate_threshold": 0.22,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": false,
+            "candidate": false,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "oral": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.28,
+          "candidate_threshold": 0.28,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "product": {
+          "eligible_documents": 2,
+          "eligible_words": 512,
+          "freeze_gate_met": false,
+          "old_threshold": 0.3,
+          "candidate_threshold": 0.3,
+          "observed_feature_quantile": 0.408,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        },
+        "prose": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.32,
+          "candidate_threshold": 0.32,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "technical": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.25,
+          "candidate_threshold": 0.25,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": false,
+            "candidate": false,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        }
+      },
+      "overall_decision": "keep_old_no_evidence_for_threshold_change"
+    },
+    "long-sentence": {
+      "profiles": {
+        "official": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 60.0,
+          "candidate_threshold": 60.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "oral": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 32.0,
+          "candidate_threshold": 32.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "product": {
+          "eligible_documents": 3,
+          "eligible_words": 672,
+          "freeze_gate_met": false,
+          "old_threshold": 46.0,
+          "candidate_threshold": 46.0,
+          "observed_feature_quantile": 42.9,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        },
+        "prose": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 42.0,
+          "candidate_threshold": 42.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "technical": {
+          "eligible_documents": 2,
+          "eligible_words": 1489,
+          "freeze_gate_met": false,
+          "old_threshold": 55.0,
+          "candidate_threshold": 55.0,
+          "observed_feature_quantile": 10.95,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        }
+      },
+      "overall_decision": "keep_old_no_evidence_for_threshold_change"
+    },
+    "one-sentence-paragraphs": {
+      "profiles": {
+        "official": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.85,
+          "candidate_threshold": 0.85,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": false,
+            "candidate": false,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "oral": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.75,
+          "candidate_threshold": 0.75,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "product": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.7,
+          "candidate_threshold": 0.7,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "prose": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.7,
+          "candidate_threshold": 0.7,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "technical": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 0.8,
+          "candidate_threshold": 0.8,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": false,
+            "candidate": false,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        }
+      },
+      "overall_decision": "keep_old_no_evidence_for_threshold_change"
+    },
+    "context-jargon-density": {
+      "profiles": {
+        "official": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 32.0,
+          "candidate_threshold": 32.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "oral": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 10.0,
+          "candidate_threshold": 10.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "product": {
+          "eligible_documents": 3,
+          "eligible_words": 672,
+          "freeze_gate_met": false,
+          "old_threshold": 18.0,
+          "candidate_threshold": 18.0,
+          "observed_feature_quantile": 0.0,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        },
+        "prose": {
+          "eligible_documents": 0,
+          "eligible_words": 0,
+          "freeze_gate_met": false,
+          "old_threshold": 12.0,
+          "candidate_threshold": 12.0,
+          "observed_feature_quantile": null,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "no_data_keep_old"
+        },
+        "technical": {
+          "eligible_documents": 2,
+          "eligible_words": 1489,
+          "freeze_gate_met": false,
+          "old_threshold": 28.0,
+          "candidate_threshold": 28.0,
+          "observed_feature_quantile": 0.0,
+          "old_clean_alert_documents": 0,
+          "candidate_clean_alert_documents": 0,
+          "off_clean_alert_documents": 0,
+          "positive_control": {
+            "old": true,
+            "candidate": true,
+            "off": false
+          },
+          "decision": "keep_old_freeze_gate_not_met"
+        }
+      },
+      "overall_decision": "keep_old_no_evidence_for_threshold_change"
+    }
+  },
+  "natural_calibration_documents": 5,
+  "natural_calibration_words": 2161,
+  "secondary_lexical_controls": 4,
+  "domain_guards": 1,
+  "supplementary_previous_pilot": {
+    "documents": 15,
+    "words": 1838,
+    "source": "benchmark/PILOT_RESULTS.json",
+    "observation": "1.3 candidate emitted none of the five ablated signal codes; only nominalization was emitted.",
+    "use": "alert-burden corroboration only; per-document feature values are unavailable here, so it is not used to estimate candidate quantiles."
+  },
+  "activation_result": "No active threshold changed. All five signals remain at 1.3 values; freeze gate is not met."
+}

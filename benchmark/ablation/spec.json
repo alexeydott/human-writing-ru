@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "benchmark": "five-signal-ablation",
+  "signals": {
+    "road-sign-density": {
+      "feature": "road_per_1000",
+      "threshold_key": "road_per_1000_warn",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "minimum_hit_key": "min_road_hits"
+    },
+    "sentence-uniformity": {
+      "feature": "sentence_cv",
+      "threshold_key": "sentence_cv_min_info",
+      "direction": "low",
+      "candidate_quantile": 0.05,
+      "requires_rhythm_checks": true,
+      "minimum_size_key": "min_sentences_for_cv",
+      "minimum_size_feature": "sentences"
+    },
+    "long-sentence": {
+      "feature": "sentence_max_words",
+      "threshold_key": "long_sentence_words_info",
+      "direction": "high",
+      "candidate_quantile": 0.95
+    },
+    "one-sentence-paragraphs": {
+      "feature": "one_sentence_paragraph_ratio",
+      "threshold_key": "one_sentence_paragraph_ratio_info",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "requires_rhythm_checks": true,
+      "minimum_size_key": "min_paragraphs_for_ratio",
+      "minimum_size_feature": "paragraphs"
+    },
+    "context-jargon-density": {
+      "feature": "jargon_per_1000",
+      "threshold_key": "jargon_per_1000_info",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "minimum_hit_key": "min_jargon_hits"
+    }
+  },
+  "freeze_gate": {
+    "minimum_independent_documents_per_profile": 50,
+    "minimum_words_per_profile": 10000,
+    "note": "Research design target only; not a Russian-language norm. Candidate thresholds cannot become active solely from quantiles unless the gate and positive/negative controls pass."
+  },
+  "decision_policy": [
+    "Evaluate one signal at a time; keep all other active settings fixed.",
+    "Natural held-out data estimate alert burden; synthetic controls estimate sensitivity only.",
+    "Do not count chunks from one source document as independent documents.",
+    "Candidate must not increase clean alert burden relative to old threshold.",
+    "Candidate must retain the targeted positive control.",
+    "If freeze gate is not met, do not change the active profile from corpus quantiles alone.",
+    "Off is a real ablation arm, not an automatic recommendation."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "case_id": "string",
+  "arm_a": "hidden",
+  "arm_b": "hidden",
+  "assertion_results": [{"assertion": "string", "a": "pass|fail|uncertain", "b": "pass|fail|uncertain", "evidence": "string"}],
+  "scores": {
+    "factual_meaning_preservation": {"a": 0, "b": 0, "scale": "0..4"},
+    "modality_attribution_preservation": {"a": 0, "b": 0, "scale": "0..4"},
+    "grammatical_correctness": {"a": 0, "b": 0, "scale": "0..4"},
+    "register_fit": {"a": 0, "b": 0, "scale": "0..4"},
+    "voice_preservation": {"a": 0, "b": 0, "scale": "0..4"},
+    "task_completion": {"a": 0, "b": 0, "scale": "0..4"},
+    "over_editing": {"a": 0, "b": 0, "scale": "0=none,4=severe"}
+  },
+  "preference": "a|b|tie|invalid",
+  "reason": "string"
+}

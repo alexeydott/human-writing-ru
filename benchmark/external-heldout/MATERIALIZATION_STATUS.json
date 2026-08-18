@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "release": "1.6.1-beta.1",
+  "date": "2026-08-10",
+  "status": "network_executor_ready_freeze_gate_not_reached_in_build_environment",
+  "external_documents_materialized_in_build": 0,
+  "external_words_materialized_in_build": 0,
+  "validated_representative_rows": 0,
+  "validated_manifest": "benchmark/external-heldout/materialized/manifest.validated.csv",
+  "validated_manifest_sha256": "a66f7925984b63ac55b31bf0dd4a58b2ea1bff3e022ab3451aff9e2b2081a269",
+  "freeze_gate_reached": false,
+  "required_profiles": [
+    "official",
+    "oral",
+    "product",
+    "prose",
+    "technical"
+  ],
+  "profile_results": {
+    "prose": {
+      "documents": 0,
+      "words": 0,
+      "freeze_gate_met": false,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "oral": {
+      "documents": 0,
+      "words": 0,
+      "freeze_gate_met": false,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "product": {
+      "documents": 0,
+      "words": 0,
+      "freeze_gate_met": false,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "technical": {
+      "documents": 0,
+      "words": 0,
+      "freeze_gate_met": false,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "official": {
+      "documents": 0,
+      "words": 0,
+      "freeze_gate_met": false,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    }
+  },
+  "ablation_run": false,
+  "active_thresholds_changed": false,
+  "active_threshold_policy": "1.4 frozen",
+  "network_runner": "scripts/run_external_heldout_gate.py",
+  "network_probe_output": "research/network_probe_2026-08-10.json",
+  "blocked_by": [
+    "This ChatGPT build container has no usable outbound network-to-filesystem transport for bulk corpus materialization.",
+    "A real short-timeout probe of prose/oral/product/technical endpoints timed out at the source-process guard without accepted documents.",
+    "RusLawOD streaming reported missing optional dependency 'datasets' in the build environment."
+  ],
+  "acquisition_fixes": [
+    "factRuEval adapter reads profile/channel from registry",
+    "GitHub raw paths use percent encoding rather than plus-for-space encoding",
+    "ZIP adapter supports multi-part upstream archives while retaining one source_id",
+    "TSV/CSV records preserve one source row as one document",
+    "Yandex Cloud and Putin Corpus have direct GitHub-tree acquisition paths",
+    "network gate runner hard-blocks ablation until validator all-profile readiness is true"
+  ],
+  "source_registry_count": 20,
+  "integrity_policy": "No catalogued URL, connector preview, search snippet, timeout, or source metadata is counted as a materialized document. No arbitrary splitting/concatenation is used to satisfy the gate."
+}

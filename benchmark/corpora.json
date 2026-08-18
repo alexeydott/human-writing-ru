@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "policy": "No third-party corpus text is redistributed in this package. Registry contains metadata and source links only.",
+  "corpora": [
+    {
+      "id": "rucola",
+      "role": [
+        "grammar_acceptability_negative_control"
+      ],
+      "source": "https://github.com/RussianNLP/RuCoLA",
+      "license": "Apache-2.0",
+      "redistribute_in_package": false,
+      "notes": "Accepted and unacceptable Russian sentences; style linter must not be treated as a grammaticality classifier."
+    },
+    {
+      "id": "ria_news_dataset",
+      "role": [
+        "media",
+        "published_prose"
+      ],
+      "source": "https://github.com/RossiyaSegodnya/ria_news_dataset",
+      "license": "CC BY-ND-NC 3.0",
+      "redistribute_in_package": false,
+      "notes": "1M+ RIA news documents. Used only transiently in the pilot; package stores aggregates, not texts."
+    },
+    {
+      "id": "ruadapt",
+      "role": [
+        "accessibility",
+        "simplification"
+      ],
+      "source": "https://github.com/Digital-Pushkin-Lab/RuAdapt",
+      "license": "MIT repository; verify licenses/provenance of each subcorpus before redistribution",
+      "redistribute_in_package": false,
+      "notes": "Parallel original/adapted Russian; future accessibility benchmark."
+    },
+    {
+      "id": "rulec_gec",
+      "role": [
+        "l2",
+        "gec",
+        "multi_reference"
+      ],
+      "source": "https://github.com/arozovskaya/RULEC-GEC",
+      "license": "verify upstream dataset terms",
+      "redistribute_in_package": false,
+      "notes": "Learner/heritage Russian correction; future over-edit and multi-reference evaluation."
+    },
+    {
+      "id": "russian_legislative_corpus",
+      "role": [
+        "official",
+        "legal"
+      ],
+      "source": "https://huggingface.co/datasets/rcds/russian-legislative-corpus",
+      "license": "CC BY-NC 4.0",
+      "redistribute_in_package": false,
+      "notes": "Large legislative corpus for long official/legal documents."
+    },
+    {
+      "id": "taiga",
+      "role": [
+        "fiction",
+        "social",
+        "subtitles",
+        "news"
+      ],
+      "source": "https://tatianashavrina.github.io/taiga_site/",
+      "license": "mixed/terms must be checked per source segment",
+      "redistribute_in_package": false,
+      "notes": "Useful for genre variation; do not collapse segments into one profile."
+    },
+    {
+      "id": "struccom",
+      "role": [
+        "technical",
+        "code_comments"
+      ],
+      "source": "https://aclanthology.org/2025.acl-long.1465/",
+      "license": "verify dataset license before redistribution",
+      "redistribute_in_package": false,
+      "notes": "Russian structured code comments; future technical-writing coverage."
+    }
+  ]
+}

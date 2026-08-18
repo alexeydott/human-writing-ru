@@ -1,0 +1,3 @@
+path,split,corpus,operation,origin,factuality,channel,audience,length,embedded_material,risk,target_register,source_period,license_note
+texts/media_001.txt,calibration,example_media,generation,native_original,factual,media,general,medium,none,ordinary,neutral,2020s,record actual corpus license here
+texts/technical_001.txt,validation,example_docs,rewrite,native_original,factual,technical,expert,medium,code,ordinary,professional,2020s,record actual corpus license here

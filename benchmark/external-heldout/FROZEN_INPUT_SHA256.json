@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "baseline_release": "1.4.0-beta.1",
+  "requirement": "The linter, unchanged ablation runner, and active editorial profile/thresholds must remain byte-identical during external held-out acquisition and gate execution.",
+  "sha256": {
+    "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+    "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+    "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+  }
+}

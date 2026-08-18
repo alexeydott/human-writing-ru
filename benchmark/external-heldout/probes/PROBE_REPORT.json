@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "release": "1.6.0-beta.1",
+  "date": "2026-08-10",
+  "purpose": "Network/acquisition probes only. Zero accepted documents means zero corpus contribution.",
+  "environment": {
+    "container_outbound_https": "unavailable via urllib/git; DNS resolution fails",
+    "research_web_tools": "available for source verification but not a bulk raw-text bridge into /mnt/data",
+    "github_connector": "public repository metadata/content visible, but connector responses cannot be materialized into local benchmark files in this session"
+  },
+  "probes": [
+    {
+      "source_id": "ljsearch_saved_copies",
+      "probe_kind": "actual materializer adapter in build container",
+      "exit_code": 2,
+      "report": {
+        "schema_version": 1,
+        "status": "materialization_failed_no_documents",
+        "registry": "benchmark/external-heldout/probes/ljsearch_saved_copies.registry.json",
+        "output_dir": "/mnt/data/hw16/benchmark/external-heldout/probes/ljsearch_saved_copies.out",
+        "documents_total": 0,
+        "words_total": 0,
+        "error_count": 1,
+        "sources": [
+          {
+            "source_id": "ljsearch_saved_copies",
+            "discovered_savedcopies": 1,
+            "accepted": 0,
+            "errors": [
+              "fetch failed: https://ljsear.ch/savedcopy?post=402698938: <urlopen error [Errno -3] Temporary failure in name resolution>"
+            ],
+            "new_manifest_rows": 0
+          }
+        ],
+        "release_warning": "Do not package raw/ automatically. Review each source license/terms; package manifests, links, hashes and aggregates by default."
+      }
+    },
+    {
+      "source_id": "factrueval_2016",
+      "probe_kind": "actual materializer adapter in build container",
+      "exit_code": 2,
+      "report": {
+        "schema_version": 1,
+        "status": "materialization_failed_no_documents",
+        "registry": "benchmark/external-heldout/probes/factrueval_2016.registry.json",
+        "output_dir": "/mnt/data/hw16/benchmark/external-heldout/probes/factrueval_2016.out",
+        "documents_total": 0,
+        "words_total": 0,
+        "error_count": 1,
+        "sources": [
+          {
+            "source_id": "factrueval_2016",
+            "accepted": 0,
+            "errors": [
+              "fetch failed: https://api.github.com/repos/dialogue-evaluation/factRuEval-2016/git/trees/master?recursive=1: <urlopen error [Errno -3] Temporary failure in name resolution>"
+            ],
+            "new_manifest_rows": 0
+          }
+        ],
+        "release_warning": "Do not package raw/ automatically. Review each source license/terms; package manifests, links, hashes and aggregates by default."
+      }
+    },
+    {
+      "source_id": "rbc_company_cases",
+      "probe_kind": "actual materializer adapter in build container",
+      "exit_code": 2,
+      "report": {
+        "schema_version": 1,
+        "status": "materialization_failed_no_documents",
+        "registry": "benchmark/external-heldout/probes/rbc_company_cases.registry.json",
+        "output_dir": "/mnt/data/hw16/benchmark/external-heldout/probes/rbc_company_cases.out",
+        "documents_total": 0,
+        "words_total": 0,
+        "error_count": 1,
+        "sources": [
+          {
+            "source_id": "rbc_company_cases",
+            "urls_discovered": 0,
+            "accepted": 0,
+            "errors": [
+              "fetch failed: https://companies.rbc.ru/cases/: <urlopen error [Errno -3] Temporary failure in name resolution>"
+            ],
+            "new_manifest_rows": 0
+          }
+        ],
+        "release_warning": "Do not package raw/ automatically. Review each source license/terms; package manifests, links, hashes and aggregates by default."
+      }
+    },
+    {
+      "source_id": "ruslawod_v3",
+      "probe_kind": "actual materializer adapter in build container",
+      "exit_code": 2,
+      "report": {
+        "schema_version": 1,
+        "status": "materialization_failed_no_documents",
+        "registry": "benchmark/external-heldout/probes/ruslawod_v3.registry.json",
+        "output_dir": "/mnt/data/hw16/benchmark/external-heldout/probes/ruslawod_v3.out",
+        "documents_total": 0,
+        "words_total": 0,
+        "error_count": 1,
+        "sources": [
+          {
+            "source_id": "ruslawod_v3",
+            "accepted": 0,
+            "errors": [
+              "optional dependency 'datasets' is not installed"
+            ],
+            "new_manifest_rows": 0
+          }
+        ],
+        "release_warning": "Do not package raw/ automatically. Review each source license/terms; package manifests, links, hashes and aggregates by default."
+      }
+    },
+    {
+      "source_id": "ruward_cases",
+      "probe_kind": "actual materializer adapter in build container",
+      "exit_code": 124,
+      "report": null,
+      "result": "outer timeout before adapter produced a report; no documents accepted or written"
+    }
+  ],
+  "documents_materialized": 0,
+  "words_materialized": 0
+}

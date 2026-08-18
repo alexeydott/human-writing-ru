@@ -1,0 +1,2 @@
+document_id,signal,profile,source_id,channel,old_fires,candidate_fires,removed_by_candidate,label,notes
+example-doc,road-sign-density,prose,example-source,blog,1,0,1,non_actionable,Example only; replace with generated template rows.

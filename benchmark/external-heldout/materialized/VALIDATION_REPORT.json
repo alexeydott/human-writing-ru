@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "status": "external_heldout_validation",
+  "manifest": "benchmark/external-heldout/materialized/manifest.csv",
+  "freeze_gate": {
+    "minimum_independent_documents_per_profile": 50,
+    "minimum_words_per_profile": 10000,
+    "note": "Research design target only; not a Russian-language norm. Candidate thresholds cannot become active solely from quantiles unless the gate and positive/negative controls pass."
+  },
+  "near_duplicate_threshold": 0.92,
+  "near_duplicate_note": "High-similarity repost heuristic for benchmark independence only; not a Russian-language norm.",
+  "manifest_rows": 0,
+  "valid_files": 0,
+  "validated_representative_manifest": "benchmark/external-heldout/materialized/manifest.validated.csv",
+  "validated_representative_manifest_sha256": "a66f7925984b63ac55b31bf0dd4a58b2ea1bff3e022ab3451aff9e2b2081a269",
+  "validated_representative_rows": 0,
+  "ablation_input_note": "Run unchanged ablate_signals.py on validated_representative_manifest, not on the raw acquisition manifest.",
+  "invalid_files": [],
+  "independence_clusters": 0,
+  "exact_duplicate_groups": [],
+  "near_duplicate_pairs": [],
+  "profiles": {
+    "prose": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false,
+      "channels": {},
+      "sources": {},
+      "largest_source_share": 0.0,
+      "largest_source": null,
+      "known_author_groups": 0,
+      "largest_known_author_share": null,
+      "largest_known_author": null,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "oral": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false,
+      "channels": {},
+      "sources": {},
+      "largest_source_share": 0.0,
+      "largest_source": null,
+      "known_author_groups": 0,
+      "largest_known_author_share": null,
+      "largest_known_author": null,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "product": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false,
+      "channels": {},
+      "sources": {},
+      "largest_source_share": 0.0,
+      "largest_source": null,
+      "known_author_groups": 0,
+      "largest_known_author_share": null,
+      "largest_known_author": null,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "technical": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false,
+      "channels": {},
+      "sources": {},
+      "largest_source_share": 0.0,
+      "largest_source": null,
+      "known_author_groups": 0,
+      "largest_known_author_share": null,
+      "largest_known_author": null,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    },
+    "official": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false,
+      "channels": {},
+      "sources": {},
+      "largest_source_share": 0.0,
+      "largest_source": null,
+      "known_author_groups": 0,
+      "largest_known_author_share": null,
+      "largest_known_author": null,
+      "signal_sample_eligibility": {
+        "road-sign-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "sentence-uniformity": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "long-sentence": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "one-sentence-paragraphs": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        },
+        "context-jargon-density": {
+          "eligible_documents": 0,
+          "eligible_words": 0
+        }
+      }
+    }
+  },
+  "required_profiles_for_freeze": [
+    "official",
+    "oral",
+    "product",
+    "prose",
+    "technical"
+  ],
+  "ready_for_unchanged_ablation": false,
+  "routing_note": "social/blog/media stay as channel strata under profile=prose; the linter profile set is unchanged in this pass."
+}

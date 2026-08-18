@@ -1,0 +1,89 @@
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.bak
+*~
+.idea/
+.vscode/
+
+# Local AI-agent context and tool configuration
+.agents/
+.ai-factory/
+.codex/
+.opencode/
+.mcp.json
+.ai-factory.json
+.agentready.yml
+opencode.json
+skills-lock.json
+AGENTS.md
+CLAUDE.md
+RULES.md
+
+# Secrets and local environment overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+credentials/
+secrets/
+
+# Python environments, caches, and packaging metadata
+.venv/
+venv/
+env/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+pytest.xml
+
+# JavaScript dependencies and test output
+node_modules/
+**/node_modules/
+test-results/
+playwright-report/
+blob-report/
+
+# Local build, cache, and temporary output
+build/
+.cache/
+tmp/
+temp/
+.tmp/
+*.tmp
+*.temp
+*.log
+*.zip
+*.sha256.txt
+dist-review*/
+.dist-*/
+.dist.*/
+
+# Local corpora and derived research data
+data/.examples/
+data/raw/
+data/local/
+data/corpus_manifest.csv
+data/features.csv
+data/distributions.json
+
+# Local presentation assets
+.fonts/
+.shieldfont/
+/shieldfont.css
+/sri.json

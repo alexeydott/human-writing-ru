@@ -1,0 +1,158 @@
+{
+  "schema_version": 3,
+  "benchmark": "five-signal-ablation-v3",
+  "supersedes_for_decisions": "spec-v2.json schema_version=2",
+  "policy_note": "Research-design thresholds below govern evidence sufficiency, not Russian-language norms.",
+  "signals": {
+    "road-sign-density": {
+      "feature": "road_per_1000",
+      "threshold_key": "road_per_1000_warn",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "minimum_hit_key": "min_road_hits"
+    },
+    "sentence-uniformity": {
+      "feature": "sentence_cv",
+      "threshold_key": "sentence_cv_min_info",
+      "direction": "low",
+      "candidate_quantile": 0.05,
+      "requires_rhythm_checks": true,
+      "minimum_size_key": "min_sentences_for_cv",
+      "minimum_size_feature": "sentences"
+    },
+    "long-sentence": {
+      "feature": "sentence_max_words",
+      "threshold_key": "long_sentence_words_info",
+      "direction": "high",
+      "candidate_quantile": 0.95
+    },
+    "one-sentence-paragraphs": {
+      "feature": "one_sentence_paragraph_ratio",
+      "threshold_key": "one_sentence_paragraph_ratio_info",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "requires_rhythm_checks": true,
+      "minimum_size_key": "min_paragraphs_for_ratio",
+      "minimum_size_feature": "paragraphs"
+    },
+    "context-jargon-density": {
+      "feature": "jargon_per_1000",
+      "threshold_key": "jargon_per_1000_info",
+      "direction": "high",
+      "candidate_quantile": 0.95,
+      "minimum_hit_key": "min_jargon_hits"
+    }
+  },
+  "profile_gate": {
+    "minimum_independent_documents": 50,
+    "minimum_words": 10000
+  },
+  "signal_gate": {
+    "minimum_eligible_documents": 50,
+    "minimum_eligible_words": 10000,
+    "calibration_minimum_documents": 30,
+    "calibration_minimum_words": 6000,
+    "validation_minimum_documents": 20,
+    "validation_minimum_words": 4000
+  },
+  "split": {
+    "calibration_fraction": 0.6,
+    "seed": "human-writing-ru-ablation-v3",
+    "group_fields": [
+      "author_or_group",
+      "split_group",
+      "source_document_id",
+      "independence_group"
+    ],
+    "source_scoped_group_fields": [
+      "source_document_id",
+      "independence_group"
+    ],
+    "note": "Rows connected by any known grouping constraint are kept in one arm. Author/speaker and explicit split_group are global within profile; source-document and independence identifiers are source-scoped to avoid accidental cross-corpus ID collisions."
+  },
+  "diversity_gate": {
+    "prose": {
+      "minimum_sources": 3,
+      "minimum_channels": 3,
+      "maximum_source_document_share": 0.6,
+      "maximum_source_word_share": 0.6,
+      "author_concentration_required": true,
+      "minimum_known_author_coverage": 0.5,
+      "maximum_known_author_document_share": 0.5,
+      "maximum_known_author_word_share": 0.5,
+      "minimum_known_source_coverage": 1.0,
+      "minimum_known_channel_coverage": 1.0
+    },
+    "oral": {
+      "minimum_sources": 2,
+      "minimum_channels": 2,
+      "maximum_source_document_share": 0.75,
+      "maximum_source_word_share": 0.75,
+      "author_concentration_required": true,
+      "minimum_known_author_coverage": 0.6,
+      "maximum_known_author_document_share": 0.5,
+      "maximum_known_author_word_share": 0.5,
+      "minimum_known_source_coverage": 1.0,
+      "minimum_known_channel_coverage": 1.0
+    },
+    "product": {
+      "minimum_sources": 2,
+      "minimum_channels": 2,
+      "maximum_source_document_share": 0.75,
+      "maximum_source_word_share": 0.75,
+      "author_concentration_required": false,
+      "minimum_known_author_coverage": 0.0,
+      "maximum_known_author_document_share": 0.6,
+      "maximum_known_author_word_share": 0.6,
+      "minimum_known_source_coverage": 1.0,
+      "minimum_known_channel_coverage": 1.0
+    },
+    "technical": {
+      "minimum_sources": 2,
+      "minimum_channels": 1,
+      "maximum_source_document_share": 0.8,
+      "maximum_source_word_share": 0.8,
+      "author_concentration_required": false,
+      "minimum_known_author_coverage": 0.0,
+      "maximum_known_author_document_share": 0.7,
+      "maximum_known_author_word_share": 0.7,
+      "minimum_known_source_coverage": 1.0,
+      "minimum_known_channel_coverage": 1.0
+    },
+    "official": {
+      "minimum_sources": 2,
+      "minimum_channels": 1,
+      "maximum_source_document_share": 0.8,
+      "maximum_source_word_share": 0.8,
+      "author_concentration_required": false,
+      "minimum_known_author_coverage": 0.0,
+      "maximum_known_author_document_share": 0.6,
+      "maximum_known_author_word_share": 0.6,
+      "minimum_known_source_coverage": 1.0,
+      "minimum_known_channel_coverage": 1.0
+    }
+  },
+  "adjudication": {
+    "labels": [
+      "actionable",
+      "non_actionable",
+      "uncertain"
+    ],
+    "minimum_old_only_annotations_for_candidate": 10,
+    "minimum_non_actionable_share_removed_for_candidate": 0.8,
+    "minimum_alert_annotations_for_off": 20,
+    "maximum_actionable_precision_for_off": 0.25,
+    "note": "Alert reduction alone cannot activate candidate or off. Manual/blind adjudication of natural alerts is required."
+  },
+  "decision_policy": [
+    "Do not derive and evaluate a candidate on the same document groups.",
+    "Any shared known author/speaker, explicit split_group, source_document_id or independence_group connects rows into one split component; a component cannot cross calibration and validation.",
+    "Profile gate, diversity gate, signal-specific eligibility gate and split-specific minima must all pass before a signal/profile decision is eligible.",
+    "Source concentration is checked by both document count and word mass; unknown source/channel metadata cannot count as a diversity category.",
+    "For profiles where author concentration is required, insufficient known-author coverage blocks the diversity gate instead of silently passing it.",
+    "Synthetic positive controls test sensitivity only and never enter corpus quantiles.",
+    "Candidate activation requires untouched-validation evidence plus adjudication showing that removed alerts are predominantly non-actionable.",
+    "Off requires sufficient annotated natural alerts showing low actionable precision; zero alert burden alone is not evidence.",
+    "No result from this protocol changes profiles/editorial-baseline.json automatically."
+  ]
+}

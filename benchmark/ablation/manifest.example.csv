@@ -1,0 +1,5 @@
+id,profile,path,calibration_eligible,lexical_only,channel,origin,source_document_id
+news-001,prose,/corpora/news/001.txt,1,0,media,native_original,news-001
+manual-001,technical,/corpora/manuals/001.md,1,0,technical,native_original,manual-001
+ui-001,technical,/corpora/ui/messages.txt,0,1,technical,translated,ui-catalog-001
+fiction-001,prose,/corpora/fiction/001.txt,0,0,fiction,native_original,fiction-001

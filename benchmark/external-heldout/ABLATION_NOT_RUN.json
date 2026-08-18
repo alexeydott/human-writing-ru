@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "release": "1.6.1-beta.1",
+  "status": "NOT_RUN",
+  "runner": "scripts/ablate_signals.py",
+  "runner_sha256": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
+  "required_input": "benchmark/external-heldout/materialized/manifest.validated.csv",
+  "precondition": "all five profile freeze gates must pass",
+  "precondition_met": false,
+  "threshold_changes": [],
+  "active_thresholds_changed": false,
+  "network_gate_runner": "scripts/run_external_heldout_gate.py",
+  "note": "old -> candidate -> off remains intentionally blocked because the preregistered 50 documents / 10,000 words gate is not met for every profile."
+}

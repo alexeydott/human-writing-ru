@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "description": "Curated negative/positive controls for TZ heuristics; not a corpus calibration claim.",
+  "cases": [
+    {
+      "id": "negative_compound_object",
+      "expect_absent": [
+        "TZ004"
+      ],
+      "text": "Система должна сохранять имя и фамилию пользователя.\n\n# Критерии приёмки\nПроверить сохранение обоих полей."
+    },
+    {
+      "id": "negative_valid_security_metric",
+      "expect_absent": [
+        "TZ008",
+        "TZ005"
+      ],
+      "text": "Система должна блокировать учётную запись после 5 неуспешных попыток входа в течение 10 минут.\n\n# Критерии приёмки\nПроверяется тестом последовательных попыток."
+    },
+    {
+      "id": "negative_observable_function",
+      "expect_absent": [
+        "TZ005"
+      ],
+      "text": "REQ-1: После создания заказа API должен вернуть идентификатор заказа и статус created.\n\n# Критерии приёмки\nПроверяется интеграционным тестом."
+    },
+    {
+      "id": "positive_vague_nfr",
+      "expect_present": [
+        "TZ002",
+        "TZ005"
+      ],
+      "text": "Система должна иметь высокую производительность и работать быстро.\n\n# Критерии приёмки\nТребуется проверка."
+    },
+    {
+      "id": "positive_conflicting_modality",
+      "expect_present": [
+        "TZ009"
+      ],
+      "text": "Система должна по возможности архивировать журнал.\n\n# Критерии приёмки\nПроверка предусмотрена."
+    },
+    {
+      "id": "positive_weak_modality",
+      "expect_present": [
+        "TZ003"
+      ],
+      "text": "REQ-7: Желательно сохранять расширенный журнал.\n\n# Критерии приёмки\nПроверка предусмотрена."
+    }
+  ]
+}

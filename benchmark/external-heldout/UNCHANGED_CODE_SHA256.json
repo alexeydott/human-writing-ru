@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "baseline_release": "1.4.0-beta.1",
+  "requirement": "These two files must remain byte-identical during the external-heldout acquisition pass.",
+  "sha256": {
+    "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+    "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a"
+  }
+}

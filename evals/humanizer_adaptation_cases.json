@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "source": "adapted from blader/humanizer 2.11.0; Russian editorial localization",
+  "cases": [
+    {
+      "id": "HUM001",
+      "input": "Запуск новой формы стал поворотным моментом, ознаменовав новую эру взаимодействия с пользователями.",
+      "expect": "remove_inflated_significance_without_adding_claims"
+    },
+    {
+      "id": "HUM002",
+      "input": "Эксперты отмечают, что система играет ключевую роль в отрасли.",
+      "expect": "require_source_or_remove_unsupported_attribution"
+    },
+    {
+      "id": "HUM003",
+      "input": "Это не просто отчёт. Это новый язык принятия решений.",
+      "expect": "replace_formulaic_antithesis_with_specific_claim_if_available"
+    },
+    {
+      "id": "HUM004",
+      "input": "Давайте разберём, как работает кэширование. Вот что важно знать. Кэш хранится в памяти процесса.",
+      "expect": "remove_meta_announcement_keep_fact"
+    },
+    {
+      "id": "HUM005",
+      "input": "Можно было бы перезапускать сервис по cron, но это плохой путь. Токены обновляются на месте.",
+      "expect": "remove_fake_alternative_unless_comparison_is_material"
+    },
+    {
+      "id": "HUM006",
+      "input": "Сервис может потенциально, возможно, в некоторых случаях уменьшить задержку.",
+      "expect": "collapse_stacked_hedges_preserve_uncertainty"
+    },
+    {
+      "id": "HUM007",
+      "input": "Документ завершает важный этап. Впереди новые горизонты и дальнейшее развитие.",
+      "expect": "drop_generic_positive_ending_without_sourced_plan"
+    },
+    {
+      "id": "HUM008",
+      "input": "Модуль — это слой совместимости.",
+      "expect": "do_not_flag_normal_russian_dash"
+    },
+    {
+      "id": "HUM009",
+      "input": "Компания назвала продукт «Маяк».",
+      "expect": "preserve_russian_typographic_quotes"
+    },
+    {
+      "id": "HUM010",
+      "input": "Архитектура сравнивает очереди и pub/sub: первая проще, вторая лучше масштабируется.",
+      "expect": "preserve_real_alternatives_with_tradeoffs"
+    }
+  ]
+}

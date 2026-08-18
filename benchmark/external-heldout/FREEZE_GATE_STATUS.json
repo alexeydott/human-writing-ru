@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "release": "1.6.1-beta.1",
+  "active_threshold_policy": "1.4 remains frozen; no threshold values changed in this pass",
+  "freeze_gate": {
+    "minimum_independent_documents_per_profile": 50,
+    "minimum_words_per_profile": 10000,
+    "note": "Research design target only; not a Russian-language norm. Candidate thresholds cannot become active solely from quantiles unless the gate and positive/negative controls pass."
+  },
+  "required_profiles": [
+    "official",
+    "oral",
+    "product",
+    "prose",
+    "technical"
+  ],
+  "profiles": {
+    "official": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false
+    },
+    "oral": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false
+    },
+    "product": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false
+    },
+    "prose": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false
+    },
+    "technical": {
+      "independent_documents": 0,
+      "independent_words": 0,
+      "freeze_gate_met": false
+    }
+  },
+  "signals": {
+    "road-sign-density": {
+      "prose": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "oral": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "product": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "technical": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "official": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      }
+    },
+    "sentence-uniformity": {
+      "prose": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "sentences",
+        "minimum_size_value": 10,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "oral": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "sentences",
+        "minimum_size_value": 10,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "product": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "sentences",
+        "minimum_size_value": 10,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "technical": {
+        "structurally_eligible": false,
+        "reason": "profile_configuration_disables_rhythm_checks",
+        "minimum_size_feature": "sentences",
+        "minimum_size_value": 10,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "official": {
+        "structurally_eligible": false,
+        "reason": "profile_configuration_disables_rhythm_checks",
+        "minimum_size_feature": "sentences",
+        "minimum_size_value": 10,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      }
+    },
+    "long-sentence": {
+      "prose": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "oral": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "product": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "technical": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "official": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      }
+    },
+    "one-sentence-paragraphs": {
+      "prose": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "paragraphs",
+        "minimum_size_value": 8,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "oral": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "paragraphs",
+        "minimum_size_value": 8,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "product": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": "paragraphs",
+        "minimum_size_value": 8,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "technical": {
+        "structurally_eligible": false,
+        "reason": "profile_configuration_disables_rhythm_checks",
+        "minimum_size_feature": "paragraphs",
+        "minimum_size_value": 8,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "official": {
+        "structurally_eligible": false,
+        "reason": "profile_configuration_disables_rhythm_checks",
+        "minimum_size_feature": "paragraphs",
+        "minimum_size_value": 8,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      }
+    },
+    "context-jargon-density": {
+      "prose": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "oral": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "product": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "technical": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      },
+      "official": {
+        "structurally_eligible": true,
+        "reason": "eligible_if_document_meets_size_and_hit_requirements",
+        "minimum_size_feature": null,
+        "minimum_size_value": null,
+        "actual_eligible_documents": 0,
+        "actual_eligible_words": 0
+      }
+    }
+  },
+  "ready_for_unchanged_ablation": false,
+  "decision": "BLOCK_ABLATION",
+  "reason": "No external documents could be written into the local benchmark filesystem in this build environment; all five per-profile freeze gates therefore fail.",
+  "validated_manifest": "benchmark/external-heldout/materialized/manifest.validated.csv",
+  "validated_manifest_sha256": "40defc74b8c90ab5d26c184bd6befa338ca40c37dd192d6fe5d8ed4c8d7dc29e"
+}

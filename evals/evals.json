@@ -1,0 +1,743 @@
+{
+  "skill_name": "human-writing-ru",
+  "evaluation_policy": {
+    "runs_per_case_recommended": 5,
+    "compare_against": "previous_skill_version_and_without_skill",
+    "exact_string_match": false,
+    "human_blind_pairwise_for_style": true,
+    "clean_context_required": true,
+    "minimum_blind_pairwise_judgments_per_case": 3,
+    "previous_skill_id": "human-writing-ru@1.6.1-beta.1"
+  },
+  "evals": [
+    {
+      "id": "edit-preserve-voice",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "channel": "article",
+        "factuality": "unknown",
+        "audience": "general",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Сделай лёгкую редактуру моего текста: убери тяжёлые места, но сохрани первое лицо, спокойный тон и мои факты.",
+      "expected_output": "Правка минимальна и узнаваемо сохраняет автора.",
+      "assertions": [
+        "Новые факты не добавлены",
+        "Степень уверенности не усилена",
+        "Первое лицо и характерная терминология сохранены",
+        "Правки не превращены в полную перепись"
+      ]
+    },
+    {
+      "id": "l2-correction",
+      "files": [
+        "evals/files/l2_sample.txt"
+      ],
+      "dimensions": {
+        "operation": "proofreading",
+        "origin": "L2",
+        "audience": "L2",
+        "factuality": "unknown",
+        "channel": "article",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "norm_only",
+        "translation_source": "not_applicable",
+        "learner_l1": "unknown",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Я изучаю русский. Исправь ошибки в приложенном абзаце, но не переписывай его как эссе носителя. После текста кратко назови повторяющиеся типы ошибок.",
+      "expected_output": "Нормативная коррекция с сохранением содержания и учебным объяснением.",
+      "assertions": [
+        "Исправлены управление/согласование там, где они нарушены",
+        "Не добавлены новые факты",
+        "Содержание и структура в основном сохранены",
+        "Объяснения группируют типы ошибок, а не переписывают стиль целиком"
+      ]
+    },
+    {
+      "id": "translated-naturalization",
+      "files": [
+        "evals/files/translated_sample.txt"
+      ],
+      "dimensions": {
+        "operation": "rewrite",
+        "origin": "translated",
+        "channel": "technical",
+        "factuality": "factual",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "naturalness",
+        "translation_source": "unknown",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Это русский машинный перевод интерфейсного описания. Сделай его естественным и технически ясным, смысл не менять.",
+      "expected_output": "Кальки и тяжёлая номинализация убраны, последовательность действий сохранена.",
+      "assertions": [
+        "Сохранены все условия и действия исходника",
+        "Не изменена причинность",
+        "Русский стал естественнее без добавления функций продукта",
+        "Термины используются последовательно"
+      ]
+    },
+    {
+      "id": "accessibility",
+      "files": [
+        "evals/files/accessibility_sample.txt"
+      ],
+      "dimensions": {
+        "operation": "adaptation",
+        "origin": "native_original",
+        "audience": "accessibility_specific",
+        "channel": "official",
+        "factuality": "factual",
+        "length": "sentence",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "accessibility",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "official"
+      },
+      "prompt": "Перепиши фразу для обычного пользователя формы. Юридический смысл должен сохраниться, но действие должно быть понятно с первого чтения.",
+      "expected_output": "Понятная версия без потери обязательного условия проверки данных.",
+      "assertions": [
+        "Сохранено сопоставление предоставленных сведений с данными системы",
+        "Не придуманы новые документы или шаги",
+        "Субъект и действие стали яснее",
+        "Упрощение не меняет юридический смысл"
+      ]
+    },
+    {
+      "id": "coreference",
+      "files": [
+        "evals/files/coreference_sample.txt"
+      ],
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "channel": "article",
+        "factuality": "unknown",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Исправь только неоднозначные местоимения. Остальное не переписывай.",
+      "expected_output": "Референты становятся однозначными с минимальными изменениями.",
+      "assertions": [
+        "Неоднозначность «она/его» устранена настолько, насколько позволяет контекст",
+        "Не придумано, кто именно говорил, если это нельзя определить",
+        "Остальные фразы почти не изменены"
+      ]
+    },
+    {
+      "id": "quotes-code",
+      "files": [
+        "evals/files/quotes_code_sample.md"
+      ],
+      "dimensions": {
+        "operation": "light_edit",
+        "embedded_material": "mixed",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "technical",
+        "audience": "expert",
+        "length": "short",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Отредактируй только авторский текст. Цитату, команду и URL не менять.",
+      "expected_output": "Цитируемая риторика и машинные фрагменты сохранены дословно; правится только авторская часть.",
+      "assertions": [
+        "Цитата сохранена дословно",
+        "Команда сохранена дословно",
+        "URL сохранён дословно",
+        "Цитата не используется как основание объявить авторский текст шаблонным"
+      ]
+    },
+    {
+      "id": "variation-preserve",
+      "files": [
+        "evals/files/voice_sample.txt"
+      ],
+      "dimensions": {
+        "operation": "proofreading",
+        "origin": "native_original",
+        "channel": "chat",
+        "factuality": "fiction",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "colloquial_written"
+      },
+      "prompt": "Это реплика персонажа в переписке. Исправь только явные опечатки, разговорную манеру не нормализуй.",
+      "expected_output": "Разговорный голос сохраняется.",
+      "assertions": [
+        "Не добавлена книжная лексика",
+        "Фрагментарность и разговорные частицы не удалены механически",
+        "Тире и отсутствие формальности не исправлены только ради нейтральной нормы"
+      ]
+    },
+    {
+      "id": "product-story",
+      "dimensions": {
+        "operation": "generation",
+        "origin": "native_original",
+        "channel": "article",
+        "factuality": "factual",
+        "audience": "expert",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "mixed",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Собери кейс продукта с ИИ: прототип на тестовых данных; я отвечал за API и участвовал в UX; после демо метрика выросла, эксперимента не было.",
+      "expected_output": "Различены стадия, вклад и причинность.",
+      "assertions": [
+        "Прототип не назван промышленным запуском",
+        "Автору не присвоен весь UX",
+        "Изменение метрики не выдано за доказанную причинность",
+        "Описаны границы ИИ-функции"
+      ]
+    },
+    {
+      "id": "technical-procedure",
+      "dimensions": {
+        "operation": "rewrite",
+        "channel": "technical",
+        "audience": "expert",
+        "origin": "native_original",
+        "factuality": "factual",
+        "length": "medium",
+        "embedded_material": "code",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Сделай из черновика техническую инструкцию: Windows 11, версия 3.2, после каждой команды нужен наблюдаемый результат.",
+      "expected_output": "Процедура в порядке зависимостей, команды копируемы.",
+      "assertions": [
+        "Предусловия Windows 11 и 3.2 сохранены",
+        "Команды не типографированы",
+        "У ключевых шагов есть ожидаемый результат",
+        "Терминология стабильна"
+      ]
+    },
+    {
+      "id": "oral",
+      "dimensions": {
+        "operation": "oral",
+        "channel": "speech",
+        "audience": "general",
+        "origin": "native_original",
+        "factuality": "factual",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "oral"
+      },
+      "prompt": "Переделай аналитический абзац в двухминутное выступление. Цифры важны, слушатель не видит слайд.",
+      "expected_output": "Произносимая речь с понятными числами и референтами.",
+      "assertions": [
+        "Смысл чисел не потерян",
+        "Нет искусственного насыщения словами-паразитами",
+        "Референты понятны на слух"
+      ]
+    },
+    {
+      "id": "fiction-dialogue",
+      "dimensions": {
+        "operation": "light_edit",
+        "factuality": "fiction",
+        "channel": "fiction",
+        "origin": "native_original",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "quotes",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "literary"
+      },
+      "prompt": "Отредактируй диалог: один персонаж сухой и официальный, второй сбивается и повторяется. Не делай их одинаково гладкими.",
+      "expected_output": "Различие голосов сохранено.",
+      "assertions": [
+        "Голоса различимы",
+        "Повторы второго не удалены механически",
+        "Нейтральная prose-норма не навязана всему диалогу"
+      ]
+    },
+    {
+      "id": "factual-material-gate",
+      "dimensions": {
+        "operation": "generation",
+        "factuality": "factual",
+        "risk": "ordinary",
+        "origin": "native_original",
+        "channel": "article",
+        "audience": "general",
+        "length": "long",
+        "embedded_material": "none",
+        "correction_goal": "mixed",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Напиши 2000 слов о моём опыте продукта. Я сообщил только: видел демо и понравился интерфейс.",
+      "expected_output": "Опыт не выдумывается; задача сужается или запрашиваются ключевые данные.",
+      "assertions": [
+        "Не сказано, что пользователь реально использовал продукт",
+        "Не придуманы покупки/ошибки/результаты",
+        "Недостаток материала учитывается"
+      ]
+    },
+    {
+      "id": "media-attribution",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "media",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "quotes",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Отредактируй короткую новостную заметку. Не превращай слова пресс-службы в подтверждённый факт и не переписывай точную цитату.",
+      "expected_output": "Заметка читается яснее, но атрибуция и границы подтверждённого сохранены.",
+      "assertions": [
+        "Слова пресс-службы остаются атрибутированными",
+        "Точная цитата не переписана",
+        "Не добавлена причинность, которой не было"
+      ]
+    },
+    {
+      "id": "social-platform-voice",
+      "dimensions": {
+        "operation": "adaptation",
+        "origin": "native_original",
+        "factuality": "unknown",
+        "channel": "social",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "colloquial_written"
+      },
+      "prompt": "Адаптируй этот спокойный личный текст для поста в соцсети. Не добавляй сленг, эмодзи и кликбейт от себя.",
+      "expected_output": "Формат становится удобнее для соцсети, но голос не подменяется стереотипной «социальной» манерой.",
+      "assertions": [
+        "Не добавлен искусственный сленг",
+        "Не добавлен кликбейт",
+        "Смысл и позиция автора сохранены"
+      ]
+    },
+    {
+      "id": "child-student-explanation",
+      "dimensions": {
+        "operation": "adaptation",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "article",
+        "audience": "child_or_student",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "accessibility",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Объясни этот абзац школьнику 12 лет. Научный термин нужно сохранить и один раз объяснить, а не заменить неточным бытовым словом.",
+      "expected_output": "Текст доступнее по структуре и лексике, но обязательный термин и научный смысл сохранены.",
+      "assertions": [
+        "Термин сохранён и объяснён",
+        "Не добавлена инфантилизирующая речь",
+        "Научный смысл не упрощён до неверного"
+      ]
+    },
+    {
+      "id": "high-stakes-health-rewrite",
+      "dimensions": {
+        "operation": "rewrite",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "official",
+        "audience": "general",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "high_stakes_factual",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "official"
+      },
+      "prompt": "Перепиши памятку пациенту более понятно. Не добавляй медицинских рекомендаций от себя, не меняй дозировки, условия и предупреждения.",
+      "expected_output": "Язык понятнее, но клинические факты, дозировки, модальность и предупреждения остаются неизменными.",
+      "assertions": [
+        "Не добавлены новые медицинские советы",
+        "Числа и дозировки не изменены",
+        "Предупреждения и условия не ослаблены",
+        "Степень уверенности не усилена"
+      ]
+    },
+    {
+      "id": "historical-pre1956-light-edit",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "article",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "pre_1956",
+        "target_register": "literary"
+      },
+      "prompt": "Легко отредактируй дореформенно звучащий мемуарный фрагмент 1930-х годов. Не осовременивай лексику только потому, что она непривычна; исправь лишь явные сбои связности и опечатки.",
+      "expected_output": "Исторический голос сохранён; современная норма не навязана ретроспективно.",
+      "assertions": [
+        "Архаичная или эпохальная лексика не заменена механически",
+        "Новые исторические факты не добавлены",
+        "Исправления ограничены заявленной глубиной"
+      ]
+    },
+    {
+      "id": "late20c-official-adaptation",
+      "dimensions": {
+        "operation": "adaptation",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "official",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "late_20c",
+        "target_register": "official"
+      },
+      "prompt": "Перепиши инструкцию из ведомственного документа 1988 года для современной справки. Сохрани обязательные условия, но не копируй советскую канцелярскую форму.",
+      "expected_output": "Условия сохранены, форма стала современной и понятной.",
+      "assertions": [
+        "Все обязательные условия сохранены",
+        "Исторические реалии не подменены современными без основания",
+        "Канцелярские оболочки можно упростить без изменения обязательности"
+      ]
+    },
+    {
+      "id": "translated-close-language",
+      "dimensions": {
+        "operation": "rewrite",
+        "origin": "translated",
+        "factuality": "factual",
+        "channel": "article",
+        "audience": "general",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "naturalness",
+        "translation_source": "close_to_russian",
+        "learner_l1": "not_applicable",
+        "source_period": "2010s",
+        "target_register": "neutral"
+      },
+      "prompt": "Это русский черновик, переведённый с белорусского. Сделай русский естественным, но не считай каждую похожую конструкцию калькой и не меняй смысл.",
+      "expected_output": "Редактура устраняет реальные неестественные места, не охотясь за сходством языков.",
+      "assertions": [
+        "Смысл исходного русского черновика сохранён",
+        "Похожие славянские конструкции не переписаны без необходимости",
+        "Не добавлены факты или интерпретации"
+      ]
+    },
+    {
+      "id": "translated-distant-language",
+      "dimensions": {
+        "operation": "rewrite",
+        "origin": "translated",
+        "factuality": "factual",
+        "channel": "technical",
+        "audience": "expert",
+        "length": "medium",
+        "embedded_material": "code",
+        "risk": "ordinary",
+        "correction_goal": "naturalness",
+        "translation_source": "distant_from_russian",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Это русский перевод технической документации с китайского. Убери неестественные кальки, но команды, имена параметров и причинные условия не меняй.",
+      "expected_output": "Естественный технический русский при сохранении машинных фрагментов и логики.",
+      "assertions": [
+        "Команды и идентификаторы сохранены дословно",
+        "Причинные и условные связи не усилены и не потеряны",
+        "Термины не варьируются ради стилистического разнообразия"
+      ]
+    },
+    {
+      "id": "l2-known-l1",
+      "dimensions": {
+        "operation": "proofreading",
+        "origin": "L2",
+        "factuality": "unknown",
+        "channel": "article",
+        "audience": "L2",
+        "length": "short",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "norm_only",
+        "translation_source": "not_applicable",
+        "learner_l1": "known",
+        "source_period": "2020s",
+        "target_register": "neutral"
+      },
+      "prompt": "Мой родной язык китайский. Исправь ошибки в русском абзаце и кратко объясни повторяющиеся проблемы, но не переписывай всё под стиль носителя.",
+      "expected_output": "Нормативная коррекция без стереотипизации по L1.",
+      "assertions": [
+        "L1 используется только как контекст обучения, а не как основание придумывать ошибки",
+        "Корректные фразы не переписаны массово",
+        "Объяснение связано с фактически найденными ошибками"
+      ]
+    },
+    {
+      "id": "mixed-factual-fiction-boundary",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "factuality": "mixed",
+        "channel": "article",
+        "audience": "general",
+        "length": "medium",
+        "embedded_material": "quotes",
+        "risk": "ordinary",
+        "correction_goal": "voice_preservation",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2000s",
+        "target_register": "literary"
+      },
+      "prompt": "Это документальная проза: факты и даты реальны, часть сцен реконструирована и помечена автором как реконструкция. Отредактируй ритм, не стирая границу между фактом и реконструкцией.",
+      "expected_output": "Фактологические и художественно-реконструированные слои остаются различимыми.",
+      "assertions": [
+        "Метки реконструкции не удалены",
+        "Реконструированная сцена не выдана за документальный факт",
+        "Даты и цитаты не изменены ради плавности"
+      ]
+    },
+    {
+      "id": "urls-preserve-edit",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "technical",
+        "audience": "expert",
+        "length": "short",
+        "embedded_material": "urls",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Отредактируй пояснение вокруг трёх URL, сами URL не меняй и не сокращай. Порядок ссылок соответствует шагам инструкции.",
+      "expected_output": "Авторский текст улучшен без повреждения URL и их порядка.",
+      "assertions": [
+        "URL сохранены дословно",
+        "Порядок URL не изменён",
+        "Шаги инструкции не переставлены без основания"
+      ]
+    },
+    {
+      "id": "table-preserve-edit",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "technical",
+        "audience": "expert",
+        "length": "medium",
+        "embedded_material": "tables",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Отредактируй текст до и после таблицы конфигурации. Значения и заголовки столбцов в таблице не менять; пояснения должны ссылаться на те же параметры.",
+      "expected_output": "Табличные данные защищены от стилистической правки.",
+      "assertions": [
+        "Числовые и текстовые значения таблицы сохранены",
+        "Имена параметров не переименованы",
+        "Пояснения не противоречат таблице"
+      ]
+    },
+    {
+      "id": "unknown-origin-neutral-edit",
+      "dimensions": {
+        "operation": "light_edit",
+        "origin": "unknown",
+        "factuality": "unknown",
+        "channel": "unknown",
+        "audience": "unknown",
+        "length": "short",
+        "embedded_material": "unknown",
+        "risk": "unknown",
+        "correction_goal": "clarity",
+        "translation_source": "unknown",
+        "learner_l1": "unknown",
+        "source_period": "unknown",
+        "target_register": "unknown"
+      },
+      "prompt": "Происхождение и жанр этого русского фрагмента неизвестны. Исправь только очевидно мешающие пониманию места и не диагностируй автора по стилю.",
+      "expected_output": "Консервативная правка без выдуманного профиля автора.",
+      "assertions": [
+        "Не делаются выводы о возрасте, регионе, профессии или родном языке автора",
+        "Неясные места исправляются минимально",
+        "Не навязывается конкретный жанровый голос без данных"
+      ]
+    },
+    {
+      "id": "ai-feature-contract",
+      "dimensions": {
+        "operation": "generation",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "technical",
+        "audience": "expert",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "clarity",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "По моим заметкам опиши AI-функцию: RAG по внутренним документам, внешний LLM, ответы подтверждает сотрудник, при недоступности модели остаётся обычный поиск. Не придумывай точность и безопасность.",
+      "expected_output": "Описан проверяемый контракт функции и деградация без маркетингового усиления.",
+      "assertions": [
+        "Различены retrieval, генерация и human verification",
+        "Указан fallback к поиску",
+        "Не придуманы метрики качества или гарантии приватности",
+        "Внешний LLM не скрыт за общим словом «ИИ»"
+      ]
+    },
+    {
+      "id": "portfolio-contribution-boundary",
+      "dimensions": {
+        "operation": "generation",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "article",
+        "audience": "expert",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "ordinary",
+        "correction_goal": "mixed",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "professional"
+      },
+      "prompt": "Собери портфолио-кейс. Я спроектировал API и написал backend прототипа; UX делал дизайнер, исследование проводил аналитик; решение показывали на демо, реальных пользователей ещё не было.",
+      "expected_output": "Личный вклад отделён от командного, стадия не завышена.",
+      "assertions": [
+        "Автору приписаны только API/backend в заявленных пределах",
+        "UX и исследование не присвоены автору",
+        "Демо не названо пользовательским запуском",
+        "Отсутствие реальных пользователей явно не маскируется"
+      ]
+    },
+    {
+      "id": "high-stakes-legal-conditions",
+      "dimensions": {
+        "operation": "rewrite",
+        "origin": "native_original",
+        "factuality": "factual",
+        "channel": "official",
+        "audience": "general",
+        "length": "medium",
+        "embedded_material": "none",
+        "risk": "high_stakes_factual",
+        "correction_goal": "accessibility",
+        "translation_source": "not_applicable",
+        "learner_l1": "not_applicable",
+        "source_period": "2020s",
+        "target_register": "official"
+      },
+      "prompt": "Сделай этот юридический порядок подачи заявления понятнее гражданину. Не меняй сроки, исключения, условия отказа и обязательность документов; если формулировка двусмысленна, не додумывай норму.",
+      "expected_output": "Понятная версия сохраняет юридически значимые условия.",
+      "assertions": [
+        "Сроки и исключения не изменены",
+        "Условия отказа не ослаблены и не усилены",
+        "Не добавлены несуществующие документы/обязанности",
+        "Неоднозначность исходной нормы не разрешена вымыслом"
+      ]
+    }
+  ]
+}

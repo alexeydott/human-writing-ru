@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "status": "small_local_probe_not_corpus_freeze",
+  "documents": [
+    {
+      "id": "gnupg-help",
+      "profile": "technical",
+      "words_rough": 1060,
+      "role": "natural_heldout",
+      "calibration_eligible": true,
+      "lexical_only": false,
+      "source_sha256": "6fba5ee88300f8599c18bacb0b5bbf6518c16c03b536e8ee12b832fe7bc72686",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/usr/share/gnupg/help.ru.txt"
+    },
+    {
+      "id": "texlive-readme",
+      "profile": "technical",
+      "words_rough": 419,
+      "role": "natural_heldout",
+      "calibration_eligible": true,
+      "lexical_only": false,
+      "source_sha256": "daa0ed424dd64eca46ba45ffbf436072c3752c7e1595528dded89623e2e7e24f",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/usr/share/texlive/readme-html.dir/readme.ru.html"
+    },
+    {
+      "id": "gnome-cantarell",
+      "profile": "product",
+      "words_rough": 165,
+      "role": "natural_heldout",
+      "calibration_eligible": true,
+      "lexical_only": false,
+      "source_sha256": "674d66aee8ee18d19d6ee8a2c1d20b1574bacaf1dc14956890a3f799090d64ad",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/usr/share/metainfo/org.gnome.cantarell.metainfo.xml"
+    },
+    {
+      "id": "gnome-screenshot",
+      "profile": "product",
+      "words_rough": 165,
+      "role": "natural_heldout",
+      "calibration_eligible": true,
+      "lexical_only": false,
+      "source_sha256": "79364d698fe9deefabe09cfded2970da09b090a35e2bf22fa28fa3c35e2785d2",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/usr/share/metainfo/org.gnome.Screenshot.metainfo.xml"
+    },
+    {
+      "id": "inkscape-appdata",
+      "profile": "product",
+      "words_rough": 347,
+      "role": "natural_heldout",
+      "calibration_eligible": true,
+      "lexical_only": false,
+      "source_sha256": "1aa78c3cb48a712c89e5218ddda01f0ac2150f15b3ff7a7c3cbe9e696e093bd7",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/usr/share/metainfo/org.inkscape.Inkscape.appdata.xml"
+    },
+    {
+      "id": "crime-punishment",
+      "profile": "prose",
+      "words_rough": 264,
+      "role": "domain_guard_fiction",
+      "calibration_eligible": false,
+      "lexical_only": false,
+      "source_sha256": "6bb0a945079de29a063e68025a71ddbd7134e6eb853b502f2cca1a6248ea6e3f",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/opt/pyvenv/lib/python3.13/site-packages/gensim/test/test_data/crime-and-punishment.txt"
+    },
+    {
+      "id": "ui-l10n-1",
+      "profile": "technical",
+      "words_rough": 1326,
+      "role": "lexical_secondary_control",
+      "calibration_eligible": false,
+      "lexical_only": true,
+      "source_sha256": "3fdc37ed5164035d74ac1fcc541199c71f4e6d7832385643aba3f6ffac1cdb2b",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/opt/pyvenv/lib/python3.13/site-packages/nbclassic/i18n/ru_RU/LC_MESSAGES/nbjs.po"
+    },
+    {
+      "id": "ui-l10n-2",
+      "profile": "technical",
+      "words_rough": 520,
+      "role": "lexical_secondary_control",
+      "calibration_eligible": false,
+      "lexical_only": true,
+      "source_sha256": "1edb4a867aedb5e99d1687ce5f9050b51090ca9d990d35621a76a3c752ba7576",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/opt/pyvenv/lib/python3.13/site-packages/nbclassic/i18n/ru_RU/LC_MESSAGES/nbui.po"
+    },
+    {
+      "id": "ui-l10n-3",
+      "profile": "technical",
+      "words_rough": 335,
+      "role": "lexical_secondary_control",
+      "calibration_eligible": false,
+      "lexical_only": true,
+      "source_sha256": "38824df507fd6e2504ad51e142d78a4be8b90d8dd0c75a4b9a3c921d82919f94",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/opt/pyvenv/lib/python3.13/site-packages/nbclassic/i18n/ru_RU/LC_MESSAGES/nbclassic.po"
+    },
+    {
+      "id": "ui-l10n-4",
+      "profile": "technical",
+      "words_rough": 1077,
+      "role": "lexical_secondary_control",
+      "calibration_eligible": false,
+      "lexical_only": true,
+      "source_sha256": "d85c9ae02690b78c79b528e0ed04269ef5a958ed84afcd739a7ea4b9d52b6ec0",
+      "source_kind": "locally installed public/package document",
+      "redistributed": false,
+      "source_locator": "/opt/pyvenv/lib/python3.13/site-packages/schedula/utils/form/server/locale/translations/ru_RU/LC_MESSAGES/antd.po"
+    }
+  ]
+}

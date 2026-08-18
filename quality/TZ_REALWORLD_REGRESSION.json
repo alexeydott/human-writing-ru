@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "rules_version": "1.0.0",
+  "source_sha256": "f3006d3086d5e47312684a6956a074080ef6967c0a9c21d15949f7d89e5e1142",
+  "source_bytes": 1337279,
+  "source_packaged": false,
+  "note": "Real-document heuristic noise-reduction regression. The source text is not redistributed in this package; only hash and aggregate counts are retained. Finding-count reduction is not a precision claim without expert adjudication.",
+  "runs": [
+    {
+      "pass": "initial",
+      "summary": {
+        "warning": 41,
+        "info": 247,
+        "total": 288,
+        "requirement_lines": 2145,
+        "obligation_lines": 529
+      },
+      "codes": {
+        "TZ001": 15,
+        "TZ003": 9,
+        "TZ004": 10,
+        "TZ006": 13,
+        "TZ002": 2,
+        "TZ005": 1,
+        "TZ009": 2,
+        "TZ010": 234,
+        "TZ011": 1,
+        "TZ013": 1
+      }
+    },
+    {
+      "pass": "pruned_1",
+      "summary": {
+        "warning": 12,
+        "info": 14,
+        "total": 26,
+        "requirement_lines": 565,
+        "obligation_lines": 541
+      },
+      "codes": {
+        "TZ001": 1,
+        "TZ004": 10,
+        "TZ002": 1,
+        "TZ005": 1,
+        "TZ003": 8,
+        "TZ009": 2,
+        "TZ010": 1,
+        "TZ011": 1,
+        "TZ013": 1
+      }
+    },
+    {
+      "pass": "pruned_2",
+      "summary": {
+        "warning": 6,
+        "info": 13,
+        "total": 19,
+        "requirement_lines": 541,
+        "obligation_lines": 541
+      },
+      "codes": {
+        "TZ001": 1,
+        "TZ004": 10,
+        "TZ002": 1,
+        "TZ005": 1,
+        "TZ003": 2,
+        "TZ009": 2,
+        "TZ011": 1,
+        "TZ013": 1
+      }
+    },
+    {
+      "pass": "final",
+      "summary": {
+        "warning": 3,
+        "info": 13,
+        "total": 16,
+        "requirement_lines": 541,
+        "obligation_lines": 541
+      },
+      "codes": {
+        "TZ004": 10,
+        "TZ002": 1,
+        "TZ005": 1,
+        "TZ009": 2,
+        "TZ011": 1,
+        "TZ013": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+name: Russian held-out decision gate v3
+
+on:
+  workflow_dispatch:
+    inputs:
+      annotations_path:
+        description: Optional repository-relative completed adjudication CSV
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  heldout-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install acquisition dependencies
+        run: python -m pip install --upgrade pip datasets PyYAML
+
+      - name: Validate package before network work
+        run: |
+          python scripts/validate_skill.py
+          python scripts/validate_eval_design.py
+          python tests/test_ablation_v3.py
+          python tests/test_edit_integrity.py
+          python tests/test_external_gate_runner.py
+
+      - name: Run acquisition and decision protocol
+        id: gate
+        shell: bash
+        env:
+          ANNOTATIONS_PATH: ${{ inputs.annotations_path }}
+        run: |
+          set +e
+          args=(--output-dir heldout-work)
+          if [ -n "$ANNOTATIONS_PATH" ]; then
+            if [ ! -f "$ANNOTATIONS_PATH" ]; then
+              echo "annotations_path does not exist in checkout: $ANNOTATIONS_PATH" | tee heldout-gate.log
+              echo "exit_code=2" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            args+=(--annotations "$ANNOTATIONS_PATH")
+          fi
+          python scripts/run_external_heldout_gate.py "${args[@]}" 2>&1 | tee heldout-gate.log
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload gate outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: human-writing-ru-heldout-gate-v3
+          path: |
+            heldout-work/**
+            heldout-gate.log
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Enforce evidence state
+        shell: bash
+        run: |
+          code='${{ steps.gate.outputs.exit_code }}'
+          case "$code" in
+            0)
+              echo "v3 evidence/adjudication stage complete. Policy still requires explicit human review before any threshold change."
+              ;;
+            3)
+              echo "All-profile 50/10000 materialization stage is incomplete."
+              exit 3
+              ;;
+            6)
+              echo "Profile size gate passed, but one or more diversity/signal/split evidence gates are incomplete."
+              exit 6
+              ;;
+            7)
+              echo "Evidence gates passed; natural-alert adjudication is still required. Download alert-adjudication.csv, complete it, add it to a review branch, and rerun with annotations_path."
+              exit 7
+              ;;
+            *)
+              echo "Held-out gate failed with exit code $code."
+              exit "${code:-2}"
+              ;;
+          esac
