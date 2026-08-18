@@ -24,6 +24,7 @@ PACKAGE_EXCLUDE_DIR_NAMES = CLEAN_DIR_NAMES | {
     ".opencode",
     ".venv",
     "node_modules",
+    "examples",
 }
 PACKAGE_EXCLUDE_FILE_NAMES = CLEAN_FILE_NAMES | {".gitignore"}
 PACKAGE_EXCLUDE_REL_DIRS = {Path("data/.examples")}

@@ -5,6 +5,7 @@ import csv
 import hashlib
 import importlib.util
 import json
+import os
 import re
 from pathlib import Path
 import subprocess
@@ -411,6 +412,55 @@ with tempfile.TemporaryDirectory() as td:
 
 print("OK LJSearch successful-routing regression")
 
+# Web-index IDs must remain unique when articles share one path and differ only
+# by query parameters, as on publishers that route all cases through /news.
+with tempfile.TemporaryDirectory() as td:
+    base = Path(td)
+    source = {
+        "id": "web_fixture", "profiles": ["product"], "channels": ["business_case"],
+        "source_url": "https://example.test/", "target_documents": 2,
+        "minimum_words_per_document": 5, "minimum_paragraphs_per_document": 1,
+        "license_or_terms": "test", "redistribution": "test-only",
+    }
+    urls = ["https://example.test/news?id=1", "https://example.test/news?id=2"]
+    old_discover = mod.discover_index_urls
+    old_fetch = mod.fetch_text
+    try:
+        mod.discover_index_urls = lambda *a, **k: (urls, [])
+        mod.fetch_text = lambda url, **k: (
+            f"<p>Это отдельный русский материал номер {url[-1]} с достаточным количеством слов для проверки.</p>",
+            url,
+        )
+        args = type("Args", (), {
+            "target_docs": None, "timeout": 1.0, "user_agent": "test",
+            "delay": 0.0, "max_index_pages": 1,
+        })()
+        rows, hashes = [], set()
+        rep = mod.materialize_web_index(source, base, args, rows, hashes)
+        assert rep["accepted"] == 2, rep
+        assert len({row["id"] for row in rows}) == 2, rows
+    finally:
+        mod.discover_index_urls = old_discover
+        mod.fetch_text = old_fetch
+
+print("OK web-index query identity regression")
+
+# GitHub API requests use an available token, but other hosts never receive it.
+old_token = os.environ.get("GITHUB_TOKEN")
+try:
+    os.environ["GITHUB_TOKEN"] = "fixture-secret"
+    github_headers = mod.request_headers("https://api.github.com/repos/o/r", "test")
+    other_headers = mod.request_headers("https://example.test/data", "test")
+    assert github_headers["Authorization"] == "Bearer fixture-secret"
+    assert "Authorization" not in other_headers
+finally:
+    if old_token is None:
+        os.environ.pop("GITHUB_TOKEN", None)
+    else:
+        os.environ["GITHUB_TOKEN"] = old_token
+
+print("OK scoped GitHub authentication regression")
+
 # Local sidecar preserves verified author/split provenance instead of inventing it.
 with tempfile.TemporaryDirectory() as td:
     base = Path(td)
@@ -435,6 +485,10 @@ with tempfile.TemporaryDirectory() as td:
     assert row["split_group"] == "session-7"
     assert row["source_document_id"] == "upstream-99"
     assert row["independence_group"] == "event-99"
+    imported = base / "out" / row["path"]
+    assert row["sha256"] == hashlib.sha256(
+        imported.read_text(encoding="utf-8").encode("utf-8")
+    ).hexdigest()
 
 print("OK local sidecar provenance regression")
 

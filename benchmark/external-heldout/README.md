@@ -15,13 +15,16 @@ URL или search snippet сам по себе никогда не считае�
 ## Рекомендуемый сетевой запуск
 
 ```bash
-python3 -m pip install datasets
-python3 scripts/run_external_heldout_gate.py \
-  --output-dir ../heldout-work \
-  --local-source taiga_social=/data/taiga-social \
-  --local-source duma_speeches_1994_2021=/data/duma \
-  --local-source pravo_open_data=/data/pravo
+python3 -m pip install datasets PyYAML pypdf
+python3 scripts/fetch_local_heldout_corpora.py
+python3 scripts/run_local_heldout_workflow.py
 ```
+
+Prepared corpora live under ignored `examples/<source_id>/` directories and are
+auto-discovered by both the orchestrator and materializer. Use
+`--local-corpus-root` or `HUMAN_WRITING_RU_EXAMPLES_DIR` for another location.
+The local workflow also reuses `GITHUB_TOKEN`/`GH_TOKEN`, or the active `gh auth`
+credential, for authenticated GitHub API reads without forwarding it to other hosts.
 
 Current default source selection включает эти manual/local strata. Без соответствующих путей run остаётся diagnostic и не может честно пройти все v3 diversity gates.
 
@@ -61,7 +64,7 @@ python3 scripts/materialize_external_heldout.py \
 ```bash
 python3 scripts/materialize_external_heldout.py \
   --sources taiga_social \
-  --local-source taiga_social=/data/taiga-selected \
+  --local-corpus-root examples \
   --output-dir ../heldout-work
 ```
 

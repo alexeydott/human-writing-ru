@@ -5,13 +5,13 @@
 ## Запуск
 
 ```bash
-python3 -m pip install datasets
-python3 scripts/run_external_heldout_gate.py \
-  --output-dir ../heldout-work \
-  --local-source taiga_social=/data/taiga-social \
-  --local-source duma_speeches_1994_2021=/data/duma \
-  --local-source pravo_open_data=/data/pravo
+python3 -m pip install datasets PyYAML pypdf
+python3 scripts/fetch_local_heldout_corpora.py
+python3 scripts/run_local_heldout_workflow.py
 ```
+
+По умолчанию runner автоматически использует `examples/<source_id>/manifest.csv`.
+Другой корень задаётся `--local-corpus-root` или `HUMAN_WRITING_RU_EXAMPLES_DIR`.
 
 Без нужных local strata default run остаётся полезным acquisition probe, но current `prose` channel/author, `oral` author/source и `official` source-diversity gates не могут быть объявлены пройденными.
 

@@ -120,6 +120,18 @@ python3 scripts/validate_eval_design.py
 python3 scripts/audit_eval_coverage.py
 ```
 
+Локальный GitHub Actions-equivalent held-out workflow с обязательными внешними
+корпусами запускается отдельно:
+
+```bash
+python3 -m pip install datasets PyYAML pypdf
+python3 scripts/fetch_local_heldout_corpora.py
+python3 scripts/run_local_heldout_workflow.py
+```
+
+Скачанные archives/PDF, подготовленные тексты и результаты находятся в
+игнорируемом `examples/` и не входят в release ZIP.
+
 ## Калибровка на локальной выборке
 
 Создайте манифест по образцу `data/corpus_manifest.example.csv`, затем:

@@ -40,6 +40,9 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "benchmark/external-heldout/SOURCE_REGISTRY.json"
+DEFAULT_LOCAL_CORPUS_ROOT = Path(
+    os.environ.get("HUMAN_WRITING_RU_EXAMPLES_DIR", str(ROOT / "examples"))
+)
 WORD_RE = re.compile(r"[А-Яа-яЁёA-Za-z]+(?:[-'][А-Яа-яЁёA-Za-z]+)*", re.UNICODE)
 RUS_RE = re.compile(r"[А-Яа-яЁё]")
 LJ_SAVED_RE = re.compile(r"(?:https?://ljsear\.ch)?/savedcopy\?post=(\d+)", re.I)
@@ -147,11 +150,21 @@ def slug(value: str, max_len: int = 80) -> str:
     return (value or "doc")[:max_len]
 
 
+def request_headers(url: str, user_agent: str) -> dict[str, str]:
+    headers = {"User-Agent": user_agent, "Accept": "*/*"}
+    if urlparse(url).netloc.lower() == "api.github.com":
+        token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+            headers["Accept"] = "application/vnd.github+json"
+    return headers
+
+
 def fetch_bytes(url: str, *, timeout: float, user_agent: str, retries: int = 2) -> tuple[bytes, str]:
     last: Exception | None = None
     for attempt in range(retries + 1):
         try:
-            req = Request(url, headers={"User-Agent": user_agent, "Accept": "*/*"})
+            req = Request(url, headers=request_headers(url, user_agent))
             with urlopen(req, timeout=timeout) as resp:
                 return resp.read(), resp.geturl()
         except (HTTPError, URLError, TimeoutError, OSError) as exc:
@@ -197,7 +210,10 @@ def make_row(*, path: Path, out: Path, profile: str, channel: str, source_id: st
         "independence_group": independence_group or source_document_id or doc_id,
         "license_or_terms": license_or_terms,
         "redistribution": redistribution,
-        "sha256": sha256_text(text),
+        # Hash the decoded UTF-8 text written by write_document(), including
+        # its canonical trailing newline. This matches the validator and is
+        # independent of Windows CRLF byte translation.
+        "sha256": sha256_text(path.read_text(encoding="utf-8")),
         "words": word_count(text),
         "paragraphs": paragraph_count(text),
         "russian_share": round(russian_share(text), 4),
@@ -608,7 +624,12 @@ def materialize_web_index(source: dict, out: Path, args, rows: list[dict], hashe
             if not eligible(text, source):
                 continue
             parsed = urlparse(final)
-            doc_id = slug(parsed.path.strip("/").replace("/", "-")) or hashlib.sha1(url.encode()).hexdigest()[:12]
+            base_id = slug(parsed.path.strip("/").replace("/", "-")) or "page"
+            # Some publishers route every article through one path (for
+            # example /news) and put the real document identity in the query.
+            # Include the requested URL so distinct articles cannot collapse
+            # to a duplicate manifest id.
+            doc_id = f"{base_id}-{hashlib.sha1(url.encode()).hexdigest()[:12]}"
             # Publisher/agency extraction is deliberately conservative. If unknown,
             # source+doc remains independent but validator reports concentration.
             path = write_document(out, profile, source["id"], doc_id, text)
@@ -782,6 +803,10 @@ def main() -> int:
     ap.add_argument("--output-dir", type=Path, required=True)
     ap.add_argument("--local-source", action="append", default=[], metavar="SOURCE_ID=PATH",
                     help="Import an already downloaded local text tree for manual_or_local_tree sources")
+    ap.add_argument("--local-corpus-root", type=Path, default=DEFAULT_LOCAL_CORPUS_ROOT,
+                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: examples or HUMAN_WRITING_RU_EXAMPLES_DIR)")
+    ap.add_argument("--no-auto-local-sources", action="store_true",
+                    help="Disable local corpus auto-discovery")
     ap.add_argument("--target-docs", type=int, default=0, help="Override per-source target (testing/small runs)")
     ap.add_argument("--timeout", type=float, default=30.0)
     ap.add_argument("--delay", type=float, default=0.35, help="Polite delay between web requests")
@@ -816,6 +841,19 @@ def main() -> int:
             ap.error("--local-source must be SOURCE_ID=PATH")
         sid, path = item.split("=", 1)
         local_map[sid] = Path(path).expanduser().resolve()
+    if not args.no_auto_local_sources:
+        local_root = args.local_corpus_root.expanduser().resolve()
+        for sid in args.sources:
+            candidate = local_root / sid
+            if (
+                sources[sid].get("adapter") == "manual_or_local_tree"
+                and sid not in local_map
+                and (candidate / "manifest.csv").is_file()
+            ):
+                local_map[sid] = candidate
+    invalid_local = [f"{sid}={path}" for sid, path in local_map.items() if not (path / "manifest.csv").is_file()]
+    if invalid_local:
+        ap.error("local corpus path must contain manifest.csv: " + ", ".join(invalid_local))
 
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=True)

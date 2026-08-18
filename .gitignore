@@ -75,6 +75,7 @@ dist-review*/
 .dist.*/
 
 # Local corpora and derived research data
+examples/
 data/.examples/
 data/raw/
 data/local/

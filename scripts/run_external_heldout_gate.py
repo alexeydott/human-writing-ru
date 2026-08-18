@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -29,6 +30,9 @@ DECISION_SPEC = ROOT / "benchmark/ablation/spec-v3.json"
 PROFILE_SPEC = DECISION_SPEC
 PROFILE_FILE = ROOT / "profiles/editorial-baseline.json"
 FROZEN = ROOT / "benchmark/external-heldout/FROZEN_INPUT_SHA256.json"
+DEFAULT_LOCAL_CORPUS_ROOT = Path(
+    os.environ.get("HUMAN_WRITING_RU_EXAMPLES_DIR", str(ROOT / "examples"))
+)
 
 DEFAULT_SOURCES = (
     # prose
@@ -80,6 +84,31 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def resolve_local_sources(
+    items: list[str], local_root: Path, selected_ids: list[str], sources: dict[str, dict], auto: bool
+) -> dict[str, Path]:
+    resolved: dict[str, Path] = {}
+    for item in items:
+        if "=" not in item:
+            raise ValueError("--local-source must be SOURCE_ID=PATH")
+        source_id, value = item.split("=", 1)
+        if source_id in resolved:
+            raise ValueError(f"duplicate --local-source for {source_id}")
+        resolved[source_id] = Path(value).expanduser().resolve()
+    if auto:
+        local_root = local_root.expanduser().resolve()
+        for source_id in selected_ids:
+            source = sources[source_id]
+            candidate = local_root / source_id
+            if (
+                source.get("adapter") == "manual_or_local_tree"
+                and source_id not in resolved
+                and (candidate / "manifest.csv").is_file()
+            ):
+                resolved[source_id] = candidate
+    return resolved
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Materialize held-out data and run leak-resistant decision protocol v3")
     ap.add_argument("--output-dir", type=Path, required=True)
@@ -88,6 +117,10 @@ def main() -> int:
     ap.add_argument("--annotations", type=Path, default=None, help="Optional completed natural-alert adjudication CSV for protocol v3")
     ap.add_argument("--local-source", action="append", default=[], metavar="SOURCE_ID=PATH",
                     help="Pass a local corpus tree to a manual_or_local_tree source; may be repeated")
+    ap.add_argument("--local-corpus-root", type=Path, default=DEFAULT_LOCAL_CORPUS_ROOT,
+                    help="Auto-discover SOURCE_ID/manifest.csv trees here (default: examples or HUMAN_WRITING_RU_EXAMPLES_DIR)")
+    ap.add_argument("--no-auto-local-sources", action="store_true",
+                    help="Disable local corpus auto-discovery; only explicit --local-source values are used")
     ap.add_argument("--timeout", type=float, default=30.0)
     ap.add_argument("--delay", type=float, default=0.35)
     ap.add_argument("--max-index-pages", type=int, default=12)
@@ -108,6 +141,15 @@ def main() -> int:
     format_unverified = [sid for sid in args.sources if "format_unverified" in str(sources[sid].get("status", ""))]
     if format_unverified:
         ap.error("decision runs refuse format-unverified source ids: " + ", ".join(format_unverified))
+    try:
+        local_sources = resolve_local_sources(
+            args.local_source, args.local_corpus_root, args.sources, sources, not args.no_auto_local_sources
+        )
+    except ValueError as exc:
+        ap.error(str(exc))
+    invalid_local = [f"{sid}={path}" for sid, path in local_sources.items() if not (path / "manifest.csv").is_file()]
+    if invalid_local:
+        ap.error("local corpus path must contain manifest.csv: " + ", ".join(invalid_local))
 
     out = args.output_dir.resolve(); out.mkdir(parents=True, exist_ok=True)
     gate_report_path = out / "NETWORK_GATE_RUN_REPORT.json"
@@ -149,6 +191,8 @@ def main() -> int:
         "status": "starting",
         "sources": list(args.sources),
         "workspace_mode": "resume" if args.resume else "fresh",
+        "local_corpus_root": str(args.local_corpus_root.expanduser().resolve()),
+        "local_sources": {source_id: str(path) for source_id, path in sorted(local_sources.items())},
         "selected_source_profile_coverage": profiles_covered(args.sources, sources),
         "frozen_inputs_pre": pre,
         "decision_runner": str(DECISION_RUNNER.relative_to(ROOT)),
@@ -166,9 +210,9 @@ def main() -> int:
     for sid in args.sources:
         if materialization_report_path.exists(): materialization_report_path.unlink()
         cmd = [sys.executable, str(MATERIALIZER), "--registry", str(args.registry), "--sources", sid, "--output-dir", str(out), "--timeout", str(args.timeout), "--delay", str(args.delay), "--max-index-pages", str(args.max_index_pages)]
-        for local_item in args.local_source:
-            if local_item.split("=", 1)[0] == sid:
-                cmd.extend(["--local-source", local_item])
+        cmd.append("--no-auto-local-sources")
+        if sid in local_sources:
+            cmd.extend(["--local-source", f"{sid}={local_sources[sid]}"])
         one = run(cmd, timeout=args.source_process_timeout); one["source_id"] = sid
         if materialization_report_path.exists():
             try:
