@@ -6,10 +6,14 @@ import csv
 import json
 import py_compile
 import re
+import sys
 import tempfile
 from pathlib import Path
 
 import yaml
+
+sys.dont_write_bytecode = True
+from build_lite import MAX_LITE_CHARACTERS, render_lite, validate_lite
 
 ROOT = Path(__file__).resolve().parents[1]
 errors: list[str] = []
@@ -288,8 +292,18 @@ for rel in operational_docs:
 lite = ROOT / "dist/human-writing-ru-lite.md"
 if not lite.exists():
     err("dist/human-writing-ru-lite.md missing")
-elif version and version not in lite.read_text(encoding="utf-8"):
-    err("dist/human-writing-ru-lite.md does not mention current VERSION")
+else:
+    lite_text = lite.read_text(encoding="utf-8")
+    if version and version not in lite_text:
+        err("dist/human-writing-ru-lite.md does not mention current VERSION")
+    if len(lite_text) > MAX_LITE_CHARACTERS:
+        err(f"dist/human-writing-ru-lite.md exceeds {MAX_LITE_CHARACTERS} characters")
+    if lite_text != render_lite():
+        err("dist/human-writing-ru-lite.md is stale; run scripts/build_lite.py")
+    try:
+        validate_lite(lite_text)
+    except ValueError as exc:
+        err(f"invalid dist/human-writing-ru-lite.md: {exc}")
 
 # Structural validation of the external source registry. This is deliberately lightweight and dependency-free.
 registry_path = ROOT / "benchmark/external-heldout/SOURCE_REGISTRY.json"
@@ -421,4 +435,3 @@ for message in errors:
 for message in warnings:
     print("WARN:", message)
 raise SystemExit(1 if errors else 0)
-

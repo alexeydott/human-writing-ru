@@ -12,6 +12,7 @@
 - Получение Yandex Cloud Docs устойчиво обрабатывает усечённый ответ GitHub API: для большого репозитория обходится объявленное поддерево `ru/`.
 - `profiles/README.md` описывает актуальный калибровочный цикл v3: раздельные диагностические распределения `profile,channel`, связанный split, ручная разметка естественных срабатываний и запрет на автоматическое изменение профиля.
 - Локальные данные и результаты workflow по-прежнему не входят в Git или архив выпуска.
+- Краткая инструкция для прямой вставки в сетевой диалог теперь автономна: она не требует программ или локальных файлов, не содержит остаточных англицизмов и ограничена 2000 знаками с запасом относительно 2048. Её формирует `scripts/build_lite.py`, а сборщик выпуска обновляет автоматически.
 
 ## Что изменено в 1.9.0-beta.3
 
@@ -134,6 +135,7 @@ python3 tests/test_external_heldout_tools.py
 python3 tests/test_external_gate_runner.py
 python3 tests/test_edit_integrity.py
 python3 tests/test_ab_eval_tools.py
+python3 tests/test_lite_builder.py
 python3 tests/test_validation_mutations.py
 python3 scripts/validate_eval_design.py
 python3 scripts/audit_eval_coverage.py

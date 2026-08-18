@@ -38,6 +38,8 @@ def main()->None:
             assert 'human-writing-ru/data/README.md' in names
             assert 'human-writing-ru/data/corpus_manifest.example.csv' in names
             assert 'human-writing-ru/dist/human-writing-ru-lite.md' in names
+            lite=z.read('human-writing-ru/dist/human-writing-ru-lite.md').decode('utf-8')
+            assert len(lite)<=2000 and 'Работай только с текстом и сведениями диалога' in lite
             assert not any('/data/taiga_social/' in n or '/data/heldout-work/' in n for n in names)
             assert not any(n.endswith('.zip') or n.endswith('.sha256.txt') for n in names)
             assert 'human-writing-ru/.gitignore' not in names

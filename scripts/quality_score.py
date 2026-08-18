@@ -30,7 +30,7 @@ add('agent_skills_spec_and_package_hygiene',14,v['ok'],v)
 tests=[
  'tests/test_check_prose_ru.py','tests/test_corpus_tools.py','tests/test_benchmark_tools.py','tests/test_ablation_tools.py',
  'tests/test_ablation_v3.py','tests/test_external_heldout_tools.py','tests/test_external_gate_runner.py','tests/test_edit_integrity.py',
- 'tests/test_ab_eval_tools.py','tests/test_release_builder.py','tests/test_validation_mutations.py','tests/test_check_tz_ru.py','tests/test_tz_rule_cases.py','tests/test_humanizer_adaptation.py'
+ 'tests/test_ab_eval_tools.py','tests/test_release_builder.py','tests/test_lite_builder.py','tests/test_validation_mutations.py','tests/test_check_tz_ru.py','tests/test_tz_rule_cases.py','tests/test_humanizer_adaptation.py'
 ]
 tr=[]
 with ThreadPoolExecutor(max_workers=min(6,len(tests))) as pool:

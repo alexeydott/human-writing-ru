@@ -104,6 +104,13 @@
           "stderr": ""
         },
         {
+          "test": "tests/test_lite_builder.py",
+          "ok": true,
+          "returncode": 0,
+          "stdout": "test_lite_builder: OK (1970/2000 знаков)\n",
+          "stderr": ""
+        },
+        {
           "test": "tests/test_release_builder.py",
           "ok": true,
           "returncode": 0,

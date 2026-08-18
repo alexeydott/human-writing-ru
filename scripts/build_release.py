@@ -10,6 +10,9 @@ import subprocess
 import sys
 import zipfile
 
+sys.dont_write_bytecode = True
+from build_lite import write_lite
+
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_NAME = "human-writing-ru"
 DEFAULT_OUTPUT_DIR = ROOT / "dist"
@@ -83,6 +86,7 @@ def write_release_integrity() -> None:
         "SKILL.md",
         "profiles/editorial-baseline.json",
         "scripts/check_prose_ru.py",
+        "scripts/build_lite.py",
         "scripts/ablate_signals.py",
         "benchmark/ablation/spec-v3.json",
         "scripts/ablate_signals_v3.py",
@@ -174,6 +178,7 @@ def main() -> int:
     if ROOT.name != SKILL_NAME:
         raise SystemExit(f"skill directory must be named {SKILL_NAME!r}, got {ROOT.name!r}")
     clean_generated()
+    write_lite()
     write_release_integrity()
     write_hash_manifest()
     write_inventory()

@@ -18,6 +18,7 @@
     "SKILL.md": "42b6b4118d3a6ad6606d466687adf37e6be6bb9bdabaa0e6888b2a7bd4536548",
     "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839",
     "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+    "scripts/build_lite.py": "2452a3c51c5e4bdeffcd65bab3689aa0e5cf9f8d910f361e1ade08f4d5ac207e",
     "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
     "benchmark/ablation/spec-v3.json": "5d40a272d3ccec8cd126c5fac3e94fdfb32e0496b693f1a4ad872ee4637963c6",
     "scripts/ablate_signals_v3.py": "9768c5b637310622512f7b2747933af15a34a7946080872bdbd309814a8dd00b",
