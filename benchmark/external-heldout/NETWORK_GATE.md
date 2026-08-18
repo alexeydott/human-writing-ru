@@ -1,6 +1,6 @@
-# Network held-out gate — v3
+# Сетевая проверка held-out — v3
 
-Этот orchestrator материализует внешний held-out и допускает current decision runner только после обязательных предварительных gates. Он не меняет лингвистические правила или active thresholds.
+Этот координатор получает внешний held-out и допускает текущий исполнитель решения только после обязательных предварительных проверок. Он не меняет лингвистические правила или действующие пороги.
 
 ## Запуск
 
@@ -10,10 +10,12 @@ python3 scripts/fetch_local_heldout_corpora.py
 python3 scripts/run_local_heldout_workflow.py
 ```
 
-По умолчанию runner автоматически использует `data/<source_id>/manifest.csv`.
+По умолчанию исполнитель автоматически использует `data/<source_id>/manifest.csv`.
 Другой корень задаётся `--local-corpus-root` или `HUMAN_WRITING_RU_DATA_DIR`.
 
-Без нужных local strata default run остаётся полезным acquisition probe, но current `prose` channel/author, `oral` author/source и `official` source-diversity gates не могут быть объявлены пройденными.
+Без нужных локальных слоёв запуск по умолчанию остаётся полезной диагностикой получения,
+но проверки канала/автора `prose`, автора/источника `oral` и разнообразия источников `official`
+нельзя объявить пройденными.
 
 Для локально скачанного корпуса можно повторять:
 
@@ -21,7 +23,7 @@ python3 scripts/run_local_heldout_workflow.py
 --local-source SOURCE_ID=/path/to/corpus
 ```
 
-По умолчанию запуск fresh: generated manifests/reports предыдущего experiment удаляются. Для явного продолжения используйте `--resume`; runner проверит, что существующий manifest не содержит чужих source IDs. Локальный `<local-root>/manifest.csv` может передать проверенный speaker/author/split provenance; без него materializer не выдумывает автора. Источники `format_unverified` в current decision-run запрещены.
+По умолчанию запуск новый: созданные манифесты и отчёты предыдущего эксперимента удаляются. Для явного продолжения используйте `--resume`; исполнитель проверит, что существующий манифест не содержит чужих ID источников. Локальный `<local-root>/manifest.csv` может передать проверенный provenance говорящего/автора/split; без него средство получения не выдумывает автора. Источники `format_unverified` запрещены в текущем запуске решения.
 
 После получения `alert-adjudication.csv` повторный запуск принимает:
 
@@ -31,32 +33,32 @@ python3 scripts/run_local_heldout_workflow.py
 
 ## Жёсткий порядок
 
-1. Проверить SHA-256 frozen `check_prose_ru.py`, historical `ablate_signals.py` и `profiles/editorial-baseline.json`.
-2. Материализовать выбранные sources независимо друг от друга в acquisition `manifest.csv`.
-3. Запустить `validate_external_heldout.py` и получить representative-only `manifest.validated.csv`.
+1. Проверить SHA-256 замороженных `check_prose_ru.py`, исторического `ablate_signals.py` и `profiles/editorial-baseline.json`.
+2. Получить выбранные источники независимо друг от друга в `manifest.csv`.
+3. Запустить `validate_external_heldout.py` и получить представительный `manifest.validated.csv`.
 4. Проверить все пять профилей: каждый должен иметь ≥50 независимых документов и ≥10 000 слов.
-5. Только после шага 4 вызвать **`ablate_signals_v3.py`**, никогда не historical runner для новых решений.
-6. Внутри v3 проверить profile/source/channel/author diversity, signal-specific eligibility и connected calibration/validation split.
-7. Сформировать natural-alert annotation template.
-8. После adjudication повторить v3; candidate/off остаются `pending_human_review` даже при поддерживающих данных.
-9. Повторно проверить frozen hashes.
+5. Только после шага 4 вызвать **`ablate_signals_v3.py`**, никогда не исторический исполнитель для новых решений.
+6. Внутри v3 проверить разнообразие профилей/источников/каналов/авторов, пригодность сигналов и связанный калибровочный/проверочный split.
+7. Сформировать шаблон разметки естественных срабатываний.
+8. После разметки повторить v3; candidate/off остаются `pending_human_review` даже при поддерживающих данных.
+9. Повторно проверить замороженные хеши.
 
 ## Exit codes
 
-- `3` — profile-size stage не достигнут; `DECISION_NOT_RUN.json`;
-- `6` — profile stage пройден, но v3 evidence gate неполон; `DECISION_NOT_READY.json`;
-- `7` — v3 evidence достаточно, требуется natural-alert adjudication;
-- `0` — preregistered evidence/adjudication stage завершён; требуется явный policy review;
-- `2/4/5` — acquisition/validator/frozen-integrity/decision subprocess failure.
+- `3` — проверка размера профилей не достигнута; `DECISION_NOT_RUN.json`;
+- `6` — проверка профилей пройдена, но проверка доказательств v3 неполна; `DECISION_NOT_READY.json`;
+- `7` — доказательств v3 достаточно, требуется разметка естественных срабатываний;
+- `0` — заранее зарегистрированный этап доказательств/разметки завершён; требуется явная проверка политики;
+- `2/4/5` — сбой получения/проверки/целостности замороженных данных/дочернего процесса решения.
 
 ## Основные outputs
 
-- `manifest.csv` — acquisition log, **не** статистическая выборка;
-- `manifest.validated.csv` — deduplicated representative-only decision input;
-- `VALIDATION_REPORT.json` — profile-size/dedup diagnostics;
-- `ABLATION_DECISION_V3.json` — current decision-protocol result;
-- `alert-adjudication.csv` — natural-alert review template;
-- `NETWORK_GATE_RUN_REPORT.json` — network/protocol/frozen-hash provenance;
+- `manifest.csv` — журнал получения, **не** статистическая выборка;
+- `manifest.validated.csv` — представительный вход решения после устранения дублей;
+- `VALIDATION_REPORT.json` — диагностика размера профилей и дублей;
+- `ABLATION_DECISION_V3.json` — результат текущего протокола решения;
+- `alert-adjudication.csv` — шаблон разметки естественных срабатываний;
+- `NETWORK_GATE_RUN_REPORT.json` — provenance сети/протокола/замороженных хешей;
 - `DECISION_NOT_RUN.json` или `DECISION_NOT_READY.json` — явные блокирующие состояния.
 
-Raw third-party texts не включаются в release ZIP без отдельной проверки прав конкретного источника.
+Исходные сторонние тексты не включаются в ZIP выпуска без отдельной проверки прав конкретного источника.

@@ -1,7 +1,7 @@
-# Локальные данные и воспроизведение held-out workflow
+# Локальные данные и воспроизведение рабочего конвейера held-out
 
 `data/` — единый локальный корень. Загруженные корпуса, OCR-инструменты,
-кэши и отчёты здесь не публикуются и исключены из release-архива. В Git
+кэши и отчёты здесь не публикуются и исключены из архива выпуска. В Git
 остаются только этот файл и маленький шаблон `corpus_manifest.example.csv`.
 
 ## Быстрый запуск
@@ -14,7 +14,7 @@ python scripts/fetch_local_heldout_corpora.py
 python scripts/run_local_heldout_workflow.py
 ```
 
-Загрузчик создаёт `data/<source_id>/manifest.csv`, а workflow пишет все
+Загрузчик создаёт `data/<source_id>/manifest.csv`, а рабочий конвейер записывает все
 результаты в `data/heldout-work/`. Для другого каталога используйте
 `--data-dir`, `--local-corpus-root` или переменную `HUMAN_WRITING_RU_DATA_DIR`.
 
@@ -30,26 +30,26 @@ python scripts/run_local_heldout_workflow.py
   локальный OCR.
 
 Точные URL, SHA-256, правила отбора, лицензии и число документов сохраняются в
-`data/LOCAL_CORPORA_REPORT.json` и sidecar `provenance.json` каждого источника.
+`data/LOCAL_CORPORA_REPORT.json` и сопроводительном файле происхождения `provenance.json` каждого источника.
 
 ## Средства
 
 Нужны Python 3.10+, `datasets`, `PyYAML`, `pypdf`, `pyarrow`, `pandas`, Poppler
 (`pdftoppm`) и Tesseract с `rus.traineddata` для OCR Pravo. Скрипт автоматически
 ищет переносимый Tesseract в `data/_tools/tesseract/`; пути можно переопределить
-переменными `PDFTOPPM_CMD` и `TESSERACT_CMD`. Для GitHub API локальный runner
-использует `GITHUB_TOKEN`/`GH_TOKEN`, либо credential активной `gh auth`-сессии.
+переменными `PDFTOPPM_CMD` и `TESSERACT_CMD`. Для GitHub API локальный исполнитель
+использует `GITHUB_TOKEN`/`GH_TOKEN`, либо учётные данные активной `gh auth`-сессии.
 
 ## Что проверяется
 
-`run_local_heldout_workflow.py` сначала выполняет package/eval preflight, затем
-запускает acquisition, проверку UTF-8/SHA-256/дубликатов, representative
-`manifest.validated.csv`, пять profile-size gates и только после них
+`run_local_heldout_workflow.py` сначала выполняет предварительную проверку пакета и
+оценочного набора, затем запускает получение, проверку UTF-8/SHA-256/дубликатов,
+представительный `manifest.validated.csv`, пять проверок размера профилей и только после них
 `ablate_signals_v3.py`. Коды `3`, `6`, `7` означают неполный последующий gate,
 а не повреждение корпуса; подробности находятся в
 `data/heldout-work/NETWORK_GATE_RUN_REPORT.json` и
 `data/heldout-work/ABLATION_DECISION_V3.json`.
 
-Сырые сторонние тексты не добавляйте в коммит и не используйте для профилей
+Исходные сторонние тексты не добавляйте в коммит и не используйте для профилей
 конкретных людей. Сохраняйте границы естественных документов и provenance
-sidecar; пример полей находится в `corpus_manifest.example.csv`.
+сопроводительный манифест; пример полей находится в `corpus_manifest.example.csv`.
