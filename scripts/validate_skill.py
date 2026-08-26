@@ -129,8 +129,28 @@ else:
             if not (ROOT / rel).exists():
                 err(f"missing referenced file: {rel}")
 
+# Dev/agent-context catalogs are never part of the package (see the exclusion lists in
+# scripts/build_release.py); exclude them from Markdown scans so a local AI setup does not
+# fail package validation because of third-party skill templates or node_modules docs.
+MD_SKIP_TOP_DIRS = {
+    ".git", ".agents", ".ai-factory", ".claude", ".codex", ".opencode", ".qwen", ".venv",
+    "node_modules", "__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache",
+}
+
+
+def md_scan_skip(md: Path) -> bool:
+    parts = md.relative_to(ROOT).parts
+    if "node_modules" in parts or parts[0] in MD_SKIP_TOP_DIRS:
+        return True
+    if len(parts) >= 2 and parts[:2] == (".github", "skills"):
+        return True
+    return False
+
+
 # Literal escaped newlines in prose documents are almost always packaging/editing defects.
 for md in ROOT.rglob("*.md"):
+    if md_scan_skip(md):
+        continue
     text = md.read_text(encoding="utf-8")
     if re.search(r"(?:^|\s)\\n(?:\\n|\s)", text):
         err(f"literal escaped newline sequence in Markdown: {md.relative_to(ROOT)}")
@@ -138,6 +158,8 @@ for md in ROOT.rglob("*.md"):
 # Validate relative Markdown links to packaged files. Ignore anchors and URLs.
 link_re = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 for md in ROOT.rglob("*.md"):
+    if md_scan_skip(md):
+        continue
     text = md.read_text(encoding="utf-8")
     for target in link_re.findall(text):
         target = target.strip().split("#", 1)[0]

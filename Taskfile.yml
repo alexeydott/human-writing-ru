@@ -1,0 +1,108 @@
+# --- Taskfile для human-writing-ru ---
+# Использование: task <цель>   (установка: https://taskfile.dev/installation/, например: winget install go-task.go-task)
+#
+# Соответствие целям и официальным командам: см. docs/getting-started.md («Полный набор проверок»).
+
+version: '3'
+
+output: prefixed
+
+vars:
+  PYTHON:
+    windows: python
+    linux: python3
+    darwin: python3
+
+tasks:
+  # --- Самопроверка пакета ---
+
+  default:
+    desc: Показать список доступных целей
+    cmds:
+      - task --list
+
+  validate:
+    desc: Самопроверка пакета (scripts/validate_skill.py)
+    cmds:
+      - '{{.PYTHON}} scripts/validate_skill.py'
+
+  # --- Тесты ---
+
+  test:
+    desc: Полный набор проверок (все тесты + аудит оценки)
+    cmds:
+      - '{{.PYTHON}} scripts/validate_skill.py'
+      - '{{.PYTHON}} tests/test_check_prose_ru.py'
+      - '{{.PYTHON}} tests/test_corpus_tools.py'
+      - '{{.PYTHON}} tests/test_benchmark_tools.py'
+      - '{{.PYTHON}} tests/test_ablation_tools.py'
+      - '{{.PYTHON}} tests/test_ablation_v3.py'
+      - '{{.PYTHON}} tests/test_external_heldout_tools.py'
+      - '{{.PYTHON}} tests/test_external_gate_runner.py'
+      - '{{.PYTHON}} tests/test_edit_integrity.py'
+      - '{{.PYTHON}} tests/test_ab_eval_tools.py'
+      - '{{.PYTHON}} tests/test_lite_builder.py'
+      - '{{.PYTHON}} tests/test_release_builder.py'
+      - '{{.PYTHON}} tests/test_validation_mutations.py'
+      - '{{.PYTHON}} tests/test_validation_md_scan.py'
+      - '{{.PYTHON}} tests/test_check_tz_ru.py'
+      - '{{.PYTHON}} tests/test_humanizer_adaptation.py'
+      - '{{.PYTHON}} tests/test_tz_rule_cases.py'
+      - '{{.PYTHON}} scripts/validate_eval_design.py'
+      - '{{.PYTHON}} scripts/audit_eval_coverage.py'
+
+  test:single:
+    desc: "Один целевой тест. Пример: task test:single TEST=test_check_tz_ru.py"
+    requires:
+      vars: [TEST]
+    cmds:
+      - '{{.PYTHON}} tests/{{.TEST}}'
+
+  # --- Зависимости ---
+
+  install:
+    desc: Опциональные зависимости для получения внешних корпусов
+    cmds:
+      - '{{.PYTHON}} -m pip install datasets PyYAML pypdf'
+
+  # --- Held-out pipeline ---
+
+  heldout-local:
+    desc: Локальный held-out workflow (корпуса в data/, результаты в data/heldout-work/)
+    deps: [install]
+    cmds:
+      - '{{.PYTHON}} scripts/fetch_local_heldout_corpora.py'
+      - '{{.PYTHON}} scripts/run_local_heldout_workflow.py'
+
+  # --- Релиз ---
+
+  release:
+    desc: "Сборка выпуска: ZIP + SHA-256 в dist/ (регенерирует FILES.sha256 и PACKAGE_CONTENTS.md)"
+    cmds:
+      - '{{.PYTHON}} scripts/build_release.py'
+
+  release:lite:
+    desc: Пересобрать автономную краткую инструкцию (dist/human-writing-ru-lite.md)
+    cmds:
+      - '{{.PYTHON}} scripts/build_lite.py'
+
+  # --- CI и очистка ---
+
+  ci:
+    desc: "Эквивалент CI-проверок: самопроверка + полный набор тестов"
+    cmds:
+      - task: validate
+      - task: test
+
+  clean:
+    desc: Удалить каталоги кэшей и *.pyc (те же правила, что clean_generated в build_release.py)
+    cmds:
+      - >-
+        {{.PYTHON}} -c
+        'import pathlib, shutil;
+        names={"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"};
+        dirs=[p for p in pathlib.Path(".").rglob("*") if p.is_dir() and p.name in names];
+        [shutil.rmtree(d, ignore_errors=True) for d in sorted(dirs, key=lambda x: -len(x.parts))];
+        files=[p for p in pathlib.Path(".").rglob("*.pyc")];
+        [p.unlink(missing_ok=True) for p in files];
+        print("clean: dirs=%d pyc=%d" % (len(dirs), len(files)))'

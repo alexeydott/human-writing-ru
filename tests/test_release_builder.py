@@ -33,8 +33,14 @@ def main()->None:
             integrity=__import__('json').loads(z.read('human-writing-ru/quality/RELEASE_INTEGRITY.json').decode('utf-8'))
             assert integrity['package_version']==VERSION and integrity['skill_root']=='human-writing-ru'
             assert integrity['frozen_inputs_match'] is True
-            forbidden_parts={'__pycache__','.pytest_cache','.mypy_cache','.ruff_cache','.git','.agents','.ai-factory','.codex','.opencode','.venv','node_modules'}
+            forbidden_parts={'__pycache__','.pytest_cache','.mypy_cache','.ruff_cache','.git','.agents','.ai-factory','.claude','.codex','.opencode','.qwen','.venv','.vscode','node_modules'}
             assert not any(any(part in forbidden_parts for part in Path(n).parts) or n.endswith('.pyc') or Path(n).name in {'.coverage','.DS_Store'} for n in names)
+            # Локальный AI-контекст разработки не попадает в пакет: каталог навыков
+            # установщика .github/skills и dev-автоматизация Taskfile.yml тоже.
+            assert not any('/.github/skills/' in n for n in names)
+            assert 'human-writing-ru/Taskfile.yml' not in names
+            local_agent_files={'.mcp.json','.ai-factory.json','.agentready.yml','opencode.json','skills-lock.json','AGENTS.md','CLAUDE.md','RULES.md'}
+            assert not any(Path(n).name in local_agent_files for n in names)
             assert 'human-writing-ru/data/README.md' in names
             assert 'human-writing-ru/data/corpus_manifest.example.csv' in names
             assert 'human-writing-ru/dist/human-writing-ru-lite.md' in names

@@ -24,13 +24,24 @@ PACKAGE_EXCLUDE_DIR_NAMES = CLEAN_DIR_NAMES | {
     ".git",
     ".agents",
     ".ai-factory",
+    ".claude",
     ".codex",
     ".opencode",
+    ".qwen",
     ".venv",
+    ".vscode",
     "node_modules",
 }
-PACKAGE_EXCLUDE_FILE_NAMES = CLEAN_FILE_NAMES | {".gitignore"}
-PACKAGE_EXCLUDE_REL_DIRS: set[Path] = set()
+PACKAGE_EXCLUDE_FILE_NAMES = CLEAN_FILE_NAMES | {
+    ".gitignore",
+    "Taskfile.yml",
+    # Локальный AI-agent-контекст: зеркало соответствующих правил .gitignore.
+    ".mcp.json", ".ai-factory.json", ".agentready.yml", "opencode.json",
+    "skills-lock.json", "AGENTS.md", "CLAUDE.md", "RULES.md",
+}
+# .github/skills — каталог навыков локального установщика агента (junction-ссылки на
+# сторонние skill-пакеты); в пакет попадает только .github/workflows/.
+PACKAGE_EXCLUDE_REL_DIRS: set[Path] = {Path(".github", "skills")}
 PACKAGE_DATA_FILES = {
     Path("data/README.md"),
     Path("data/corpus_manifest.example.csv"),
@@ -41,9 +52,48 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def all_tree_paths() -> list[Path]:
+    """Все записи дерева в порядке убывания глубины, без битых репар-точек.
+
+    Установщики skill создают Windows junction в каталогах агентов. Для таких записей
+    readdir не всегда сообщает reparse-флаг, а stat/open бросают OSError (WinError 448);
+    их следует исключить целиком вместе с «тенью» поддерева (она дублирует другие пути).
+    """
+    import os
+    import stat as _stat
+
+    out=[]
+
+    def walk(directory: str) -> None:
+        try:
+            entries=list(os.scandir(directory))
+        except OSError:
+            return
+        for entry in entries:
+            try:
+                st=os.stat(entry.path)  # следует за репар-точкой; битая запись бросит OSError
+            except OSError:
+                continue
+            out.append(Path(entry.path))
+            if _stat.S_ISDIR(st.st_mode) and not _stat.S_ISLNK(st.st_mode):
+                walk(entry.path)
+
+    walk(str(ROOT))
+    out.sort(key=lambda x: len(x.relative_to(ROOT).parts), reverse=True)
+    return out
+
+
 def clean_generated() -> None:
     # Remove local/runtime artifacts before computing manifests.
-    for p in sorted(ROOT.rglob("*"), key=lambda x: len(x.parts), reverse=True):
+    # Исключаемые (не cache) каталоги не трогаем: в них живут junction на глобальные
+    # skill-пакеты пользователя, чьи runtime-артефакты не имеют отношения к сборке.
+    non_cache_excluded = PACKAGE_EXCLUDE_DIR_NAMES - CLEAN_DIR_NAMES
+    for p in all_tree_paths():
+        rel = p.relative_to(ROOT)
+        if any(part in non_cache_excluded for part in rel.parts):
+            continue
+        if any(rel == excluded or excluded in rel.parents for excluded in PACKAGE_EXCLUDE_REL_DIRS):
+            continue
         if p.is_file() and (p.suffix == ".pyc" or p.name in CLEAN_FILE_NAMES):
             p.unlink(missing_ok=True)
         elif p.is_dir() and p.name in CLEAN_DIR_NAMES:
@@ -53,7 +103,7 @@ def clean_generated() -> None:
 
 def package_files(include_generated_manifests: bool = True) -> list[Path]:
     files=[]
-    for p in ROOT.rglob("*"):
+    for p in all_tree_paths():
         if not p.is_file():
             continue
         rel=p.relative_to(ROOT)

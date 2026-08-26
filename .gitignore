@@ -12,8 +12,11 @@ Desktop.ini
 # Local AI-agent context and tool configuration
 .agents/
 .ai-factory/
+.claude/
 .codex/
+.github/skills/
 .opencode/
+.qwen/
 .mcp.json
 .ai-factory.json
 .agentready.yml

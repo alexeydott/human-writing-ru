@@ -13,7 +13,10 @@ ENV={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'}
 
 def copy_root(base:Path,name='human-writing-ru')->Path:
     dst=base/name
-    shutil.copytree(ROOT,dst,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+    # Agent/dev catalogs hold third-party skill templates and Windows junctions created by
+    # skill installers; neither belongs to the validation surface or survives copytree.
+    skip={'__pycache__','.git','node_modules','.agents','.ai-factory','.claude','.codex','.opencode','.qwen','.venv'}
+    shutil.copytree(ROOT,dst,ignore=lambda d,n:{x for x in n if x in skip or x.endswith('.pyc')})
     return dst
 
 def validate(dst:Path):
