@@ -305,7 +305,7 @@
       "channels": [
         "legal"
       ],
-      "adapter": "huggingface_stream",
+      "adapter": "manual_or_local_tree",
       "source_url": "https://github.com/irlcode/RusLawOD/",
       "dataset_url": "https://huggingface.co/datasets/irlspbru/RusLawOD",
       "dataset_id": "irlspbru/RusLawOD",
@@ -316,7 +316,8 @@
       "minimum_words_per_document": 300,
       "minimum_paragraphs_per_document": 3,
       "selection_policy": "Stream full legal acts, keep document boundaries, diversify issuing bodies and years, and exclude near-duplicate amendment templates.",
-      "status": "catalogued"
+      "status": "catalogued",
+      "local_import_note": "Local corpus data/ruslawod_v3/ (80 documents from RusLawOD shard ruslawod_11.parquet, see provenance.json). manual_or_local_tree replaces huggingface_stream: full-dataset streaming requires 11 multi-GB shards that are not reproducible on the available network."
     },
     {
       "id": "pravo_open_data",
@@ -471,8 +472,8 @@
       "archive_sha256": "0fb9272a8390fe6645274fc85f6ab2ce4bee694998c9185ab9fec24fc77aca20",
       "license_or_terms": "Discuss Data publishes the dataset as Open Access under the Open Data Commons Attribution License (ODC-By) v1.0.",
       "redistribution": "manifest_and_aggregates_only",
-      "target_documents": 100,
-      "target_words": 40000,
+      "target_documents": 185,
+      "target_words": 50000,
       "minimum_words_per_document": 160,
       "minimum_paragraphs_per_document": 1,
       "selection_policy": "A naturally bounded speech/oral contribution is one document. Sample across dates and speakers; cap speaker concentration. Do not concatenate short unrelated contributions.",
