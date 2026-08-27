@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-08-27",
+  "source_id": "ljsearch_saved_copies",
+  "route": "ljsear.ch search (HTML) -> original livejournal.com post URLs (HTTP) -> div.aentry-post__text",
+  "route_note": "The savedcopy route (https://ljsear.ch/savedcopy?post=<id>) is deterministically RU-IP-blocked from this network (2506-byte stub, 'Доступ из РФ к сохранённым записям закрыт', observed on 52/52 direct-HTTP attempts, in the operator's Firefox, and in a fresh Edge instance on 2026-08-27). The original livejournal.com URLs returned by the search page are reachable directly and carry the full post body, so the search page was used for discovery and the original URLs for text retrieval.",
+  "collection_method": "Interactive collection driving a local msedge instance over the DevTools protocol (CDP, port 9334): navigate search page, parse items, navigate each original post, extract the rendered post text, record word/paragraph counts. The identical route is reproducible by plain HTTP (search HTML + post HTML).",
+  "queries": [
+    "путешествие",
+    "город",
+    "работа",
+    "образование",
+    "наука",
+    "книги",
+    "интернет",
+    "технологии",
+    "история",
+    "архитектура",
+    "транспорт",
+    "музеи"
+  ],
+  "query_pages": [
+    "offset=0 for all 12 queries",
+    "offset=20 for 'путешествие'"
+  ],
+  "eligibility": {
+    "minimum_words_per_document": 250,
+    "minimum_paragraphs_per_document": 8,
+    "per_journal_cap_per_run": 3,
+    "dedupe": "exact URL dedupe (122 unique of 124 raw records) + word-4gram Jaccard > 0.5 near-duplicate removal (4 dropped: mirrors of one ruslan63 post under ez7pac/zergulio/colonelcassad, and a sonia_mal crosspost under dakotaks)"
+  },
+  "results": {
+    "raw_fetched_with_text": 124,
+    "documents": 60,
+    "authors": 56,
+    "max_documents_per_author": 2,
+    "top_authors": [
+      [
+        "vsegda_tvoj",
+        2
+      ],
+      [
+        "vamoisej",
+        2
+      ],
+      [
+        "bolivar_s",
+        2
+      ],
+      [
+        "hostess_kniga",
+        2
+      ],
+      [
+        "sergej_manit",
+        1
+      ],
+      [
+        "albercul",
+        1
+      ],
+      [
+        "arlekiness",
+        1
+      ],
+      [
+        "anika_cheaptrip",
+        1
+      ]
+    ],
+    "total_words": 56386,
+    "year_distribution": {
+      "1925": 1,
+      "1926": 1,
+      "1928": 1,
+      "2017": 53,
+      "2018": 4
+    },
+    "backdated_documents": 3,
+    "target_documents": 60,
+    "target_documents_met": true,
+    "target_words": 20000,
+    "target_words_met": true
+  },
+  "redistribution": "manifest_and_aggregates_only",
+  "raw_local_copy": {
+    "path": "data/_lj_probe/lj_corpus_candidates.jsonl",
+    "sha256": "ccea7214e64fd5cb320c48b8605a34f0f0fd198e6ab40b52dbc848e5af052013",
+    "note": "Gitignored local research copy with full post bodies; not part of the package."
+  },
+  "status": "collected_manifest_only"
+}

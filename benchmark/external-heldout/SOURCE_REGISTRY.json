@@ -53,8 +53,9 @@
         "https://ljsear.ch/savedcopy?post=689758469",
         "https://ljsear.ch/savedcopy?post=420678034"
       ],
-      "status": "catalogued",
-      "author_provenance_capable": true
+      "status": "collected_manifest_only",
+      "author_provenance_capable": true,
+      "collection_note": "Collected 2026-08-27 over the original-URL route (ljsear.ch search page -> original livejournal.com post URLs), driven interactively over the DevTools protocol in a local msedge instance. The savedcopy route is deterministically RU-IP-blocked from this network (2506-byte stub; 52/52 direct-HTTP attempts, operator's Firefox, and a fresh Edge instance all show 'Доступ из РФ к сохранённым записям закрыт'). Result: 60 documents / 56 authors / 56386 words, all meeting the 250-word / 8-paragraph gate, 4 near-duplicate mirrors dropped. Per release_policy the repo keeps manifest + per-document text hashes only: benchmark/external-heldout/ljsearch_browser_collection/manifest.csv and COLLECTION_REPORT.json. Raw post bodies stay in the gitignored local research copy data/_lj_probe/lj_corpus_candidates.jsonl (sha256 ccea7214e64fd5cb320c48b8605a34f0f0fd198e6ab40b52dbc848e5af052013, see COLLECTION_REPORT.json)."
     },
     {
       "id": "zenodo_livejournal_7139731",
@@ -76,7 +77,8 @@
       "minimum_words_per_document": 250,
       "minimum_paragraphs_per_document": 8,
       "selection_policy": "Before sampling, inspect archive members and confirm that they contain actual LiveJournal post bodies with recoverable document boundaries. The Zenodo record itself gives no schema description. Only then scan deterministically, keep long Russian posts, deduplicate exact/near copies and report author concentration where metadata permits.",
-      "status": "catalogued_format_unverified"
+      "status": "rejected_format_binary_graph_no_text",
+      "format_note": "Format verified 2026-08-27: the zip member livejournal.bcsr is a binary CSR social graph, not a text corpus. Layout (little-endian): u32 num_nodes=4846609, u32 num_edges=85702474, u32 zero; then (num_nodes+1) u64 row pointers and num_edges u32 vertex IDs. Full structural validation passed (exact size match, offsets[0]=0, offsets[-1]=num_edges, monotone offsets, all adjacency IDs in [0, N-1]). No post bodies, usernames, or document boundaries; unusable for the prose channel. Local reader/validation scripts: data/_downloads/zenodo_livejournal_7139731/read_livejournal_bcsr.py (not packaged)."
     },
     {
       "id": "factrueval_2016",
