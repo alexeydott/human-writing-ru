@@ -17,7 +17,7 @@
 | Номер | Где | Когда меняется |
 |-------|-----|----------------|
 | Версия пакета | `VERSION`, `metadata.version` в `SKILL.md` | каждый релиз |
-| Лингвистическая политика | `metadata.policy_version` (= 1.4.0) | только по итогам внешнего held-out v3 evidence run |
+| Лингвистическая политика | `metadata.policy_version` (= 1.5.0) | только по итогам внешнего held-out v3 evidence run |
 
 Синхронно при повышении версии обновляются: `VERSION`, frontmatter `SKILL.md`, верхний раздел
 `CHANGELOG.md` и заголовок `README.md`.
@@ -56,7 +56,7 @@ references/ profiles/ evals/  ←  scripts/  →  data/  →  benchmark|dist
 
 ## Замороженные области (byte-stable)
 
-Файлы, не изменяемые в рамках политики 1.4.0:
+Файлы, не изменяемые в рамках политики 1.5.0:
 
 - `scripts/check_prose_ru.py`
 - `scripts/ablate_signals.py`

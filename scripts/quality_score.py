@@ -89,7 +89,7 @@ skill=(ROOT/'SKILL.md').read_text(encoding='utf-8')
 doc_ok=(
     version in (ROOT/'README.md').read_text(encoding='utf-8')
     and version in (ROOT/'dist/human-writing-ru-lite.md').read_text(encoding='utf-8')
-    and 'policy_version: "1.4.0"' in skill
+    and 'policy_version: "1.5.0"' in skill
     and all((ROOT/f'references/{x}.md').exists() for x in ['product-case','portfolio','ai-feature','technical-specification'])
     and (ROOT/'references/product-story.md').stat().st_size < 3000
 )

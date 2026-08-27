@@ -14,30 +14,35 @@ CHECK = ROOT / "scripts/check_prose_ru.py"
 SPEC = json.loads((ROOT / "benchmark/ablation/spec.json").read_text(encoding="utf-8"))
 PROFILE = json.loads((ROOT / "profiles/editorial-baseline.json").read_text(encoding="utf-8"))["profiles"]
 
-EXPECTED_13 = {
-    "prose": {"road_per_1000_warn": 10, "sentence_cv_min_info": 0.32, "long_sentence_words_info": 42, "one_sentence_paragraph_ratio_info": 0.70, "jargon_per_1000_info": 12},
+# Active thresholds of policy 1.5.0 (applied from external held-out v3, run
+# data/heldout-work-policy-1.6): long-sentence is off for prose/product/official
+# via the sentinel 100000 (the frozen linter has no per-signal off switch), and
+# one-sentence-paragraphs/product moved to the calibrated candidate 0.90674.
+EXPECTED_1_5 = {
+    "prose": {"road_per_1000_warn": 10, "sentence_cv_min_info": 0.32, "long_sentence_words_info": 100000, "one_sentence_paragraph_ratio_info": 0.70, "jargon_per_1000_info": 12},
     "oral": {"road_per_1000_warn": 10, "sentence_cv_min_info": 0.28, "long_sentence_words_info": 32, "one_sentence_paragraph_ratio_info": 0.75, "jargon_per_1000_info": 10},
-    "product": {"road_per_1000_warn": 10, "sentence_cv_min_info": 0.30, "long_sentence_words_info": 46, "one_sentence_paragraph_ratio_info": 0.70, "jargon_per_1000_info": 18},
+    "product": {"road_per_1000_warn": 10, "sentence_cv_min_info": 0.30, "long_sentence_words_info": 100000, "one_sentence_paragraph_ratio_info": 0.90674, "jargon_per_1000_info": 18},
     "technical": {"road_per_1000_warn": 15, "sentence_cv_min_info": 0.25, "long_sentence_words_info": 55, "one_sentence_paragraph_ratio_info": 0.80, "jargon_per_1000_info": 28},
-    "official": {"road_per_1000_warn": 18, "sentence_cv_min_info": 0.22, "long_sentence_words_info": 60, "one_sentence_paragraph_ratio_info": 0.85, "jargon_per_1000_info": 32},
+    "official": {"road_per_1000_warn": 18, "sentence_cv_min_info": 0.22, "long_sentence_words_info": 100000, "one_sentence_paragraph_ratio_info": 0.85, "jargon_per_1000_info": 32},
 }
 
-# This release intentionally does not move the five active thresholds without the freeze gate.
-for mode, expected in EXPECTED_13.items():
+for mode, expected in EXPECTED_1_5.items():
     for key, value in expected.items():
         assert float(PROFILE[mode][key]) == float(value), (mode, key, PROFILE[mode][key], value)
 
-# Each synthetic positive control must still trigger its intended signal in prose mode.
+# Each synthetic positive control must still trigger its intended signal.
+# long-sentence runs in oral: the signal is policy-off in prose since 1.5.0,
+# and oral (threshold 32) still exercises the same frozen mechanism.
 controls = {
-    "road-sign-density": "road.txt",
-    "sentence-uniformity": "uniform.txt",
-    "long-sentence": "long.txt",
-    "one-sentence-paragraphs": "one-paragraph.txt",
-    "context-jargon-density": "jargon.txt",
+    "road-sign-density": ("road.txt", "prose"),
+    "sentence-uniformity": ("uniform.txt", "prose"),
+    "long-sentence": ("long.txt", "oral"),
+    "one-sentence-paragraphs": ("one-paragraph.txt", "prose"),
+    "context-jargon-density": ("jargon.txt", "prose"),
 }
-for code, filename in controls.items():
+for code, (filename, mode) in controls.items():
     p = subprocess.run(
-        [sys.executable, str(CHECK), "--json", "--mode", "prose", str(ROOT / "benchmark/ablation/controls" / filename)],
+        [sys.executable, str(CHECK), "--json", "--mode", mode, str(ROOT / "benchmark/ablation/controls" / filename)],
         capture_output=True, text=True, check=True,
     )
     data = json.loads(p.stdout)

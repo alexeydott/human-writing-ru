@@ -1,9 +1,15 @@
 # План re-run held-out v3 до повышения policy_version
 
+> **Статус: завершён (2026-08-27).** Полные evidence gates для всех пяти профилей
+> получены прогоном `data/heldout-work-policy-1.6` (911 валидированных документов),
+> разметка 217 natural alerts закрыта (181 `non_actionable`, 36 `actionable`),
+> решения человека применены: `metadata.policy_version` `1.4.0` → `1.5.0`,
+> версия пакета `1.9.0-beta.5`. Детали — ниже (Этап 2) и в `CHANGELOG.md`.
+
 Цель: получить полные evidence gates для всех пяти профилей, закрыть разметку
 natural alerts и подготовить основание для человека, чтобы принять решение
 `keep old / candidate / off` и — только при полном проходе — повысить
-`metadata.policy_version` (сейчас 1.4.0) с цитатой прошедшего прогона.
+`metadata.policy_version` (с 1.4.0) с цитатой прошедшего прогона.
 
 Дисциплина: конвенции §4 (кандидат только на calibration, проверка на
 независимой validation, запрет авто-смены порога), `benchmark/ablation/spec-v3.json`,
@@ -375,9 +381,44 @@ yandex_cloud_docs_ru не материализовался (сбой github-ак
 61 против 80 в 1.5), гейты при этом держатся. Алертов на разметку: 217
 (впервые — official/long-sentence 45, гейт official закрыт).
 
-Проверка перед Этапом 3 (по `VALIDATION_REPORT.json` + `ABLATION_DECISION_V3.json`):
-`gate_met: true` у всех пяти профилей и у всех применимых сигналов,
-`natural_alert_adjudication_complete_where_required: true`.
+**Разметка 217 алертов завершена (2026-08-27).** Все 217 алертов размечены
+(0 `uncertain`, 0 пустых): **181 `non_actionable`, 36 `actionable`**.
+Рабочая страница — слепая (old/candidate скрыты), фрагменты срабатываний
+извлекались замороженным линтером; разметка выполнена в браузере и возвращена
+CSV'ом. Итоговый файл разметки:
+`data/heldout-work-policy-1.6/alert-adjudication-labeled.csv`
+(12 комментариев; исходный скачанный CSV — `data/alert-adjudication-1.6.csv`).
+Решения перегенерированы флагом `--annotations`; до-разметочный вариант
+решения сохранён как `ABLATION_DECISION_V3.json.pre-annotations`.
+`natural_alert_adjudication_pending = []` — пар, ждущих разметки, нет.
+Глобальный флаг `natural_alert_adjudication_complete_where_required = False` —
+не из-за нехватки разметки, а потому что evidence gate не пройден у
+`one-sentence-paragraphs` на профилях oral и prose (`gate_met: false`;
+эти пары заблокированы и по замыслу протокола не входят в шаблон
+разметки — 3 prose-алерта того сигнала размечать не положено).
+
+**Решения для Этапа 3** (из обновлённого `ABLATION_DECISION_V3.json`):
+
+| Пара «профиль × сигнал» | Решение | Основание |
+|---|---|---|
+| one-sentence-paragraphs / product | **candidate supported** (0.70 → 0.9067), ждёт человека | 20/20 removed-алертов `non_actionable` (100% ≥ 80%), 20 решающих |
+| long-sentence / official | **off supported**, ждёт человека | 45/45 решающих, actionable-precision 0.0 ≤ 0.25 |
+| long-sentence / product | **off supported**, ждёт человека | 24/24 решающих, precision 0.25 ≤ 0.25 (впритык) |
+| long-sentence / prose | **off supported**, ждёт человека | 24/24 решающих, precision 0.167 ≤ 0.25 |
+| long-sentence / oral | off НЕ поддерживается; кандидат не поддерживается | precision 0.263 > 0.25 (26 actionable из 99); кандидат теряет positive control |
+| остальные пары | keep_old / не оцениваемо | candidate == old, образец < 20, либо gate не пройден |
+
+Все 36 `actionable` лежат в long-sentence (oral 26, product 6, prose 4) —
+именно они удерживают сигнал на профиле oral. Скрипт пороги не меняет;
+решение и применение — за человеком (Этап 3).
+
+Проверка перед Этапом 3 (фактическое состояние после разметки):
+`gate_met: true` у всех пяти профилей; сигнальные evidence gates пройдены
+для всех применимых пар, кроме `one-sentence-paragraphs` oral/prose
+(`blocked_evidence_gate_not_met` — остаются без изменений по п. 1 Этапа 3);
+`natural_alert_adjudication_pending = []` (разметка завершена),
+`natural_alert_adjudication_complete_where_required = false` — только из-за
+двух заблокированных OSP-пар.
 
 ## Этап 3. Решение и повышение policy
 

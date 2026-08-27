@@ -163,7 +163,7 @@ def write_release_integrity() -> None:
     report={
         "schema_version":1,
         "package_version":version,
-        "policy_version":"1.4.0",
+        "policy_version":"1.5.0",
         "skill_root":SKILL_NAME,
         "frozen_inputs_match":all(actual_frozen[rel]==expected for rel,expected in frozen.items()),
         "frozen_expected":frozen,

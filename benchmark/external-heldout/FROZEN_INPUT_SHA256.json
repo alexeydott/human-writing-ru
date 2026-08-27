@@ -1,10 +1,26 @@
 {
   "schema_version": 1,
-  "baseline_release": "1.4.0-beta.1",
+  "baseline_release": "1.5.0",
   "requirement": "The linter, unchanged ablation runner, and active editorial profile/thresholds must remain byte-identical during external held-out acquisition and gate execution.",
   "sha256": {
     "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
     "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
-    "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+    "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a"
+  },
+  "policy_bump": {
+    "from": "1.4.0",
+    "to": "1.5.0",
+    "date": "2026-08-27",
+    "basis": "External held-out v3 run data/heldout-work-policy-1.6 (911 validated documents, manifest.validated.csv sha256 6fe9013ef8c6ce01a84753cb096486354ad5d611959f2cd9f08ac618b3d29457); decisions in data/heldout-work-policy-1.6/ABLATION_DECISION_V3.json after blind adjudication of all 217 natural alerts (181 non_actionable, 36 actionable); approved by explicit human decision per POLICY_RERUN_PLAN.md stage 3.",
+    "changed_thresholds": {
+      "prose/long_sentence_words_info": "42 -> 100000 (off sentinel)",
+      "product/long_sentence_words_info": "46 -> 100000 (off sentinel)",
+      "official/long_sentence_words_info": "60 -> 100000 (off sentinel)",
+      "product/one_sentence_paragraph_ratio_info": "0.7 -> 0.90674 (calibration p95 candidate)"
+    },
+    "unchanged_code_sha256": {
+      "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
+      "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a"
+    }
   }
 }

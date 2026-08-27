@@ -1,5 +1,17 @@
 # Журнал изменений
 
+## 1.9.0-beta.5 — применение политики 1.5.0 по итогам held-out v3
+
+- Применены решения человека по итогам полного внешнего held-out v3 (рабочий каталог `data/heldout-work-policy-1.6`, 911 валидированных документов; `manifest.validated.csv` SHA-256 `6fe9013ef8c6ce01a84753cb096486354ad5d611959f2cd9f08ac618b3d29457`; решения — `data/heldout-work-policy-1.6/ABLATION_DECISION_V3.json`):
+  - `long-sentence` отключён для **prose**, **product** и **official** (`long_sentence_words_info` → sentinel `100000`): слепая разметка всех 217 natural alerts (181 `non_actionable`, 36 `actionable`) дала actionable-precision ≤ 0.25 (official 0.0/45, product 0.25/24, prose 0.167/24 — порог off 0.25, минимум 20 решающих).
+  - `one-sentence-paragraphs/product`: порог `0.7` → **`0.90674`** (кандидат p95 по calibration; removed-алерты 20/20 `non_actionable`, порог 80%).
+  - `long-sentence` на **oral** сохранён: precision 0.263 > 0.25 (26 `actionable` из 99) — сигнал оставлен.
+  - Все остальные пары «профиль × сигнал» — `keep_old`/не оцениваемо и не менялись.
+- `metadata.policy_version` в `SKILL.md` повышен `1.4.0` → `1.5.0`; активные пороги зафиксированы в `profiles/editorial-baseline.json`; `benchmark/external-heldout/FROZEN_INPUT_SHA256.json` переведён на `baseline_release: 1.5.0` с аудиторией повышения (`policy_bump`).
+- Frozen код не изменён: SHA-256 `scripts/check_prose_ru.py` и `scripts/ablate_signals.py` совпадают с предшествующей фиксацией; изменения порогов — только в `profiles/editorial-baseline.json`.
+- Тестовый контрол long-sentence перенесён в режим `oral` (в `prose` сигнал политически отключён); ожидаемые пороги в `tests/test_ablation_tools.py` приведены к политике 1.5.0.
+- Сводка полного цикла: `POLICY_RERUN_PLAN.md` (этапы 0–3); локальные деревья `ljsearch_saved_copies` и `ruslawod_v3` (адаптеры `manual_or_local_tree`) задокументированы в `benchmark/external-heldout/SOURCE_REGISTRY.json`.
+
 ## 1.9.0-beta.4 — воспроизводимая калибровка v3
 
 - Выполнен новый локальный workflow v3: проверки кода, целостности и объёма пройдены; изменение активных порогов не выполнялось, поскольку не все проверки происхождения и разнообразия имеют достаточные доказательства.

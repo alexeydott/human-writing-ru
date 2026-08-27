@@ -79,7 +79,7 @@ python scripts/check_prose_ru.py --json --features-only article.md
 
 Набор флагов: `--json`, `--mode <reжим>`, `--include-quotes`, `--features-only`.
 Пороги в `profiles/editorial-baseline.json` — экспертный baseline до корпусной калибровки,
-не языковая норма; файлы линтера заморожены в политике 1.4.0 (см. [Architecture](architecture.md)).
+не языковая норма; файлы линтера заморожены в политике 1.5.0 (см. [Architecture](architecture.md)).
 
 ## Краткая инструкция для диалога
 
