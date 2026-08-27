@@ -1,17 +1,26 @@
 # Roadmap после 1.9.0-beta.2 critical review
 
+> **Статус (2026-08-27):** этап 1 завершён — полный внешний held-out v3 выполнен
+> (прогон `data/heldout-work-policy-1.6`, 911 документов, все gates пройдены, 217
+> natural alerts размечены слепо), решения человека применены политикой **1.5.0**
+> (пакет 1.9.0-beta.5). Осталось: генеративный A/B (этап 3) — и только тогда
+> проверяется готовность к stable по §5.
+
 ## 1. Следующий обязательный этап — данные, не новые эвристики
 
-Лингвистическая policy 1.4 и три frozen inputs остаются неизменными. Следующий качественно новый результат должен прийти из внешнего held-out corpus.
+Завершён (2026-08-27): policy 1.5.0 применена по итогам полного held-out v3
+(детали — `POLICY_RERUN_PLAN.md`, CHANGELOG 1.9.0-beta.5); frozen-входы
+перефиксированы на `baseline_release: 1.5.0`. До следующего изменения порогов
+качественно новый результат снова должен прийти из внешнего held-out.
 
-1. Материализовать естественно ограниченные документы для `prose`, `oral`, `product`, `technical`, `official`.
-2. Пройти exact/near-copy dedup и получить `manifest.validated.csv`.
-3. Для каждого profile выполнить size + diversity gate.
-4. Для каждого применимого сигнала отдельно выполнить signal eligibility + signal diversity gate.
-5. Разделить группы на calibration/untouched validation без пересечения любого известного author/split/source-document/independence component.
-6. Получить candidate только на calibration.
-7. На validation сформировать `--annotation-template`, разметить natural alerts как `actionable / non_actionable / uncertain` слепо к arm, где возможно.
-8. Только после этого принимать решение `keep old / candidate / off`; active profile не меняется автоматически.
+1. Материализовать естественно ограниченные документы для `prose`, `oral`, `product`, `technical`, `official`. ✅ (911 документов)
+2. Пройти exact/near-copy dedup и получить `manifest.validated.csv`. ✅
+3. Для каждого profile выполнить size + diversity gate. ✅ (все 5 профилей)
+4. Для каждого применимого сигнала отдельно выполнить signal eligibility + signal diversity gate. ✅
+5. Разделить группы на calibration/untouched validation без пересечения любого известного author/split/source-document/independence component. ✅
+6. Получить candidate только на calibration. ✅
+7. На validation сформировать `--annotation-template`, разметить natural alerts как `actionable / non_actionable / uncertain` слепо к arm, где возможно. ✅ (217/217, 0 uncertain)
+8. Только после этого принимать решение `keep old / candidate / off`; active profile не меняется автоматически. ✅ (решения в `data/heldout-work-policy-1.6/ABLATION_DECISION_V3.json`)
 
 ## 2. Приоритеты корпуса
 
@@ -43,9 +52,9 @@ Stable-релиз требует одновременно:
 
 - engineering/methodology quality score >90;
 - успешный внешний Agent Skills reference validation (`skills-ref`) в CI;
-- хотя бы один полный external held-out v3 evidence run;
+- хотя бы один полный external held-out v3 evidence run; ✅ (2026-08-27, `heldout-work-policy-1.6`)
 - generative A/B без factual/high-stakes regression;
-- отсутствие неразмеченных candidate/off решений, которые объявляются доказанными.
+- отсутствие неразмеченных candidate/off решений, которые объявляются доказанными. ✅
 
 ## TZ normalization follow-up
 

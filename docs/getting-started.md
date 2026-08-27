@@ -26,7 +26,7 @@ git clone https://github.com/alexeydott/human-writing-ru.git \
   .claude/skills/human-writing-ru
 
 # Вариант 2: из релиз-архива (корень ZIP уже называется human-writing-ru/)
-unzip dist/human-writing-ru-1.9.0-beta.4-full.zip -d .claude/skills/
+unzip dist/human-writing-ru-1.9.0-beta.5-full.zip -d .claude/skills/
 ```
 
 Для других рантаймов те же пути: `.qwen/skills/`, `.github/skills/`, `.opencode/skills/`,
@@ -61,16 +61,20 @@ python tests/test_ab_eval_tools.py
 python tests/test_lite_builder.py
 python tests/test_validation_mutations.py
 python tests/test_validation_md_scan.py
+python tests/test_check_tz_ru.py
+python tests/test_tz_rule_cases.py
+python tests/test_humanizer_adaptation.py
+python tests/test_release_builder.py
 python scripts/validate_eval_design.py
 python scripts/audit_eval_coverage.py
 ```
 
-Каждый тест выводит `OK` при успехе.
+Каждый тест завершается кодом 0 при успехе (большинство печатает `OK`).
 
 ## Первый прогон линтера
 
 ```bash
-# Текстовый отчёт для заданного режима (prose | technical | oral)
+# Текстовый отчёт для заданного режима (prose | oral | product | technical | official)
 python scripts/check_prose_ru.py --mode prose article.md
 
 # Машинный вывод + измеряемые признаки без стилистического вердикта
@@ -78,8 +82,9 @@ python scripts/check_prose_ru.py --json --features-only article.md
 ```
 
 Набор флагов: `--json`, `--mode <reжим>`, `--include-quotes`, `--features-only`.
-Пороги в `profiles/editorial-baseline.json` — экспертный baseline до корпусной калибровки,
-не языковая норма; файлы линтера заморожены в политике 1.5.0 (см. [Architecture](architecture.md)).
+Пороги в `profiles/editorial-baseline.json` — заморожены политикой 1.5.0: экспертный
+baseline + корпусная калибровка по внешнему held-out v3 (прогон `heldout-work-policy-1.6`),
+не языковая норма (см. [Architecture](architecture.md)).
 
 ## Краткая инструкция для диалога
 

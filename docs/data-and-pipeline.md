@@ -24,10 +24,11 @@
 
 | Профиль | Основной путь источников |
 |---------|--------------------------|
-| `prose` / blog | Сохранённые копии LJSearch; Zenodo LiveJournal — запасной, формат unverified |
-| media | Исходные документы factRuEval |
+| `prose` / blog | LJSearch по original-URL (saved-copy-маршрут детерминированно блокируется по RU-IP; 58 документов в прогоне 1.6); Zenodo LiveJournal отклонён (бинарный граф bcsr без текста) |
+| `prose` / social | Taiga (`taiga_social`, user-level provenance из заголовков записей) |
+| `prose` / media | Исходные документы factRuEval |
 | product | Реальные кейсы RBC (страницы отдельных материалов) и Ruward (содержательные блоки) |
-| official | RusLawOD (полные нормативные документы, контроль near-copies) |
+| official | RusLawOD (полные нормативные документы, контроль near-copies; шар `ruslawod_11`, локальное дерево, селекция v2 с капом 4000 слов) + pravo |
 | oral | Готовые речи, Q&A/интервью, спонтанные диалоги; короткие ASR-высказывания не склеиваются |
 | technical | Русская документация Kubernetes + Yandex Cloud Docs (обход поддерева `ru/`) |
 
@@ -62,6 +63,11 @@ CI-вариант с внешними корпусами описывает `.gi
 7. Разметка natural alerts на validation: решающие метки `actionable` / `non_actionable`;
    `uncertain` сохраняется в отчёте, но не влияет на точность `actionable`.
 8. Решение `keep old / candidate / off` принимает человек; active profile не меняется автоматически.
+
+Статус: первый полный цикл завершён прогоном `data/heldout-work-policy-1.6` (911
+валидированных документов, все пять профилей прошли gates, 217 natural alerts размечены
+слепо); решения человека применены политикой **1.5.0** (детали —
+[POLICY_RERUN_PLAN.md](../POLICY_RERUN_PLAN.md) и CHANGELOG).
 
 Промежуточные факты фиксируются артефактами: `MATERIALIZATION_STATUS.json`,
 `FREEZE_GATE_STATUS.json`, `ABLATION_NOT_RUN.json`, `probes/PROBE_REPORT.json`.

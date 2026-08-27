@@ -15,7 +15,7 @@
     "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a"
   },
   "tracked_sha256": {
-    "SKILL.md": "a1e499923cc612d4064288dbd2e501dca962ef974ef8af50fca7945c11780ee4",
+    "SKILL.md": "a92d8a1865c7e6dc552429c1f47d929a366e1c950d84e63f60f4307963f80fae",
     "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a",
     "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
     "scripts/build_lite.py": "2452a3c51c5e4bdeffcd65bab3689aa0e5cf9f8d910f361e1ade08f4d5ac207e",

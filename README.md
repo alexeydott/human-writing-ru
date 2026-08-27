@@ -48,6 +48,16 @@ python scripts/check_prose_ru.py --json --features-only article.md   # приз�
 
 ## Недавние изменения
 
+### 1.9.0-beta.5
+
+- Применена лингвистическая политика **1.5.0** по итогам первого полного внешнего held-out v3
+  (911 валидированных документов, слепая разметка 217 natural alerts): `long-sentence`
+  отключён для prose/product/official, порог `one-sentence-paragraphs` для product
+  пересмотрен до 0.90674, `long-sentence` на oral сохранён (подробности — CHANGELOG).
+- Полные evidence gates закрыты для всех пяти профилей; протокол held-out v3 описан в
+  [docs/data-and-pipeline.md](docs/data-and-pipeline.md), план и итоги — в
+  [POLICY_RERUN_PLAN.md](POLICY_RERUN_PLAN.md).
+
 ### 1.9.0-beta.4
 
 - Повторно выполнен локальный held-out workflow v3: проверки кода, целостности, манифеста и минимального объёма прошли; активные пороги не менялись — проверки происхождения и разнообразия остаются неполными.
@@ -72,8 +82,11 @@ python scripts/check_prose_ru.py --json --features-only article.md   # приз�
 
 ## Ограничения beta
 
-- Выполнен малый пилот на реальном корпусе; генеративное A/B между версиями Skill ещё не проведено.
-- Новые пороги или утверждения о превосходстве генерации не активируются без внешнего held-out v3 и настоящего A/B.
+- Внешний held-out v3 выполнен (прогон `heldout-work-policy-1.6`, политика 1.5.0);
+  генеративное A/B между версиями Skill ещё не проведено.
+- Утверждения о превосходстве генерации не активируются без настоящего A/B
+  (протокол — `evals/AB_EVAL_PROTOCOL.md`); новые сигналы — только после собственного
+  corpus evidence (ROADMAP §4).
 
 ## Лицензия
 
