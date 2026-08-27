@@ -80,7 +80,9 @@
     "target_documents": 60,
     "target_documents_met": true,
     "target_words": 20000,
-    "target_words_met": true
+    "target_words_met": true,
+    "materialized_documents": 58,
+    "materialization_note": "Local tree data/ljsearch_saved_copies/ (60 documents) is imported by the manual_or_local_tree adapter. Canonical pipeline eligibility keeps 58: lj_37128223 (jane_volunteer) drops at 239 words under WORD_RE (digits not counted) < 250; lj_28057 (andrusbarabus) drops at russian_share 0.464 < 0.65 (German/Russian mixed note)."
   },
   "redistribution": "manifest_and_aggregates_only",
   "raw_local_copy": {

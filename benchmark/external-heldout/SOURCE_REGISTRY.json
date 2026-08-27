@@ -22,7 +22,7 @@
       "channels": [
         "blog"
       ],
-      "adapter": "ljsearch",
+      "adapter": "manual_or_local_tree",
       "source_url": "https://ljsear.ch/",
       "search_url_template": "https://ljsear.ch/search?q={query}",
       "license_or_terms": "Archive of third-party LiveJournal posts; copyright remains source-dependent. Use for research analysis; do not redistribute raw posts in release.",
@@ -55,6 +55,7 @@
       ],
       "status": "collected_manifest_only",
       "author_provenance_capable": true,
+      "local_import_note": "Local tree data/ljsearch_saved_copies/ (60 collected documents, 2026-08-27 browser collection, see provenance.json); canonical import keeps 58 (lj_37128223 <250 WORD_RE words, lj_28057 russian_share 0.464). manifest.csv sidecar: one row per post, author_or_group = journal name (56 distinct, max 2 documents per author), channel=blog. The network discovery route (search page -> original livejournal.com URLs) stays documented in collection_note; the savedcopy endpoint is RU-IP-blocked from the collection network, and the legacy ljsearch fetcher remains in scripts/materialize_external_heldout.py for reference only.",
       "collection_note": "Collected 2026-08-27 over the original-URL route (ljsear.ch search page -> original livejournal.com post URLs), driven interactively over the DevTools protocol in a local msedge instance. The savedcopy route is deterministically RU-IP-blocked from this network (2506-byte stub; 52/52 direct-HTTP attempts, operator's Firefox, and a fresh Edge instance all show 'Доступ из РФ к сохранённым записям закрыт'). Result: 60 documents / 56 authors / 56386 words, all meeting the 250-word / 8-paragraph gate, 4 near-duplicate mirrors dropped. Per release_policy the repo keeps manifest + per-document text hashes only: benchmark/external-heldout/ljsearch_browser_collection/manifest.csv and COLLECTION_REPORT.json. Raw post bodies stay in the gitignored local research copy data/_lj_probe/lj_corpus_candidates.jsonl (sha256 ccea7214e64fd5cb320c48b8605a34f0f0fd198e6ab40b52dbc848e5af052013, see COLLECTION_REPORT.json)."
     },
     {
