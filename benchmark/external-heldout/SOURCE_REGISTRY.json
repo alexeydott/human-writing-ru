@@ -320,7 +320,7 @@
       "minimum_paragraphs_per_document": 3,
       "selection_policy": "Stream full legal acts, keep document boundaries, diversify issuing bodies and years, and exclude near-duplicate amendment templates.",
       "status": "catalogued",
-      "local_import_note": "Local corpus data/ruslawod_v3/ (80 documents from RusLawOD shard ruslawod_11.parquet, see provenance.json). manual_or_local_tree replaces huggingface_stream: full-dataset streaming requires 11 multi-GB shards that are not reproducible on the available network."
+      "local_import_note": "Local corpus data/ruslawod_v3/ (80 documents from RusLawOD shard ruslawod_11.parquet, see provenance.json). Selection v2 (2026-08-27): same stratification (body, year; caps 8 per body / 6 per year) with a 4000-word per-document cap and shortest-first within cells — 105,517 words, word share of the official profile 0.679 (v1 longest-first was 534,652 words / 0.915, above the spec-v3 maximum_source_word_share cap 0.8). manual_or_local_tree replaces huggingface_stream: full-dataset streaming requires 11 multi-GB shards that are not reproducible on the available network."
     },
     {
       "id": "pravo_open_data",

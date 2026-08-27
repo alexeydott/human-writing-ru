@@ -24,7 +24,7 @@
     "scripts/ablate_signals_v3.py": "9768c5b637310622512f7b2747933af15a34a7946080872bdbd309814a8dd00b",
     "scripts/validate_external_heldout.py": "d7ed8c43183e91eccc36e162b2374025d114a5949467c98da48dc3919b783dde",
     "scripts/run_external_heldout_gate.py": "268f45564a40e41e08b7a9e76fd463185d731461cfb4c6e75239137c0c1fc4d6",
-    "benchmark/external-heldout/SOURCE_REGISTRY.json": "cddffe89386df4c173e3140343706a922bcae8e30bc5418849eead3590136f64",
+    "benchmark/external-heldout/SOURCE_REGISTRY.json": "4b6df09305f3c0f432f800f290723276c747f31560ada4d8815a52bd3ea8c37c",
     "benchmark/external-heldout/SOURCE_MANIFEST.csv": "d0e2a718143fd10c7549337859e72df64b6f0bc1cb9aa470dbf0c265a1a95932",
     "scripts/check_edit_integrity.py": "ef28f82ce53acfcf8c817e8a2e08b6be4895ec7e60c9bc413882391fcdef8d45",
     "scripts/check_tz_ru.py": "cd94800be0ef033960ff44d8698d7fb2b8acc25cf9574609c0b202a2d2ae51d4",
