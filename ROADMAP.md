@@ -1,10 +1,15 @@
 # Roadmap после 1.9.0-beta.2 critical review
 
-> **Статус (2026-08-27):** этап 1 завершён — полный внешний held-out v3 выполнен
-> (прогон `data/heldout-work-policy-1.6`, 911 документов, все gates пройдены, 217
-> natural alerts размечены слепо), решения человека применены политикой **1.5.0**
-> (пакет 1.9.0-beta.5). Осталось: генеративный A/B (этап 3) — и только тогда
-> проверяется готовность к stable по §5.
+> **Статус (2026-08-28):** этап 1 завершён (2026-08-27) — полный внешний held-out v3,
+> решения человека применены политикой **1.5.0** (пакет 1.9.0-beta.5).
+> Этап 3 (generative A/B) выполнен 2026-08-28: итерация 1
+> (`research/ab-eval-iteration-1.md`, workspace `data/ab-eval/iteration-1`) — 420
+> прогонных запусков, 420 blind pairwise: регрессий нет (high-stakes 4.0/4.0,
+> фабрикаций нет), current и previous статистически неразличимы (p=0.505),
+> Skill погранично впереди базового (p≈0.095–0.129). Для stable осталось:
+> score >90 и `skills-ref` validation в CI (§5); по желанию — итерация 2 A/B
+> с исправленным harness (входные файлы в prompt-only кейсах, анонимные пути
+> для судьи).
 
 ## 1. Следующий обязательный этап — данные, не новые эвристики
 
@@ -34,11 +39,13 @@
 
 Запустить `evals/AB_EVAL_PROTOCOL.md` для текущей версии, предыдущей версии и baseline без Skill:
 
-- 5 независимых запусков на case;
-- чистый context;
-- assertions + blind pairwise;
-- factual/meaning/modality/voice/over-edit отдельно;
-- high-stakes cases не усреднять с обычными так, чтобы регрессия скрылась.
+- 5 независимых запусков на case; ✅ (420 runs, итерация 1)
+- чистый context; ✅
+- assertions + blind pairwise; ✅ (420 pairwise, 28 кейсов × 5 runs × 3 пары)
+- factual/meaning/modality/voice/over-edit отдельно; ✅
+- high-stakes cases не усреднять с обычными так, чтобы регрессия скрылась. ✅ (выделены в отчёте)
+
+Выполнено 2026-08-28: `research/ab-eval-iteration-1.md`.
 
 ## 4. Что можно добавлять только после evidence
 
@@ -53,7 +60,7 @@ Stable-релиз требует одновременно:
 - engineering/methodology quality score >90;
 - успешный внешний Agent Skills reference validation (`skills-ref`) в CI;
 - хотя бы один полный external held-out v3 evidence run; ✅ (2026-08-27, `heldout-work-policy-1.6`)
-- generative A/B без factual/high-stakes regression;
+- generative A/B без factual/high-stakes regression; ✅ (2026-08-28, `research/ab-eval-iteration-1.md`: high-stakes 4.0/4.0, фабрикаций нет)
 - отсутствие неразмеченных candidate/off решений, которые объявляются доказанными. ✅
 
 ## TZ normalization follow-up

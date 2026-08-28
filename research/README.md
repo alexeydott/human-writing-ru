@@ -14,3 +14,7 @@
 - pass 16 — дизайн локализованных TZ rules;
 - pass 17 — pruning ложных срабатываний;
 - pass 18 — интеграция и safety review.
+
+## Generative A/B
+
+- `ab-eval-iteration-1.md` — A/B 1.9.0-beta.5 (policy 1.5.0) против 1.9.0-beta.4 (1.4.0) и без Skill: 420 прогонных запусков, 420 blind pairwise; без регрессий, current и previous неразличимы, Skill погранично впереди базового.
