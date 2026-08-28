@@ -6,10 +6,10 @@
 > (`research/ab-eval-iteration-1.md`, workspace `data/ab-eval/iteration-1`) — 420
 > прогонных запусков, 420 blind pairwise: регрессий нет (high-stakes 4.0/4.0,
 > фабрикаций нет), current и previous статистически неразличимы (p=0.505),
-> Skill погранично впереди базового (p≈0.095–0.129). Для stable осталось:
-> score >90 и `skills-ref` validation в CI (§5); по желанию — итерация 2 A/B
-> с исправленным harness (входные файлы в prompt-only кейсах, анонимные пути
-> для судьи).
+> Skill погранично впереди базового (p≈0.095–0.129). Все stable-критерии §5
+> закрыты (score 100/100 и `skills-ref` validation в CI — 2026-08-28);
+> по желанию — итерация 2 A/B с исправленным harness (входные файлы в
+> prompt-only кейсах, анонимные пути для судьи).
 
 ## 1. Следующий обязательный этап — данные, не новые эвристики
 
@@ -57,8 +57,8 @@
 
 Stable-релиз требует одновременно:
 
-- engineering/methodology quality score >90;
-- успешный внешний Agent Skills reference validation (`skills-ref`) в CI;
+- engineering/methodology quality score >90; ✅ (2026-08-28: 100/100, `quality/QUALITY_SCORE.json`)
+- успешный внешний Agent Skills reference validation (`skills-ref`) в CI; ✅ (2026-08-28: `.github/workflows/skills-ref.yml` — PyPI `skills-ref`, CLI `agentskills validate` на push/PR: корень пакета + содержимое собранного релизного ZIP)
 - хотя бы один полный external held-out v3 evidence run; ✅ (2026-08-27, `heldout-work-policy-1.6`)
 - generative A/B без factual/high-stakes regression; ✅ (2026-08-28, `research/ab-eval-iteration-1.md`: high-stakes 4.0/4.0, фабрикаций нет)
 - отсутствие неразмеченных candidate/off решений, которые объявляются доказанными. ✅

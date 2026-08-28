@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "score": 96,
+  "score": 100,
   "max_score": 100,
   "target": ">90",
   "target_met": true,
   "score_scope": "engineering_and_methodological_readiness_only",
-  "empirical_threshold_confidence": "not_established_until_external_heldout_v3",
-  "generative_superiority_confidence": "not_established_until_real_ab_eval",
+  "empirical_threshold_confidence": "established_by_external_heldout_v3_2026-08-27 (data/heldout-work-policy-1.6, ABLATION_DECISION_V3.json)",
+  "generative_superiority_confidence": "no_regression_established_by_ab_iteration_1_2026-08-28 (research/ab-eval-iteration-1.md); superiority over previous_skill not established",
   "criteria": [
     {
       "name": "agent_skills_spec_and_package_hygiene",
@@ -338,12 +338,12 @@
         "expected": {
           "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
           "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
-          "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+          "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a"
         },
         "actual": {
           "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
           "scripts/ablate_signals.py": "f6b6eb357636fdfafcca3b78661cedac6c9b01b70709c267754026ca2a36454a",
-          "profiles/editorial-baseline.json": "437199c10715bef7a2a74e9d172f5f40bef95a337e488a889a2819b2c6b96839"
+          "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a"
         }
       }
     },
@@ -353,18 +353,20 @@
       "earned": 4,
       "ok": true,
       "evidence": {
-        "version": "1.9.0-beta.4",
+        "version": "1.9.0-beta.5",
         "product_router_bytes": 1247
       }
     },
     {
       "name": "external_skills_ref_validation",
       "weight": 4,
-      "earned": 0,
-      "ok": false,
+      "earned": 4,
+      "ok": true,
       "evidence": {
-        "status": "not_available_in_runtime",
-        "points_deliberately_not_awarded": true
+        "ok": true,
+        "returncode": 0,
+        "stdout": "Valid skill: D:\\projects\\externals\\human-writing-ru\n",
+        "stderr": ""
       }
     }
   ]

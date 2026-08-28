@@ -1,0 +1,45 @@
+name: Agent Skills reference validation
+
+# Внешний reference-validator Agent Skills (PyPI `skills-ref`,
+# github.com/anthropics/agentskills, Apache-2.0). Stable-критерий:
+# успешный внешний Agent Skills reference validation в CI (ROADMAP §5).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  skills-ref:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install skills-ref (official Agent Skills reference validator)
+        run: python -m pip install --upgrade pip skills-ref
+
+      - name: Validate package root
+        run: agentskills validate .
+
+      - name: Build deterministic release
+        run: python scripts/build_release.py
+
+      - name: Validate built release contents
+        shell: bash
+        run: |
+          version=$(tr -d '[:space:]' < VERSION)
+          zip="dist/human-writing-ru-${version}-full.zip"
+          test -f "$zip"
+          tmp=$(mktemp -d)
+          python -m zipfile -e "$zip" "$tmp"
+          agentskills validate "$tmp/human-writing-ru"

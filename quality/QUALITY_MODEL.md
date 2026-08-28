@@ -17,6 +17,12 @@
 
 Если `skills-ref` не установлен в runtime, эти 4 балла **не начисляются**. Локальный максимум тогда равен 96; отсутствие инструмента нельзя выдавать за успешную внешнюю валидацию.
 
+Инструмент: официальный reference-validator Agent Skills — PyPI-пакет `skills-ref`
+(github.com/anthropics/agentskills, Apache-2.0); CLI-команда — `agentskills`
+(`pip install skills-ref`, затем `agentskills validate <skill-root>`).
+В CI проверка выполняется workflow `.github/workflows/skills-ref.yml` на push/PR:
+валидация корневого каталога и содержимого собранного релизного ZIP.
+
 ## Отдельная эмпирическая уверенность
 
 Corpus validity пяти стилевых сигналов **не входит** в engineering score. Пока не выполнен внешний held-out protocol v3 с достаточными diversity/signal/split gates и требуемой natural-alert adjudication, её статус — `not_established_until_external_heldout_v3`.

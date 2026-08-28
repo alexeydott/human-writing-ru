@@ -96,12 +96,14 @@ doc_ok=(
 add('documentation_and_progressive_disclosure',4,doc_ok,{'version':version,'product_router_bytes':(ROOT/'references/product-story.md').stat().st_size})
 
 # 8. Independent reference validator if actually available; never award points for absence.
-ref=shutil.which('skills-ref')
+# Official Agent Skills reference validator: PyPI `skills-ref`
+# (github.com/anthropics/agentskills, Apache-2.0), CLI entry point `agentskills`.
+ref=shutil.which('agentskills') or shutil.which('skills-ref')
 if ref:
     rr=run([ref,'validate',str(ROOT)])
     add('external_skills_ref_validation',4,rr['ok'],rr)
 else:
-    add('external_skills_ref_validation',4,False,{'status':'not_available_in_runtime','points_deliberately_not_awarded':True})
+    add('external_skills_ref_validation',4,False,{'status':'not_available_in_runtime','install':'pip install skills-ref','cli':'agentskills validate <skill-root>','points_deliberately_not_awarded':True})
 
 score=sum(x['earned'] for x in criteria)
 report={
@@ -111,8 +113,8 @@ report={
  'target':'>90',
  'target_met':score>90,
  'score_scope':'engineering_and_methodological_readiness_only',
- 'empirical_threshold_confidence':'not_established_until_external_heldout_v3',
- 'generative_superiority_confidence':'not_established_until_real_ab_eval',
+ 'empirical_threshold_confidence':'established_by_external_heldout_v3_2026-08-27 (data/heldout-work-policy-1.6, ABLATION_DECISION_V3.json)',
+ 'generative_superiority_confidence':'no_regression_established_by_ab_iteration_1_2026-08-28 (research/ab-eval-iteration-1.md); superiority over previous_skill not established',
  'criteria':criteria,
 }
 out=ROOT/'quality/QUALITY_SCORE.json'
