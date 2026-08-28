@@ -7,11 +7,14 @@
     "human_blind_pairwise_for_style": true,
     "clean_context_required": true,
     "minimum_blind_pairwise_judgments_per_case": 3,
-    "previous_skill_id": "human-writing-ru@1.6.1-beta.1"
+    "previous_skill_id": "human-writing-ru@1.9.0-beta.4"
   },
   "evals": [
     {
       "id": "edit-preserve-voice",
+      "files": [
+        "evals/files/edit_voice_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -236,6 +239,9 @@
     },
     {
       "id": "technical-procedure",
+      "files": [
+        "evals/files/tech_draft_sample.txt"
+      ],
       "dimensions": {
         "operation": "rewrite",
         "channel": "technical",
@@ -262,6 +268,9 @@
     },
     {
       "id": "oral",
+      "files": [
+        "evals/files/oral_analytic_sample.txt"
+      ],
       "dimensions": {
         "operation": "oral",
         "channel": "speech",
@@ -287,6 +296,9 @@
     },
     {
       "id": "fiction-dialogue",
+      "files": [
+        "evals/files/fiction_dialogue_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "factuality": "fiction",
@@ -337,6 +349,9 @@
     },
     {
       "id": "media-attribution",
+      "files": [
+        "evals/files/media_note_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -362,6 +377,9 @@
     },
     {
       "id": "social-platform-voice",
+      "files": [
+        "evals/files/social_source_sample.txt"
+      ],
       "dimensions": {
         "operation": "adaptation",
         "origin": "native_original",
@@ -387,6 +405,9 @@
     },
     {
       "id": "child-student-explanation",
+      "files": [
+        "evals/files/child_science_sample.txt"
+      ],
       "dimensions": {
         "operation": "adaptation",
         "origin": "native_original",
@@ -412,6 +433,9 @@
     },
     {
       "id": "high-stakes-health-rewrite",
+      "files": [
+        "evals/files/health_note_sample.txt"
+      ],
       "dimensions": {
         "operation": "rewrite",
         "origin": "native_original",
@@ -438,6 +462,9 @@
     },
     {
       "id": "historical-pre1956-light-edit",
+      "files": [
+        "evals/files/historical_memoir_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -463,6 +490,9 @@
     },
     {
       "id": "late20c-official-adaptation",
+      "files": [
+        "evals/files/late20c_instruction_sample.txt"
+      ],
       "dimensions": {
         "operation": "adaptation",
         "origin": "native_original",
@@ -488,6 +518,9 @@
     },
     {
       "id": "translated-close-language",
+      "files": [
+        "evals/files/bel_draft_sample.txt"
+      ],
       "dimensions": {
         "operation": "rewrite",
         "origin": "translated",
@@ -513,6 +546,9 @@
     },
     {
       "id": "translated-distant-language",
+      "files": [
+        "evals/files/zh_tech_sample.md"
+      ],
       "dimensions": {
         "operation": "rewrite",
         "origin": "translated",
@@ -538,6 +574,9 @@
     },
     {
       "id": "l2-known-l1",
+      "files": [
+        "evals/files/l2_chinese_sample.txt"
+      ],
       "dimensions": {
         "operation": "proofreading",
         "origin": "L2",
@@ -563,6 +602,9 @@
     },
     {
       "id": "mixed-factual-fiction-boundary",
+      "files": [
+        "evals/files/doc_prose_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -588,6 +630,9 @@
     },
     {
       "id": "urls-preserve-edit",
+      "files": [
+        "evals/files/urls_text_sample.md"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -613,6 +658,9 @@
     },
     {
       "id": "table-preserve-edit",
+      "files": [
+        "evals/files/table_config_sample.md"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "native_original",
@@ -638,6 +686,9 @@
     },
     {
       "id": "unknown-origin-neutral-edit",
+      "files": [
+        "evals/files/unknown_fragment_sample.txt"
+      ],
       "dimensions": {
         "operation": "light_edit",
         "origin": "unknown",
@@ -715,6 +766,9 @@
     },
     {
       "id": "high-stakes-legal-conditions",
+      "files": [
+        "evals/files/legal_procedure_sample.txt"
+      ],
       "dimensions": {
         "operation": "rewrite",
         "origin": "native_original",
