@@ -1,5 +1,29 @@
 # Журнал изменений
 
+## 1.9.0 — stable-релиз
+
+- Пакет выпущен в stable: все stable-критерии ROADMAP §5 закрыты одновременно:
+  - engineering/methodology quality score 100/100 (`quality/QUALITY_SCORE.json`, 2026-08-28);
+  - внешний Agent Skills reference validation (`skills-ref`, PyPI) в CI —
+    `.github/workflows/skills-ref.yml` на push/PR: корень пакета + содержимое собранного
+    релизного ZIP (на момент релиза прогоны ожидают решения биллинга GitHub-аккаунта —
+    rerun после);
+  - полный внешний held-out v3 evidence run (2026-08-27, `data/heldout-work-policy-1.6`,
+    политика 1.5.0);
+  - generative A/B без факт/high-stakes regression — две итерации по 420 прогонных
+    запусков и 420 blind pairwise (`research/ab-eval-iteration-1.md`,
+    `research/ab-eval-iteration-2.md`): high-stakes 3.9–4.0, фабрикаций нет, current и
+    previous статистически неразличимы (p=1.000), Skill значимо впереди без-Skill базового
+    (p=0.0019);
+  - отсутствие неразмеченных candidate/off решений, объявленных доказанными.
+- Лингвистическая политика без изменений: `metadata.policy_version` остаётся **1.5.0**;
+  frozen-файлы `scripts/check_prose_ru.py`, `scripts/ablate_signals.py`,
+  `profiles/editorial-baseline.json` не тронуты (SHA-256 совпадают с
+  `benchmark/external-heldout/FROZEN_INPUT_SHA256.json`).
+- Версия — stable beta-серии 1.9.0-beta.1…beta.5; содержимое и доказательства — в
+  соответствующих разделах журнала. Релизный ZIP: `dist/human-writing-ru-1.9.0-full.zip`
+  (сборка `python scripts/build_release.py`; публикация GitHub-релиза — отдельным шагом).
+
 ## 1.9.0-beta.5 — применение политики 1.5.0 по итогам held-out v3
 
 - Применены решения человека по итогам полного внешнего held-out v3 (рабочий каталог `data/heldout-work-policy-1.6`, 911 валидированных документов; `manifest.validated.csv` SHA-256 `6fe9013ef8c6ce01a84753cb096486354ad5d611959f2cd9f08ac618b3d29457`; решения — `data/heldout-work-policy-1.6/ABLATION_DECISION_V3.json`):

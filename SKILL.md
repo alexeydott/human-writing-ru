@@ -6,7 +6,7 @@ license: MIT
 compatibility: >-
   Основной Skill не требует сети. Встроенные проверки рассчитаны на Python 3.10+; внешняя held-out материализация требует исходящего HTTPS, а отдельные Hugging Face источники — пакета datasets.
 metadata:
-  version: "1.9.0-beta.5"
+  version: "1.9.0"
   policy_version: "1.5.0"
   language: "ru"
 ---

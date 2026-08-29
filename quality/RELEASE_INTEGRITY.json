@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "package_version": "1.9.0-beta.5",
+  "package_version": "1.9.0",
   "policy_version": "1.5.0",
   "skill_root": "human-writing-ru",
   "frozen_inputs_match": true,
@@ -15,7 +15,7 @@
     "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a"
   },
   "tracked_sha256": {
-    "SKILL.md": "a92d8a1865c7e6dc552429c1f47d929a366e1c950d84e63f60f4307963f80fae",
+    "SKILL.md": "de1baf0a09f3052096db0e4ecf1966e75cc3054190fa1079798b365da72ed7a2",
     "profiles/editorial-baseline.json": "9f561d0d02645676d80b26877762897380ad14fc31cb1f3d96593645492f232a",
     "scripts/check_prose_ru.py": "00648ff1df947042eedb4372ad4e4175f88af795f3ae883d98623d73b16b8a57",
     "scripts/build_lite.py": "2452a3c51c5e4bdeffcd65bab3689aa0e5cf9f8d910f361e1ade08f4d5ac207e",
@@ -24,7 +24,7 @@
     "scripts/ablate_signals_v3.py": "9768c5b637310622512f7b2747933af15a34a7946080872bdbd309814a8dd00b",
     "scripts/validate_external_heldout.py": "d7ed8c43183e91eccc36e162b2374025d114a5949467c98da48dc3919b783dde",
     "scripts/run_external_heldout_gate.py": "268f45564a40e41e08b7a9e76fd463185d731461cfb4c6e75239137c0c1fc4d6",
-    "benchmark/external-heldout/SOURCE_REGISTRY.json": "352c8a1590dc7504b6c56e7937ef861ea39ccfb8b35abc6723716b30e5865e17",
+    "benchmark/external-heldout/SOURCE_REGISTRY.json": "798a6b62e5ba748f1cd4b5d4ec5e8bdfa6014b95a09e4fbf7b84500db6ca0a6c",
     "benchmark/external-heldout/SOURCE_MANIFEST.csv": "d0e2a718143fd10c7549337859e72df64b6f0bc1cb9aa470dbf0c265a1a95932",
     "scripts/check_edit_integrity.py": "ef28f82ce53acfcf8c817e8a2e08b6be4895ec7e60c9bc413882391fcdef8d45",
     "scripts/check_tz_ru.py": "cd94800be0ef033960ff44d8698d7fb2b8acc25cf9574609c0b202a2d2ae51d4",

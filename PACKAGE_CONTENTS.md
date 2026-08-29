@@ -1,12 +1,12 @@
 # Package contents
 
-Complete installable package for `human-writing-ru`, version **1.9.0-beta.5**.
+Complete installable package for `human-writing-ru`, version **1.9.0**.
 
 The ZIP root is the stable Agent Skills directory `human-writing-ru/`; the version belongs to the archive name and metadata, not to the install directory.
 
 ## Inventory
 
-- `(root)`: 18 files
+- `(root)`: 20 files
 - `.github`: 2 files
 - `agents`: 1 files
 - `benchmark`: 51 files
@@ -21,7 +21,7 @@ The ZIP root is the stable Agent Skills directory `human-writing-ru/`; the versi
 - `scripts`: 23 files
 - `tests`: 18 files
 
-Total files: **209**.
+Total files: **211**.
 
 ## Integrity
 

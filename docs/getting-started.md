@@ -26,7 +26,7 @@ git clone https://github.com/alexeydott/human-writing-ru.git \
   .claude/skills/human-writing-ru
 
 # Вариант 2: из релиз-архива (корень ZIP уже называется human-writing-ru/)
-unzip dist/human-writing-ru-1.9.0-beta.5-full.zip -d .claude/skills/
+unzip dist/human-writing-ru-1.9.0-full.zip -d .claude/skills/
 ```
 
 Для других рантаймов те же пути: `.qwen/skills/`, `.github/skills/`, `.opencode/skills/`,

@@ -6,7 +6,7 @@
   "target_met": true,
   "score_scope": "engineering_and_methodological_readiness_only",
   "empirical_threshold_confidence": "established_by_external_heldout_v3_2026-08-27 (data/heldout-work-policy-1.6, ABLATION_DECISION_V3.json)",
-  "generative_superiority_confidence": "no_regression_established_by_ab_iteration_1_2026-08-28 (research/ab-eval-iteration-1.md); superiority over previous_skill not established",
+  "generative_superiority_confidence": "no_regression_established_by_ab_iterations_1_and_2_2026-08-28_29 (research/ab-eval-iteration-1.md, ab-eval-iteration-2.md); superiority over without_skill significant (p=0.0019, iteration 2); superiority over previous_skill not established (p=1.000)",
   "criteria": [
     {
       "name": "agent_skills_spec_and_package_hygiene",

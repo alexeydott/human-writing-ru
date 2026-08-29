@@ -1,6 +1,10 @@
 # Roadmap после 1.9.0-beta.2 critical review
 
-> **Статус (2026-08-29):** этап 1 завершён (2026-08-27) — полный внешний held-out v3,
+> **Статус (2026-08-29):** пакет выпущен в **stable 1.9.0** — все stable-критерии §5
+> закрыты одновременно (quality score 100/100, held-out v3, generative A/B ×2,
+> `skills-ref` в CI, отсутствие неразмеченных candidate-решений); политика **1.5.0**,
+> frozen-входы не тронуты.
+> Этап 1 завершён (2026-08-27) — полный внешний held-out v3,
 > решения человека применены политикой **1.5.0** (пакет 1.9.0-beta.5).
 > Этап 3 (generative A/B) выполнен 2026-08-28 (итерация 1) и 2026-08-29 (итерация 2):
 > `research/ab-eval-iteration-1.md`, `research/ab-eval-iteration-2.md` — по 420
@@ -60,8 +64,10 @@ Stable-релиз требует одновременно:
 - engineering/methodology quality score >90; ✅ (2026-08-28: 100/100, `quality/QUALITY_SCORE.json`)
 - успешный внешний Agent Skills reference validation (`skills-ref`) в CI; ✅ (2026-08-28: `.github/workflows/skills-ref.yml` — PyPI `skills-ref`, CLI `agentskills validate` на push/PR: корень пакета + содержимое собранного релизного ZIP)
 - хотя бы один полный external held-out v3 evidence run; ✅ (2026-08-27, `heldout-work-policy-1.6`)
-- generative A/B без factual/high-stakes regression; ✅ (2026-08-28, `research/ab-eval-iteration-1.md`: high-stakes 4.0/4.0, фабрикаций нет)
+- generative A/B без factual/high-stakes regression; ✅ (2026-08-28, `research/ab-eval-iteration-1.md`: high-stakes 4.0/4.0, фабрикаций нет; подтверждено второй итерацией 2026-08-29)
 - отсутствие неразмеченных candidate/off решений, которые объявляются доказанными. ✅
+
+Все критерии закрыты одновременно — stable-релиз **1.9.0** выполнен 2026-08-29.
 
 ## TZ normalization follow-up
 
