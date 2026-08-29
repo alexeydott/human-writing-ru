@@ -13,15 +13,15 @@ The ZIP root is the stable Agent Skills directory `human-writing-ru/`; the versi
 - `data`: 2 files
 - `dist`: 1 files
 - `docs`: 5 files
-- `evals`: 19 files
+- `evals`: 37 files
 - `profiles`: 4 files
 - `quality`: 5 files
 - `references`: 19 files
-- `research`: 22 files
+- `research`: 23 files
 - `scripts`: 23 files
 - `tests`: 18 files
 
-Total files: **190**.
+Total files: **209**.
 
 ## Integrity
 
